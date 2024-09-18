@@ -1,4 +1,4 @@
-package com.webshop.AIWebshop;
+package com.AIWebshop.AIWebshop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

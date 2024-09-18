@@ -1,4 +1,4 @@
-package com.webshop.AIWebshop;
+package com.AIWebshop.AIWebshop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
