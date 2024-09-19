@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './css/App.css'
 import axios from 'axios'
 import { User } from './fields/User.tsx';
+import Header from './header.tsx';
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);
@@ -25,18 +26,12 @@ function App() {
 
 
   return (
-    <>
-      <div>
-        {users.map((user) => (
-          <table>
-            <tr>
-              <td>{user.id}</td>
-              <td>{user.surename}</td>
-            </tr>
-          </table>
-        ))}
-      </div>
-    </>
+    <div className='app'>
+      <Header />
+      <main className='main-content'>
+
+      </main>
+    </div>
   )
 }
 
