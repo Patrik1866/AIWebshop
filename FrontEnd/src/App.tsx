@@ -1,50 +1,41 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './css/App.css'
 import axios from 'axios'
+import { User } from './fields/User.tsx';
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [user, setUser] = useState('');
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    const userData = async () => {
-      try {
-        const response = await axios.get("/listUsers");
-        setUser(response.data);
-      } catch (e) {
-        console.error("Valami nem jó")
-      }
-    }
-    userData()
-  }, [])
+    fetchUsers();
+  }, []);
 
+  const fetchUsers = async () => {
+    try {
+      const response = axios.get<User[]>("/listUsers");
+      if (!response) {
+        throw new Error('Failed');
+      }
+      setUsers((await response).data)
+      console.log("Siker")
+    } catch (e) {
+      throw new Error('Failed');
+    }
+  }
 
 
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        {users.map((user) => (
+          <table>
+            <tr>
+              <td>{user.id}</td>
+              <td>{user.surename}</td>
+            </tr>
+          </table>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count: number) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-        {user && <p>{user}</p>}
-      </p>
     </>
   )
 }
