@@ -18,7 +18,7 @@ public class AiWebshopApplication {
 		return new WebMvcConfigurer() {
 			public void addCorsMapping(CorsRegistry reg){
 				reg.addMapping("/api/**")
-						.allowedOrigins("http://localhost:3000")
+						.allowedOrigins("http://localhost:5173")
 						.allowedMethods("GET", "POST", "PUT", "DELETE");
 			}
 		};

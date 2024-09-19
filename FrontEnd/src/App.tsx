@@ -1,10 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import axios from 'axios'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [user, setUser] = useState('');
+
+  useEffect(() => {
+    const userData = async () => {
+      try {
+        const response = await axios.get("/listUsers");
+        setUser(response.data);
+      } catch (e) {
+        console.error("Valami nem jó")
+      }
+    }
+    userData()
+  }, [])
+
+
 
   return (
     <>
@@ -18,7 +34,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
+        <button onClick={() => setCount((count: number) => count + 1)}>
           count is {count}
         </button>
         <p>
@@ -27,6 +43,7 @@ function App() {
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
+        {user && <p>{user}</p>}
       </p>
     </>
   )
