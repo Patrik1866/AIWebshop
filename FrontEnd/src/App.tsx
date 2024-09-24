@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './css/App.css'
 import axios from 'axios'
 import { User } from './fields/User.tsx';
-import Header from './header.tsx';
+import Header from './Header.tsx';
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);
