@@ -21,7 +21,10 @@ function Header() {
                     <a href="/contact" className="nav-link">Kapcsolat</a>
                 </div>
                 <div className="nav-item">
-                    <a href="/profile" className="nav-link">Profil</a>
+                    <a href="/" className="nav-link">Profil</a>
+                </div>
+                <div className='nav-item'>
+                    <a href="/LoginPage" className='nav-link'>Login</a>
                 </div>
             </nav>
         </header>

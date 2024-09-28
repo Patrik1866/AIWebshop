@@ -3,7 +3,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #f8f9fa;
+    background-color: #8C6436;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
     z-index: 1000;
 }
@@ -21,9 +21,12 @@
 
 .nav-link {
     text-decoration: none;
-    color: #333;
+    color: #2D3845;
     font-weight: bold;
     padding: 0.5rem 1rem;
+}
+.nav-link:hover{
+    color: #A6A278;
 }
 
 .dropdown:hover .dropdown-menu {
