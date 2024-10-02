@@ -2,20 +2,26 @@ import React from "react";
 import '../css/loginPage.css';
 
  export function LoginPage(){
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
+  const handleLogin = (event:React.FormEvent) => {
+    event.preventDefault();
+    setIsLoggedIn(true);
+  }
 
 
     return (
       <body>
         <div className="loginContainer">
           <h2>Login</h2>
-          <form className="loginForm">
+          <form className="loginForm" onSubmit={handleLogin}>
             <div className="form-group">
-              <label htmlFor="username_or_email">Username:</label>
+              <label>Username:</label>
               <br />
               <input type="text" id="username" name="username" required />
             </div>
             <div className="form-group">
-              <label htmlFor="password">Password:</label>
+              <label>Password:</label>
               <br />
               <input type="password" id="password" name="password" required />
             </div>
@@ -23,7 +29,7 @@ import '../css/loginPage.css';
               Login
             </button>
             <br />
-            <label>Don't have a profile yet?<a href="/Register">Register</a></label>
+            <label>Don't have a profile yet?<a href="/RegisterPage">Register</a></label>
           </form>
         </div>
       </body>

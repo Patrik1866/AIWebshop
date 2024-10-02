@@ -13,14 +13,4 @@ public class AiWebshopApplication {
 		SpringApplication.run(AiWebshopApplication.class, args);
 	}
 
-	@Bean
-	public WebMvcConfigurer corsConfig(){
-		return new WebMvcConfigurer() {
-			public void addCorsMapping(CorsRegistry reg){
-				reg.addMapping("/api/**")
-						.allowedOrigins("http://localhost:5173")
-						.allowedMethods("GET", "POST", "PUT", "DELETE");
-			}
-		};
-	}
 }
