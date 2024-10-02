@@ -62,7 +62,8 @@ export function RegisterPage(){
             <label>Phone:</label><br />
             <input type="tel" id="phone" name="phone" placeholder="123-456-7890" required value={registerFormData.phone} onChange={handleChange}/>
           </div>
-          <button className="registerButton" type="submit">Register</button>
+          <button className="registerButton" type="submit">Register</button><br />
+          <label>Már van fiókja? Jelentkezzen be <a style={{textDecoration: "underline", color: "#A6A278"}} href="/LoginPage">itt</a></label>
         </form>
         </div>
     );
