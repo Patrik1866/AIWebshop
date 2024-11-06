@@ -1,9 +1,7 @@
-package com.AIWebshop.AIWebshop.AppRestController;
+package com.AIWebshop.AIWebshop.AppController;
 
-import com.AIWebshop.AIWebshop.Fields.User;
+import com.AIWebshop.AIWebshop.Entities.User;
 import com.AIWebshop.AIWebshop.Repos.UserRepository;
-import org.apache.groovy.util.Maps;
-import org.json.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.AIWebshop.AIWebshop.Fields;
+package com.AIWebshop.AIWebshop.Entities;
 
 import jakarta.persistence.*;
 
