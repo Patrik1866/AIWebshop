@@ -1,5 +1,3 @@
-import './css/header.css'
-
 
 function Header() {
 

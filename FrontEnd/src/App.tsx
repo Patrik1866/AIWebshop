@@ -1,9 +1,10 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 import Header from './components/Header.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import LoginPage from './pages/LoginPage.tsx';
-import HomePage from './pages/HomePage.tsx';
-import RegisterPage from './pages/RegisterPage.tsx';
+import LoginPage from './pages/loginPage/LoginPage.tsx';
+import HomePage from './pages/homepage/HomePage.tsx';
+import RegisterPage from './pages/registerPage/RegisterPage.tsx';
+import './style.css';
 
 function App() {
 
