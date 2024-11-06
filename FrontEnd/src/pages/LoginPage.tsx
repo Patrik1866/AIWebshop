@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import '../css/loginPage.css';
-import { User } from "../fields/User";
 
  export function LoginPage() {
-   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
    const [loginFormData, setLoginFormData] = useState({
      email: "",
      password: "",
@@ -26,7 +24,6 @@ import { User } from "../fields/User";
          });
          if (response.ok) {
           alert("User logged in successfully");
-           setIsLoggedIn(true);
          } else {
            const errorText = response.text();
            alert(`Failed to login: ${errorText}`);
