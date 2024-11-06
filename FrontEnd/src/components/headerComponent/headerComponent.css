@@ -1,0 +1,56 @@
+/* src/index.css or src/styles.css */
+
+.header {
+    background-color: #a68e6c;
+    padding: 1rem 0;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .nav-item {
+    position: relative;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+  
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  }
+  
+  .dropdown-item {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    display: block;
+    background-color: #a68e6c;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navbar .button {
+    border: none;
+    padding: 0.5rem 1rem;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .navbar .button:hover {
+    background-color: #3498db;
+  }
+  

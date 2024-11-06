@@ -1,3 +1,4 @@
+import './headerComponent.css';
 
 function Header() {
 

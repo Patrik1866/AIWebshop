@@ -1,4 +1,12 @@
 body{
-    background-color: aqua;
+    background-color: #f7f7f7;
     margin: auto;
+}
+
+p, a{
+    color: #0F0F0F;
+}
+
+p, a:hover{
+    color: #b22106;
 }
