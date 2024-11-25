@@ -1,6 +1,9 @@
-package com.AIWebshop.AIWebshop.Entities;
+package com.AIWebshop.AIWebshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name= "users")
@@ -16,6 +19,17 @@ public class User {
     private String password;
     private String phone;
 
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Address> addresses;
     public Integer getId() {
         return id;
     }

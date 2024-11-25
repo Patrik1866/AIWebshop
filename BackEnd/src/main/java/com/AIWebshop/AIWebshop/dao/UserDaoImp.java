@@ -1,0 +1,50 @@
+package com.AIWebshop.AIWebshop.dao;
+
+import com.AIWebshop.AIWebshop.entity.Address;
+import com.AIWebshop.AIWebshop.entity.User;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public class UserDaoImp implements UserDao{
+
+    @Autowired
+    private EntityManager entityManager;
+
+    @Override
+    public List<User> findAll() {
+        TypedQuery<User> theQuerry = entityManager.createQuery("FROM User", User.class);
+
+        List<User> users = theQuerry.getResultList();
+
+        return users;
+    }
+
+    @Override
+    public User findById(int id) {
+        User user = entityManager.find(User.class, id);
+
+        return user;
+    }
+
+    @Override
+    @Transactional
+    public User save(User user) {
+        User dbUser = entityManager.merge(user);
+
+        return dbUser;
+    }
+
+    @Override
+    @Transactional
+    public User deleteById(User user) {
+        entityManager.remove(user);
+
+        return null;
+    }
+}
