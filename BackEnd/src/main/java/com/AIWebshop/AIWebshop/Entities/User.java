@@ -7,6 +7,15 @@ import jakarta.persistence.*;
 public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
+    @Id
+    @Column(name ="user_id")
+    private Integer id;
+    private String surname;
+    private String firstname;
+    private String email;
+    private String password;
+    private String phone;
+
     public Integer getId() {
         return id;
     }
@@ -53,12 +62,5 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    @Id
-    @Column(name ="user_id")
-    private Integer id;
-    private String surname;
-    private String firstname;
-    private String email;
-    private String password;
-    private String phone;
+
 }

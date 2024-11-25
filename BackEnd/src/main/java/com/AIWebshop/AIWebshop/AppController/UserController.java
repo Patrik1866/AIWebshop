@@ -30,7 +30,7 @@ public class    UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password){
-        String sql = "SELECT * FROM \"AIWebshop\".users WHERE email = ? AND password = ?";
+        String sql = "SELECT * FROM aiwebshop.users WHERE email = ? AND password = ?";
         List<Map<String, Object>> users = jdbcTemplate.queryForList(sql, email, password);
 
         if (!users.isEmpty()){
@@ -51,7 +51,7 @@ public class    UserController {
             @RequestParam String password,
             @RequestParam String phone
     ){
-        String checksql = "SELECT COUNT(*) FROM \"AIWebshop\".users WHERE email = :email";
+        String checksql = "SELECT COUNT(*) FROM aiwebshop.users WHERE email = :email";
         Map<String, Object> params = new HashMap<>();
         params.put("email", email);
         int count = namedParameterJdbcTemplate.queryForObject(checksql, params, Integer.class);
@@ -59,7 +59,7 @@ public class    UserController {
             return ResponseEntity.badRequest().body("User with these email already exist");
         }
 
-        String sql = "INSERT INTO \"AIWebshop\".users (surname, firstname, email, password, phone) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO aiwebshop.users (surname, firstname, email, password, phone) VALUES (?, ?, ?, ?, ?)";
         int result = jdbcTemplate.update(sql, surname, firstname, email, password, phone);
 
         if(result > 0){
