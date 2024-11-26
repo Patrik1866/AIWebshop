@@ -1,11 +1,10 @@
-# Use the official Nginx image
 FROM nginx:alpine
 
-# Copy the Nginx configuration file
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# Copy the static files from the frontend build directory
+# Másold a statikus fájlokat a frontend build könyvtárából
 COPY --from=frontend /app/build /usr/share/nginx/html
 
-# Expose the port Nginx is running on
+# Expose az nginx által használt port
 EXPOSE 80
+
+# Indítsd el az nginx szervert
+CMD ["nginx", "-g", "daemon off;"]
