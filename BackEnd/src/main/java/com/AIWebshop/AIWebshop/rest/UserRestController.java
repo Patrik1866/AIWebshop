@@ -32,7 +32,9 @@ public class UserRestController {
 
     @PutMapping("/users")
     public User updateUser(@RequestBody User user){
-        user.getAddresses().forEach(address -> address.setUser(user));
+        if (user.getAddresses() != null){
+            user.getAddresses().forEach(address -> address.setUser(user));
+        }
         User theUser = userService.save(user);
 
         return theUser;

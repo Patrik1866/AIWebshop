@@ -25,7 +25,10 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User save(User user) {
-        user.getAddresses().forEach(address -> address.setUser(user));
+        if (user.getAddresses() != null) {
+            user.getAddresses().forEach(address -> address.setUser(user));
+        }
+
         return userDao.save(user);
     }
 
