@@ -1,5 +1,6 @@
 package com.AIWebshop.AIWebshop.service;
 
+import com.AIWebshop.AIWebshop.entity.Address;
 import com.AIWebshop.AIWebshop.entity.User;
 import com.AIWebshop.AIWebshop.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +25,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<User> findByEmail(String email){
-        return userDao.findByEmail(email);
-    }
-
-    @Override
     public User save(User user) {
-        if (user.getAddresses() != null) {
-            user.getAddresses().forEach(address -> address.setUser(user));
-        }
-
         return userDao.save(user);
     }
 
@@ -44,10 +36,9 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User createUserWithAddress(User user) {
-        user.getAddresses().forEach(address -> address.setUser(user));
-
-        return userDao.save(user);
+    public Address saveAddress(Address address) {
+        return userDao.saveAddress(address);
     }
+
 
 }

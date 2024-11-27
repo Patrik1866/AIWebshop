@@ -33,18 +33,6 @@ public class UserDaoImp implements UserDao{
         return user;
     }
 
-    @Override
-    public List<User> findByEmail(String email) {
-        String jpql = "SELECT u FROM User u WHERE u.email = :email";
-        try{
-            return entityManager.createQuery(jpql, User.class)
-                    .setParameter("email",email)
-                    .getResultList();
-
-        } catch (NoResultException e){
-            return null;
-        }
-    }
 
     @Override
     @Transactional
@@ -60,6 +48,14 @@ public class UserDaoImp implements UserDao{
         entityManager.remove(user);
 
         return null;
+    }
+
+    @Override
+    @Transactional
+    public Address saveAddress(Address address) {
+        Address dbaddress = entityManager.merge(address);
+
+        return dbaddress;
     }
 
 

@@ -1,6 +1,8 @@
 package com.AIWebshop.AIWebshop.rest;
 
+import com.AIWebshop.AIWebshop.entity.Address;
 import com.AIWebshop.AIWebshop.entity.User;
+import com.AIWebshop.AIWebshop.req.UserAddressRequest;
 import com.AIWebshop.AIWebshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,32 +31,32 @@ public class UserRestController {
         return theUser;
     }
 
-    @GetMapping("/users/email/{email}")
-    public List<User> findByEmail(@PathVariable String email){
-        List<User> theUser = userService.findByEmail(email);
-        if (theUser == null){
-            throw new RuntimeException("Felhasználó nem létezik");
-        }
-
-        return theUser;
-    }
-
     @PutMapping("/users")
     public User updateUser(@RequestBody User user){
-        if (user.getAddresses() != null){
-            user.getAddresses().forEach(address -> address.setUser(user));
-        }
         User theUser = userService.save(user);
 
         return theUser;
     }
 
     @PostMapping("/users")
-    public User createUserWithAddress(@RequestBody User user){
-        User createdUser = userService.createUserWithAddress(user);
+    public User save(@RequestBody User user){
+        User createdUser = userService.save(user);
 
         return ResponseEntity.ok(createdUser).getBody();
     }
+
+     @PostMapping("/saveUser")
+     public User save(@RequestBody UserAddressRequest request){
+        User user = request.getUser();
+        Address address = request.getAddress();
+
+        User createdUser = userService.save(user);
+        address.setUserId(createdUser.getId());
+
+        Address createdAddress = userService.saveAddress(address);
+
+        return createdUser;
+     }
 
 
     @DeleteMapping("/users/{userId}")
@@ -68,6 +70,5 @@ public class UserRestController {
 
         return "DELETE";
     }
-
 
 }

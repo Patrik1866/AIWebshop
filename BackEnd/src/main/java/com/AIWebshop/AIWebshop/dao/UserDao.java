@@ -1,5 +1,6 @@
 package com.AIWebshop.AIWebshop.dao;
 
+import com.AIWebshop.AIWebshop.entity.Address;
 import com.AIWebshop.AIWebshop.entity.User;
 import groovy.lang.GString;
 
@@ -10,5 +11,5 @@ public interface UserDao {
     User findById(int id);
     User save(User user);
     User deleteById(User user);
-    List<User> findByEmail(String email);
+    Address saveAddress(Address address);
 }
