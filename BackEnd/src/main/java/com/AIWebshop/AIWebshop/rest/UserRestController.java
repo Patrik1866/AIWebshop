@@ -1,6 +1,5 @@
 package com.AIWebshop.AIWebshop.rest;
 
-import com.AIWebshop.AIWebshop.entity.Address;
 import com.AIWebshop.AIWebshop.entity.User;
 import com.AIWebshop.AIWebshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,16 @@ public class UserRestController {
     @GetMapping("/users/{userId}")
     public User findById(@PathVariable int userId){
         User theUser = userService.findById(userId);
+        if (theUser == null){
+            throw new RuntimeException("Felhasználó nem létezik");
+        }
+
+        return theUser;
+    }
+
+    @GetMapping("/users/email/{email}")
+    public List<User> findByEmail(@PathVariable String email){
+        List<User> theUser = userService.findByEmail(email);
         if (theUser == null){
             throw new RuntimeException("Felhasználó nem létezik");
         }
@@ -59,4 +68,6 @@ public class UserRestController {
 
         return "DELETE";
     }
+
+
 }

@@ -3,6 +3,7 @@ package com.AIWebshop.AIWebshop.dao;
 import com.AIWebshop.AIWebshop.entity.Address;
 import com.AIWebshop.AIWebshop.entity.User;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,19 @@ public class UserDaoImp implements UserDao{
     }
 
     @Override
+    public List<User> findByEmail(String email) {
+        String jpql = "SELECT u FROM User u WHERE u.email = :email";
+        try{
+            return entityManager.createQuery(jpql, User.class)
+                    .setParameter("email",email)
+                    .getResultList();
+
+        } catch (NoResultException e){
+            return null;
+        }
+    }
+
+    @Override
     @Transactional
     public User save(User user) {
         User dbUser = entityManager.merge(user);
@@ -47,4 +61,6 @@ public class UserDaoImp implements UserDao{
 
         return null;
     }
+
+
 }

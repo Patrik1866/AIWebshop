@@ -24,6 +24,11 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public List<User> findByEmail(String email){
+        return userDao.findByEmail(email);
+    }
+
+    @Override
     public User save(User user) {
         if (user.getAddresses() != null) {
             user.getAddresses().forEach(address -> address.setUser(user));

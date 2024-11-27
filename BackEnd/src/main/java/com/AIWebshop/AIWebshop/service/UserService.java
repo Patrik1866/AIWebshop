@@ -13,6 +13,7 @@ public interface UserService {
     User findById(int id);
     User save(User user);
     void deleteById(int id);
+    List<User> findByEmail(String email);
 
     User createUserWithAddress(User user);
 }
