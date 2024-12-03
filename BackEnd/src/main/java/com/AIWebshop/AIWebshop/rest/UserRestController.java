@@ -4,14 +4,21 @@ import com.AIWebshop.AIWebshop.entity.Address;
 import com.AIWebshop.AIWebshop.entity.User;
 import com.AIWebshop.AIWebshop.req.UserAddressRequest;
 import com.AIWebshop.AIWebshop.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class UserRestController {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
 
     @Autowired
     private UserService userService;
@@ -39,10 +46,11 @@ public class UserRestController {
     }
 
     @PostMapping("/users")
-    public User save(@RequestBody User user){
+    public ResponseEntity<User> save(@RequestBody @Validated User user){
+        logger.info("Ez van:",user);
         User createdUser = userService.save(user);
-
-        return ResponseEntity.ok(createdUser).getBody();
+        logger.info("Ennek kéne lennie",createdUser);
+        return new ResponseEntity<>(createdUser,HttpStatus.CREATED);
     }
 
      @PostMapping("/saveUser")
