@@ -11,6 +11,7 @@ public interface UserService {
 
     public List<User> findAll();
     User findById(int id);
+    User findByUsername(String username);
     User save(User user);
     void deleteById(int id);
     Address saveAddress(Address address);

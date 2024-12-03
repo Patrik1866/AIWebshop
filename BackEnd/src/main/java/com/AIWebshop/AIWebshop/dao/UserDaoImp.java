@@ -33,6 +33,17 @@ public class UserDaoImp implements UserDao{
         return user;
     }
 
+    @Override
+    public User findByUsername(String username) {
+        try {
+            TypedQuery<User> theQuerry = entityManager.createQuery("FROM User where username = :username", User.class);
+            theQuerry.setParameter("username", username);
+            return theQuerry.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
 
     @Override
     @Transactional

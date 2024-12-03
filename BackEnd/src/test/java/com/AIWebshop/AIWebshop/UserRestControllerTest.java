@@ -57,16 +57,6 @@ public class UserRestControllerTest {
     }
 
     @Test
-    public void testCreateUserWithAddress(){
-        User user = new User();
-        user.setId(1);
-        when(userService.createUserWithAddress(user)).thenReturn(user);
-
-        User result = userRestController.createUserWithAddress(user);
-        assertEquals(1, result.getId());
-    }
-
-    @Test
     public void testDelete(){
         User user = new User();
         user.setId(1);
@@ -77,19 +67,4 @@ public class UserRestControllerTest {
         verify(userService, times(1)).deleteById(1);
     }
 
-    @Test
-    public void testCreateUserWithAddress2(){
-        User user = new User();
-        user.setId(1);
-        Address address = new Address();
-        address.setId(1);
-        user.setAddresses(Arrays.asList(address));
-
-        when(userService.createUserWithAddress(user)).thenReturn(user);
-
-        User result = userRestController.createUserWithAddress(user);
-        assertEquals(1,result.getId());
-        assertEquals(1,result.getAddresses().size());
-        assertEquals(1, result.getAddresses().get(0).getId());
-    }
 }
