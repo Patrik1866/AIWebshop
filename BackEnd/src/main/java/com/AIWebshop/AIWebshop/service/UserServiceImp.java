@@ -36,7 +36,7 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User save(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user    .getPassword()));
         return userDao.save(user);
     }
 
