@@ -2,6 +2,7 @@ package com.AIWebshop.AIWebshop.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -13,8 +14,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class OpenAIService {
 
-    private final String API_URL = "https://api.openai.com/v1/chat/completions";
-    private final String API_TOKEN = "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";
+    private final String API_TOKEN;
+    private final String API_URL = "https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill";
+
+    public OpenAIService(){
+        Dotenv dotenv = Dotenv.load();
+        this.API_TOKEN = dotenv.get("API_TOKEN_HUGGIN");
+        if (API_TOKEN == null) {
+            throw new RuntimeException("OpenAI API token not found in environment variable");
+        }
+
+    }
 
     public String generateResponse(String prompt) {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
@@ -22,7 +32,7 @@ public class OpenAIService {
             request.setHeader("Authorization", "Bearer " + API_TOKEN);
             request.setHeader("Content-Type", "application/json");
 
-            String json = "{\"model\": \"gpt-4\", \"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}], \"max_tokens\": 100}";
+            String json = "{\"inputs\": \"" + prompt + "\"}";
 
             StringEntity entity = new StringEntity(json);
             request.setEntity(entity);
@@ -33,10 +43,8 @@ public class OpenAIService {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode rootNode = mapper.readTree(responseBody);
 
-            if (rootNode.has("choices") && rootNode.get("choices").isArray() && rootNode.get("choices").size() > 0) {
-                return rootNode.get("choices").get(0).get("message").get("content").asText();
-            } else if (rootNode.has("error")) {
-                throw new RuntimeException("API returned an error: " + rootNode.get("error").get("message").asText());
+            if (rootNode.isArray() && rootNode.size() > 0) {
+                return rootNode.get(0).get("generated_text").asText();
             } else {
                 throw new RuntimeException("Unexpected API response format: " + responseBody);
             }
