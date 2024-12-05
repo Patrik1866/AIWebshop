@@ -36,4 +36,10 @@ public class ProductServiceImp implements ProductService{
     public List<Product> findBySubCategoryId(int id) {
         return productDao.findBySubCategoryId(id);
     }
+
+    @Override
+    public void deleteById(int id) {
+        Product product = productDao.findByProductId(id);
+        productDao.deleteById(product);
+    }
 }

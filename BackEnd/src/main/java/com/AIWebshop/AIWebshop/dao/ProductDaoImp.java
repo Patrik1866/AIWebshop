@@ -61,4 +61,12 @@ public class ProductDaoImp implements ProductDao {
             return null;
         }
     }
+
+    @Override
+    @Transactional
+    public Product deleteById(Product product) {
+        entityManager.remove(product);
+
+        return null;
+    }
 }

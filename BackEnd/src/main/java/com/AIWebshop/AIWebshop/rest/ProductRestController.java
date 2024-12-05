@@ -39,4 +39,17 @@ public class ProductRestController {
         Product createdProduct = productService.save(product);
         return ResponseEntity.ok(createdProduct);
     }
+
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<Product> deleteById(@PathVariable int id){
+        Product product = productService.findByProductId(id);
+
+        if (product == null) {
+            throw new RuntimeException("");
+        }
+
+        productService.deleteById(id);
+
+        return ResponseEntity.ok(product);
+    }
 }
