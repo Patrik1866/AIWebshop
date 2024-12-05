@@ -1,5 +1,6 @@
 package com.AIWebshop.AIWebshop.Components;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -14,9 +15,11 @@ import java.util.function.Function;
 public class JwtUtil {
 
     private final Key secretKey;
+    private final String base64EncodedSecretKey;
 
     public JwtUtil() {
-        String base64EncodedSecretKey = "s5Ww502YsJemyt8Y22jlBrHBXbtqA6xcbiQy9vTfO6U=";
+        Dotenv dotenv = Dotenv.load();
+        this.base64EncodedSecretKey = dotenv.get("BASE64_ENCODED_KEY");
         byte[] keyBytes = Base64.getDecoder().decode(base64EncodedSecretKey);
         this.secretKey = Keys.hmacShaKeyFor(keyBytes);
     }
