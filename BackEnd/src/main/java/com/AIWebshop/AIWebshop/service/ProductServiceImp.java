@@ -16,4 +16,9 @@ public class ProductServiceImp implements ProductService{
     public List<Product> findAll() {
         return productDao.findAll();
     }
+
+    @Override
+    public Product save(Product product) {
+        return productDao.save(product);
+    }
 }
