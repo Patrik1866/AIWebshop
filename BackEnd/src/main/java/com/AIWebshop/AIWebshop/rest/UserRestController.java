@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/users")
 public class UserRestController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserRestController.class);
@@ -22,12 +23,12 @@ public class UserRestController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping
     public List<User> findAll(){
         return userService.findAll();
     }
 
-    @GetMapping("/users/{userId}")
+    @GetMapping("/{userId}")
     public User findById(@PathVariable int userId){
         User theUser = userService.findById(userId);
         if (theUser == null){
@@ -37,14 +38,14 @@ public class UserRestController {
         return theUser;
     }
 
-    @PutMapping("/users")
+    @PutMapping
     public User updateUser(@RequestBody User user){
         User theUser = userService.save(user);
 
         return theUser;
     }
 
-    @PostMapping("/users")
+    @PostMapping
     public ResponseEntity<User> save(@RequestBody @Validated User user){
         logger.info("Ez van:",user);
         User createdUser = userService.save(user);
@@ -66,7 +67,7 @@ public class UserRestController {
      }
 
 
-    @DeleteMapping("/users/{userId}")
+    @DeleteMapping("/{userId}")
     public String delete(@PathVariable int userId){
         User user = userService.findById(userId);
 
