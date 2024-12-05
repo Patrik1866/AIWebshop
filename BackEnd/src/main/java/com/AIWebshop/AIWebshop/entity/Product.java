@@ -15,6 +15,18 @@ public class Product {
     private String description;
     private int price;
     private int quantity;
+    @Column(name = "category_id")
+    private int categoryId;
+    @Column(name = "sub_category_id")
+    private int subCategoryId;
+
+    public int getSubCategoryId() {
+        return subCategoryId;
+    }
+
+    public void setSubCategoryId(int subCategoryId) {
+        this.subCategoryId = subCategoryId;
+    }
 
     public int getId() {
         return id;
@@ -64,6 +76,5 @@ public class Product {
         this.name = name;
     }
 
-    @Column(name = "category_id")
-    private int categoryId;
+
 }
