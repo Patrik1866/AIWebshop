@@ -4,10 +4,7 @@ import com.AIWebshop.AIWebshop.entity.Product;
 import com.AIWebshop.AIWebshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +17,21 @@ public class ProductRestController {
     @GetMapping("/products")
     public List<Product> findAll(){
         return productService.findAll();
+    }
+
+    @GetMapping("/products/{id}")
+    public Product findByProductId(@PathVariable int id){
+        return productService.findByProductId(id);
+    }
+
+    @GetMapping("/products/category/{id}")
+    public List<Product> findByCategoryId(@PathVariable int id){
+        return productService.findByCategoryId(id);
+    }
+
+    @GetMapping("/products/subcategory/{id}")
+    public List<Product> findBySubCategoryId(@PathVariable int id){
+        return productService.findBySubCategoryId(id);
     }
 
     @PostMapping("/products")

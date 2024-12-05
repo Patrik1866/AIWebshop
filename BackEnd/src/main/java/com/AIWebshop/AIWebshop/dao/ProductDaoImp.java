@@ -30,4 +30,35 @@ public class ProductDaoImp implements ProductDao {
 
         return dbProduct;
     }
+
+    @Override
+    public Product findByProductId(int id) {
+        Product product = entityManager.find(Product.class, id);
+
+        return product;
+    }
+
+    @Override
+    public List<Product> findByCategoryId(int id) {
+        try{
+            TypedQuery<Product> theQuerry = entityManager.createQuery("FROM Product WHERE categoryId = :id", Product.class);
+            theQuerry.setParameter("id", id);
+            List<Product> products = theQuerry.getResultList();
+            return products;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Product> findBySubCategoryId(int id) {
+        try{
+            TypedQuery<Product> theQuerry = entityManager.createQuery("FROM Product WHERE subCategoryId = :id", Product.class);
+            theQuerry.setParameter("id", id);
+            List<Product> products = theQuerry.getResultList();
+            return products;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

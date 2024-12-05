@@ -21,4 +21,19 @@ public class ProductServiceImp implements ProductService{
     public Product save(Product product) {
         return productDao.save(product);
     }
+
+    @Override
+    public Product findByProductId(int id) {
+        return  productDao.findByProductId(id);
+    }
+
+    @Override
+    public List<Product> findByCategoryId(int id) {
+        return productDao.findByCategoryId(id);
+    }
+
+    @Override
+    public List<Product> findBySubCategoryId(int id) {
+        return productDao.findBySubCategoryId(id);
+    }
 }
