@@ -1,5 +1,10 @@
+:root{
+    --primary-color: #f7f7f7;
+    --primary-color-brown : #a68e6c;
+}
+
 body{
-    background-color: #f7f7f7;
+    background-color: var(--primary-color);
     margin: auto;
 }
 

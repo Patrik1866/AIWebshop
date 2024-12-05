@@ -3,7 +3,7 @@ import './loginPage.css';
 
  export function LoginPage() {
    const [loginFormData, setLoginFormData] = useState({
-     email: "",
+     username: "",
      password: "",
    });
 
@@ -15,15 +15,18 @@ import './loginPage.css';
      const handleLogin = async (event: React.FormEvent) => {
        event.preventDefault();
        try {
-         const response = await fetch("http://localhost:8080/login", {
+         const response = await fetch("http://localhost:8080/auth/login", {
            method: "POST",
            headers: {
-             "Content-Type": "application/x-www-form-urlencoded",
+             "Content-Type": "application/json",
+             "Authorization": `Bearer ${localStorage.getItem("token")}`
            },
-           body: new URLSearchParams(loginFormData as any).toString(),
+           body: JSON.stringify(loginFormData)
          });
          if (response.ok) {
           alert("User logged in successfully");
+          sessionStorage.setItem("token",await response.text());
+           window.location.href = "/";
          } else {
            const errorText = response.text();
            alert(`Failed to login: ${errorText}`);
@@ -34,14 +37,14 @@ import './loginPage.css';
      };
 
      return (
-       <body>
+       
          <div className="loginContainer">
            <h2>Login</h2>
            <form className="loginForm" onSubmit={handleLogin}>
              <div className="form-group">
                <label>E-mail:</label>
                <br />
-               <input type="text" id="email" name="email" required value={loginFormData.email} onChange={handleChange}/>
+               <input type="text" id="username" name="email" required value={loginFormData.username} onChange={handleChange}/>
              </div>
              <div className="form-group">
                <label>Password:</label>
@@ -57,7 +60,7 @@ import './loginPage.css';
              </label>
            </form>
          </div>
-       </body>
+      
      );
    };
  

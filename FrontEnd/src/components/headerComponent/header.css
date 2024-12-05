@@ -1,7 +1,7 @@
 /* src/index.css or src/styles.css */
 
 .header {
-    background-color: #a68e6c;
+    background-color: var(--primary-color-brown);
     padding: 1rem 0;
   }
   
