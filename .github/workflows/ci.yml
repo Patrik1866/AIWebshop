@@ -39,16 +39,20 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y docker-compose
 
-      - name: Build Docker Compose
+      - name: Docker Compose Down
+        run: docker-compose down
+
+      - name: Build and Run Docker Compose
         run: docker-compose up --build
 
-    #- name: Run Backend Tests
-    #  run: |
-    #   cd BackEnd
-    #   mvn test
-
-    # Optional: Run Frontend Tests
-    #- name: Run Frontend Tests
-    #  run: |
-    #   cd FrontEnd
-    #   npm test
+    # Uncomment to run backend tests
+    # - name: Run Backend Tests
+    #   run: |
+    #     cd BackEnd
+    #     mvn test
+    
+    # Uncomment to run frontend tests
+    # - name: Run Frontend Tests
+    #   run: |
+    #     cd FrontEnd
+    #     npm test
