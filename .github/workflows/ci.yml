@@ -7,7 +7,7 @@ on:
     branches: [main, develop]
 
 jobs:
-  build-and-deploy:
+  build-only:
     runs-on: self-hosted 
 
     steps:
