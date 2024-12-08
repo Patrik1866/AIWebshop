@@ -42,8 +42,9 @@ jobs:
       - name: Docker Compose Down
         run: docker-compose down
 
-      - name: Copy .env File
-        run: cp ./BackEnd/.env ./.env
+      - name: Copy .env File to Root for Build Context
+        run: |
+          cp BackEnd/.env .env
 
       - name: Build and Run Docker Compose
         run: docker-compose up --build
