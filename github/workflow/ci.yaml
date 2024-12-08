@@ -23,8 +23,7 @@ jobs:
     - name: Build Backend
       run: |
         cd BackEnd
-        chmod +x gradlew
-        ./gradlew build
+        mvn clean package -DskipTests
     
     - name: Build Frontend
       run: |
@@ -38,7 +37,7 @@ jobs:
     - name: Run Backend Tests
       run: |
         cd BackEnd
-        ./gradlew test
+        mvn test
     
     # Opcionális: Frontend tesztek futtatása
     - name: Run Frontend Tests
