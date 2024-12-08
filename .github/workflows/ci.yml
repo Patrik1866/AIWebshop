@@ -42,8 +42,11 @@ jobs:
       - name: Docker Compose Down
         run: docker-compose down
 
-      - name: Build and Run Docker Compose
-        run: docker-compose up --build --no-cache
+      - name: Build Docker Images Without Cache
+        run: docker-compose build --no-cache
+
+      - name: Run Docker Compose Up
+        run: docker-compose up -d
 
     # Uncomment to run backend tests
     # - name: Run Backend Tests
