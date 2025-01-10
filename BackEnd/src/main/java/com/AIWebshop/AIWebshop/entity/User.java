@@ -19,8 +19,24 @@ public class User {
     private String password;
     private String phone;
     private String username;
+    private boolean isAdmin;
+    private boolean isModerator;
 
+    public boolean getIsModerator() {
+        return isModerator;
+    }
 
+    public void setIsModerator(boolean moderator) {
+        isModerator = moderator;
+    }
+
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 
     public Integer getId() {
         return id;
