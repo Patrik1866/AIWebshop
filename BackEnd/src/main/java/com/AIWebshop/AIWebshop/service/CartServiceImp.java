@@ -12,8 +12,20 @@ public class CartServiceImp implements CartService{
 
     @Autowired
     private CartDao cartDao;
+
+    @Override
+    public Cart findById(int id) {
+        return cartDao.findById(id);
+    }
+
     @Override
     public List<Cart> findByUserId(int id) {
         return cartDao.findByUserId(id);
+    }
+
+    @Override
+    public void deleteById(int id) {
+        Cart theCart = cartDao.findById(id);
+        cartDao.deleteById(theCart);
     }
 }

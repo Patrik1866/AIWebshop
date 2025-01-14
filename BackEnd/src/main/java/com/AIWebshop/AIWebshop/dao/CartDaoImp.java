@@ -3,6 +3,7 @@ package com.AIWebshop.AIWebshop.dao;
 import com.AIWebshop.AIWebshop.entity.Cart;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +13,11 @@ import java.util.List;
 public class CartDaoImp implements CartDao{
     @Autowired
     private EntityManager entityManager;
+
+    @Override
+    public Cart findById(int id) {
+        return entityManager.find(Cart.class, id);
+    }
 
     @Override
     public List<Cart> findByUserId(int id) {
@@ -24,5 +30,13 @@ public class CartDaoImp implements CartDao{
         } catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    @Override
+    @Transactional
+    public Cart deleteById(Cart cart) {
+        entityManager.remove(cart);
+
+        return null;
     }
 }
