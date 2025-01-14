@@ -26,7 +26,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/**", "/cart/**").permitAll()
+                        .requestMatchers("/auth/**", "/cart/**", "/reviews/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/moderator/**").hasAnyRole("MODERATOR", "ADMIN")
                         .requestMatchers("/products/**", "/chat/**").hasAnyRole("USER", "MODERATOR", "ADMIN")

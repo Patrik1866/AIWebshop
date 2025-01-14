@@ -1,13 +1,13 @@
-package com.AIWebshop.AIWebshop.dao;
+package com.AIWebshop.AIWebshop.service;
 
 import com.AIWebshop.AIWebshop.entity.Reviews;
 
 import java.util.List;
 
-public interface ReviewDao {
+public interface ReviewService {
     List<Reviews> findAll();
     Reviews findById(int id);
     List<Reviews> findByUserId(int userId);
     List<Reviews> findByProductId(int productId);
-    Reviews deleteById(Reviews review);
+    void deleteById(int id);
 }
