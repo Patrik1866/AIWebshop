@@ -1,4 +1,4 @@
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/loginPage/LoginPage.tsx";
 import HomePage from "./pages/homepage/HomePage.tsx";
@@ -9,7 +9,6 @@ import Header from "./components/headerComponent/Header.tsx";
 function App() {
 
   useEffect(() => {
-    console.log(sessionStorage.getItem("token"));
   }, []);
 
   return (

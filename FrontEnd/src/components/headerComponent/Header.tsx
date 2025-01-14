@@ -39,21 +39,21 @@ function Header() {
             </div>
             <div className="nav-item">
               <a
-                href="/logout"
+                href="/"
                 className="nav-link"
                 onClick={() => {
                   localStorage.clear();
                   sessionStorage.clear();
                 }}
               >
-                Logout
+                Kijelentkezés
               </a>
             </div>
           </>
         ) : (
-          <div className="nav-item">
+          <div className="nav-item" style={{ marginLeft: 'auto', marginRight: '2rem' }}>
             <a href="/LoginPage" className="nav-link">
-              Login
+              Bejelentkezés<i style={{ paddingLeft: '0.2rem' }} className="fas fa-sign-in-alt"></i>
             </a>
           </div>
         )}

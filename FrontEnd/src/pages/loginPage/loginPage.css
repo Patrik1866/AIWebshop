@@ -1,0 +1,70 @@
+.loginContainer {
+    border: 0.11em solid black;
+    border-radius: 0.8em;
+    padding: 1em;
+    width: 100%;
+    height: 20em;
+    max-width: 20em;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    margin-top: 10em;
+}
+
+.loginForm {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+
+    div {
+        margin: 2em;
+    }
+
+    input {
+        margin-top: 1em;
+    }
+
+    button {
+        margin-bottom: 2em;
+    }
+}
+
+h2 {
+    margin: 0;
+    font-size: 30px;
+    text-align: center;
+}
+
+input {
+    height: 1em;
+    border-radius: 0.5em;
+    border: none;
+    padding: 0.6em;
+
+    ::placeholder {
+        color: black;
+    }
+}
+
+button {
+    height: 2.5em;
+    width: 10em;
+    border-radius: 0.5em;
+    border: none;
+    padding: 0.4em;
+    background-color: var(--primary-color-brown);
+    color: black;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: var(--primary-color);
+    color: var(--primary-color-brown);
+    transition: 0.3s ease-in-out;
+}

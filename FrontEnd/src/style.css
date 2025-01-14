@@ -1,18 +1,22 @@
-:root{
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+
+:root {
     --primary-color: #f7f7f7;
-    --primary-color-brown : #a68e6c;
+    --primary-color-brown: #a68e6c;
 }
 
-body{
-    color: #b22106;
-    background-color:red;
+body {
+    color: black;
+    background-color: var(--primary-color);
     margin: auto;
 }
 
-p, a{
+p,
+a {
     color: #0F0F0F;
 }
 
-p, a:hover{
+p,
+a:hover {
     color: #b22106;
 }
