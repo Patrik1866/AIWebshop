@@ -26,7 +26,9 @@ export function LoginPage() {
 
       if (response.ok) {
         alert("User logged in successfully");
-        sessionStorage.setItem("token", await response.text());
+        const data = await response.json();
+        sessionStorage.setItem("token", data.token);
+        sessionStorage.setItem("currentUser", JSON.stringify(data.user));
         window.location.href = "/";
       } else {
         const errorText = response.text();

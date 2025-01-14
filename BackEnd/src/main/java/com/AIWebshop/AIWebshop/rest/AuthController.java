@@ -41,7 +41,6 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
         try {
-
             User user = userService.findByUsername(authRequest.getUsername());
             if (user == null || !passwordEncoder.matches(authRequest.getPassword(), user.getPassword())) {
                 throw new AuthenticationException("Invalid username or password") {
@@ -53,7 +52,7 @@ public class AuthController {
             }
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
             String token = jwtUtil.generateToken(authRequest.getUsername());
-            return ResponseEntity.ok(new AuthResponse(token));
+            return ResponseEntity.ok(new AuthResponse(token, user));
         } catch (org.springframework.security.core.AuthenticationException e) {
             return ResponseEntity.status(401).build();
         }
