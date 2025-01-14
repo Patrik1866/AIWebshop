@@ -18,6 +18,11 @@ public class CartController {
     @Autowired
     private UserService userService;
 
+    @GetMapping
+    public List<Cart> findAll(){
+        return cartService.findAll();
+    }
+
     @GetMapping("/cartId/{cartId}")
     public Cart findByCartId(@PathVariable int cartId){
         Cart theCart = cartService.findById(cartId);

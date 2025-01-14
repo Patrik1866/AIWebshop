@@ -15,6 +15,14 @@ public class CartDaoImp implements CartDao{
     private EntityManager entityManager;
 
     @Override
+    public List<Cart> findAll() {
+        TypedQuery<Cart> theQuerry = entityManager.createQuery("FROM Cart", Cart.class);
+
+        List<Cart> results = theQuerry.getResultList();
+        return results;
+    }
+
+    @Override
     public Cart findById(int id) {
         return entityManager.find(Cart.class, id);
     }

@@ -14,6 +14,11 @@ public class CartServiceImp implements CartService{
     private CartDao cartDao;
 
     @Override
+    public List<Cart> findAll() {
+        return cartDao.findAll();
+    }
+
+    @Override
     public Cart findById(int id) {
         return cartDao.findById(id);
     }
