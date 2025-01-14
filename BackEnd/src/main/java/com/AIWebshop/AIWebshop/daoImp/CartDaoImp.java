@@ -1,5 +1,6 @@
-package com.AIWebshop.AIWebshop.dao;
+package com.AIWebshop.AIWebshop.daoImp;
 
+import com.AIWebshop.AIWebshop.dao.CartDao;
 import com.AIWebshop.AIWebshop.entity.Cart;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class CartDaoImp implements CartDao{
+public class CartDaoImp implements CartDao {
     @Autowired
     private EntityManager entityManager;
 

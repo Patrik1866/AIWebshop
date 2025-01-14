@@ -1,5 +1,6 @@
-package com.AIWebshop.AIWebshop.dao;
+package com.AIWebshop.AIWebshop.daoImp;
 
+import com.AIWebshop.AIWebshop.dao.ProductDao;
 import com.AIWebshop.AIWebshop.entity.Product;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;

@@ -1,5 +1,6 @@
-package com.AIWebshop.AIWebshop.dao;
+package com.AIWebshop.AIWebshop.daoImp;
 
+import com.AIWebshop.AIWebshop.dao.UserDao;
 import com.AIWebshop.AIWebshop.entity.Address;
 import com.AIWebshop.AIWebshop.entity.User;
 import jakarta.persistence.EntityManager;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class UserDaoImp implements UserDao{
+public class UserDaoImp implements UserDao {
 
     @Autowired
     private EntityManager entityManager;
