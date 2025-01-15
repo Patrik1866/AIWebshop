@@ -1,10 +1,14 @@
+import { useAuth } from "../../util/AuthContext";
 import "./header.css";
 
 function Header() {
+  const { user, hasRole } = useAuth();
+
+
   return (
     <header className="header">
       <nav className="navbar">
-        {sessionStorage.getItem("token") ? (
+        {user ? (
           <>
             <div className="nav-item">
               <a href="/" className="nav-link">
@@ -37,6 +41,15 @@ function Header() {
                 Profil
               </a>
             </div>
+            {hasRole(["ADMIN"]) && (
+              <div className="nav-item">
+                <a href="/dashboard" className="nav-link">
+                  Kezelőfelület
+                </a>
+              </div>
+            )}
+
+
             <div className="nav-item">
               <a
                 href="/"

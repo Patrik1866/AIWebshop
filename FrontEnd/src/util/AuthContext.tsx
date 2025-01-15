@@ -2,10 +2,14 @@ import { createContext, useState, useContext } from "react";
 import React from "react";
 import { User } from "../entities/User";
 
+export type Role = "ADMIN" | "MODERATOR" | "USER";
+
 type AuthContextType = {
     user: User | null;
     setUser: (user: User | null) => void;
     isAuthenticated: boolean;
+    hasRole: (requiredRoles: Role[]) => boolean;
+    getUserRole: () => Role;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -19,8 +23,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const isAuthenticated = !!user;
 
+    const getUserRole = (): Role => {
+        if (user?.isAdmin) {
+            return "ADMIN";
+        } else if (user?.isModerator) {
+            return "MODERATOR";
+        } else {
+            return "USER";
+        }
+    };
+
+    const hasRole = (requiredRoles: Role[]): boolean => {
+        if (!user) return false;
+
+        const currentRole = getUserRole();
+
+        if (currentRole === "ADMIN") return true;
+
+        if (currentRole === "MODERATOR") return requiredRoles.some(role => ["MODERATOR"].includes(role))
+
+        return requiredRoles.includes("USER");
+    };
+
+
     return (
-        <AuthContext.Provider value={{ user, setUser, isAuthenticated }}>
+        <AuthContext.Provider value={{ user, setUser, isAuthenticated, hasRole, getUserRole }}>
             {children}
         </AuthContext.Provider>
     );

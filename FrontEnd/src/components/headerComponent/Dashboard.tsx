@@ -4,7 +4,7 @@ export function Dashboard() {
     const { user, isAuthenticated } = useAuth();
 
     if (!isAuthenticated) {
-        return <p>Please log in to view this page.</p>;
+        return <p>Kérlek jelentkezz be hogy lásd az oldalt</p>;
     }
 
     return (

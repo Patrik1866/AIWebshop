@@ -3,7 +3,7 @@ import './loginPage.css';
 import { useAuth } from "../../util/AuthContext";
 
 export function LoginPage() {
-  const { setUser } = useAuth();
+  const { user, setUser } = useAuth();
   const [loginFormData, setLoginFormData] = useState({
     username: "",
     password: "",
@@ -25,15 +25,27 @@ export function LoginPage() {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${localStorage.getItem("token")}`
         },
+        credentials: 'include',
         body: JSON.stringify(loginFormData)
       });
-      console.log(loginFormData);
+
       if (response.ok) {
-        alert("User logged in successfully");
+
         const data = await response.json();
         sessionStorage.setItem("token", data.token);
-        sessionStorage.setItem("currentUser", JSON.stringify(data.user));
+
+        const safeData = {
+          username: data.user.username,
+          surname: data.user.surname,
+          firstname: data.user.firstname,
+          email: data.user.email,
+          phone: data.user.phone,
+          isAdmin: data.user.isAdmin,
+          isModerator: data.user.isModerator
+        }
+        sessionStorage.setItem("currentUser", JSON.stringify(safeData));
         setUser(data.user);
+        console.log(user)
         window.location.href = "/";
       } else {
         const errorText = response.text();
