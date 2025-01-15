@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { UserProvider } from "./util/UserContext.tsx";
 import LoginPage from "./pages/loginPage/LoginPage.tsx";
 import HomePage from "./pages/homepage/HomePage.tsx";
 import RegisterPage from "./pages/registerPage/RegisterPage.tsx";
 import "./style.css";
 import Header from "./components/headerComponent/Header.tsx";
+import { AuthProvider } from "./util/AuthContext.tsx";
 
 function App() {
 
@@ -16,18 +16,16 @@ function App() {
   }, []);
 
   return (
-    <>
-      <UserProvider>
-        <Header />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/LoginPage" element={<LoginPage />} />
-            <Route path="/RegisterPage" element={<RegisterPage />}></Route>
-          </Routes>
-        </BrowserRouter>
-      </UserProvider>
-    </>
+    <AuthProvider>
+      <Header />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/LoginPage" element={<LoginPage />} />
+          <Route path="/RegisterPage" element={<RegisterPage />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

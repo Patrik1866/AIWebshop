@@ -1,5 +1,4 @@
-import Dashboard from "../../components/Dashboard";
-
+import { Dashboard } from "../../components/headerComponent/Dashboard";
 
 export function HomePage() {
 
