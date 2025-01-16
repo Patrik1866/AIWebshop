@@ -26,10 +26,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/auth/**", "/cart/**", "/reviews/**", "/users/**").permitAll()
+                        .requestMatchers("/auth/**", "/cart/**", "/reviews/**", "/users/**", "/chat/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/moderator/**").hasAnyRole("MODERATOR", "ADMIN")
-                        .requestMatchers("/products/**", "/chat/**").hasAnyRole("USER", "MODERATOR", "ADMIN")
+                        .requestMatchers("/products/**").hasAnyRole("USER", "MODERATOR", "ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

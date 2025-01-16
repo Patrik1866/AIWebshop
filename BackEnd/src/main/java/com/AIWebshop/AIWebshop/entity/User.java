@@ -8,9 +8,9 @@ import java.util.List;
 @Entity
 @Table(name= "users")
 public class User {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name ="user_id")
     private Integer id;
     private String surname;
