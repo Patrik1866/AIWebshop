@@ -1,0 +1,49 @@
+.notification {
+    position: fixed;
+    top: 5em;
+    right: 2em;
+    background-color: rgb(70, 189, 70);
+    border-radius: 0.8em;
+    z-index: 999;
+    animation: slideIn 0.5s ease-in-out, slideOut 0.5s ease-in-out 4.5s forwards;
+    border: 1px solid black;
+    height: 3em;
+    width: 15em;
+
+    p {
+        color: black;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOut {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

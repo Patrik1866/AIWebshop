@@ -1,10 +1,12 @@
 import { useAuth } from "../util/AuthContext";
 import "../styles/profile.css"
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import Notification from "../components/Notification";
 
 
 export function ProfilePage(this: any) {
     const { user, setUser } = useAuth();
+    const [notificationMessage, setNotificationMessage] = useState<string | null>(null);
     const [address, setAddressForm] = useState({
         id: 0,
         userId: 0,
@@ -62,6 +64,10 @@ export function ProfilePage(this: any) {
             });
 
             if (response.ok) {
+                setNotificationMessage("Sikeres mentés!")
+                setTimeout(() => {
+                    setNotificationMessage(null);
+                }, 5000)
             }
         } catch (error) {
             throw error;
@@ -79,6 +85,19 @@ export function ProfilePage(this: any) {
             if (name !== 'password') {
                 setUser(userToSave);
             }
+
+        }
+    }
+
+    function handleDeliveryAddress(e: React.ChangeEvent<HTMLInputElement>) {
+        const { name, value } = e.target;
+        if (address) {
+            const addressToSave = {
+                ...address,
+                [name]: value
+            };
+            setAddressForm(addressToSave);
+
 
         }
     }
@@ -115,23 +134,26 @@ export function ProfilePage(this: any) {
                 <h3>Szállítási adatok</h3>
                 <div>
                     <label>Település</label>
-                    <input type="text" value={address.city} />
+                    <input type="text" name="city" value={address.city} onChange={handleDeliveryAddress} />
                 </div>
                 <div>
                     <label>Út/Utca</label>
-                    <input type="text" value={address.street} />
+                    <input type="text" name="street" value={address.street} onChange={handleDeliveryAddress} />
                 </div>
                 <div>
                     <label>Házszám</label>
-                    <input type="text" value={address.address} />
+                    <input type="text" name="address" value={address.address} onChange={handleDeliveryAddress} />
                 </div>
                 <div>
                     <label>Postakód</label>
-                    <input type="text" value={address.zipcode} />
+                    <input type="text" name="zipcode" value={address.zipcode} onChange={handleDeliveryAddress} />
                 </div>
             </div>
         </legend>
         <button className="profile-save-button" onClick={savePersonalData}>Mentés</button>
+
+
+        {notificationMessage && <Notification message={notificationMessage} />}
     </>
 
 }

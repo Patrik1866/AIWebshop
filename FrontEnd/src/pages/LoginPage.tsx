@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import '../styles/loginPage.css';
 import { useAuth } from "../util/AuthContext";
+import Notification from "../components/Notification";
 
 export function LoginPage() {
   const { user, setUser } = useAuth();
+  const [showNotification, setShowNotification] = useState(false);
   const [loginFormData, setLoginFormData] = useState({
     username: "",
     password: "",
@@ -45,8 +47,13 @@ export function LoginPage() {
         }
         sessionStorage.setItem("currentUser", JSON.stringify(safeData));
         setUser(data.user);
-        console.log(user)
-        window.location.href = "/";
+
+        setShowNotification(true);
+
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 2000);
+
       } else {
         const errorText = response.text();
         alert(`Failed to login: ${errorText}`);
@@ -57,7 +64,7 @@ export function LoginPage() {
     }
   };
 
-  return (
+  return (<>
 
     <div className="loginContainer">
       <h2>Bejelentkezés</h2>
@@ -82,6 +89,9 @@ export function LoginPage() {
       </form>
     </div>
 
+    {showNotification && <Notification message="Sikeres bejelentkezés" />}
+
+  </>
   );
 };
 
