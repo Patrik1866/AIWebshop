@@ -27,4 +27,11 @@ header{
     .chat-messages{
         margin-bottom: auto;
     }
+    p{
+        color: black;
+    }
+    span{
+        display: block;
+        text-align: start;
+    }
 }
