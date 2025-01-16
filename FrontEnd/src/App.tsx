@@ -8,6 +8,8 @@ import Header from "./components/Header.tsx";
 import { AuthProvider } from "./util/AuthContext.tsx";
 import { ProtectedRoute } from "./util/ProtectedRoute.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
+import ManageProductsPage from "./pages/ManageProductsPage.tsx";
+import GeminiChatPage from "./pages/GeminiChatPage.tsx";
 
 function App() {
 
@@ -22,19 +24,40 @@ function App() {
       <Header />
       <BrowserRouter>
         <Routes>
+
           {/* Publikus Elérések */}
+
           <Route path="/" element={<HomePage />} />
           <Route path="/LoginPage" element={<LoginPage />} />
           <Route path="/RegisterPage" element={<RegisterPage />}></Route>
+
           {/*Védett elérések */}
+
           <Route path="/profil" element={
             <ProtectedRoute >
               <ProfilePage />
             </ProtectedRoute>
           } />
+
+          <Route path="/chat" element={
+            <ProtectedRoute >
+              <GeminiChatPage/>
+            </ProtectedRoute>
+          
+          }/>
+
           {/*Admin elérések */}
 
+          <Route path="/manageProducts" element={
+            <ProtectedRoute roles={["ADMIN"]}>
+              <ManageProductsPage/>
+            </ProtectedRoute>
+          }></Route>
+
+          
+
           {/*Admin és moderátor elérések */}
+
         </Routes>
       </BrowserRouter>
     </AuthProvider>

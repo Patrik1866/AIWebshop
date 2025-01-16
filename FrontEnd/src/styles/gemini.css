@@ -1,0 +1,30 @@
+header{
+    margin: auto;
+    margin-top: 5em;
+    h3{
+        text-align: center;
+    }
+}
+
+.chat-container {
+    border: 1px solid black;
+    border-radius: 0.8em;
+    width: 100%;
+    height: 35em;
+    max-width: 30em;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+
+    .chat-input{
+        margin-top: auto;
+    }
+
+    .chat-messages{
+        margin-bottom: auto;
+    }
+}

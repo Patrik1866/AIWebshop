@@ -4,7 +4,6 @@ import "../styles/header.css";
 function Header() {
   const { user, hasRole } = useAuth();
 
-
   return (
     <header className="header">
       <nav className="navbar">
@@ -37,9 +36,8 @@ function Header() {
               </a>
             </div>
             <div className="nav-item">
-              <a href="/" className="nav-link">
-                Profil
-              </a>
+              <a href="/chat" className="nav-link">Gemini chat</a>
+
             </div>
             {hasRole(["ADMIN"]) && (
               <div className="nav-item">
@@ -48,13 +46,17 @@ function Header() {
                 </a>
               </div>
             )}
+            {hasRole(["ADMIN"]) && (
+              <div className="nav-item">
+                <a href="/manageProducts" className="nav-link">Termékek kezelése</a> 
+              </div>
+            )}
 
             <div className="nav-item">
               <a href="/profil" className="nav-link">
                 Saját profil
               </a>
             </div>
-
 
             <div className="nav-item">
               <a
@@ -70,9 +72,16 @@ function Header() {
             </div>
           </>
         ) : (
-          <div className="nav-item" style={{ marginLeft: 'auto', marginRight: '2rem' }}>
+          <div
+            className="nav-item"
+            style={{ marginLeft: "auto", marginRight: "2rem" }}
+          >
             <a href="/LoginPage" className="nav-link">
-              Bejelentkezés<i style={{ paddingLeft: '0.2rem' }} className="fas fa-sign-in-alt"></i>
+              Bejelentkezés
+              <i
+                style={{ paddingLeft: "0.2rem" }}
+                className="fas fa-sign-in-alt"
+              ></i>
             </a>
           </div>
         )}
