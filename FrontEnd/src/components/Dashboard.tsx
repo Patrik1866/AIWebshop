@@ -1,4 +1,4 @@
-import { useAuth } from "../../util/AuthContext";
+import { useAuth } from "../util/AuthContext";
 
 export function Dashboard() {
     const { user, isAuthenticated } = useAuth();

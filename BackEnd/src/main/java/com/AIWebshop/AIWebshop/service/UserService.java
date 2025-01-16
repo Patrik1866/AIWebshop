@@ -15,4 +15,5 @@ public interface UserService {
     User save(User user);
     void deleteById(int id);
     Address saveAddress(Address address);
+    Address findAddressByUserId(int userId);
 }

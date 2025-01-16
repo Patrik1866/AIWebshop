@@ -38,6 +38,16 @@ public class UserRestController {
         return theUser;
     }
 
+    @GetMapping("address/{userId}")
+    public Address findAddressByUserId(@PathVariable int userId){
+        Address theAddress = userService.findAddressByUserId(userId);
+
+        if (theAddress == null){
+            throw new RuntimeException("Üres a szállítási cím");
+        }
+        return theAddress;
+    }
+
     @PutMapping
     public User updateUser(@RequestBody User user){
         User theUser = userService.save(user);
@@ -53,7 +63,7 @@ public class UserRestController {
         return new ResponseEntity<>(createdUser,HttpStatus.CREATED);
     }
 
-     @PostMapping("/saveUser")
+     @PutMapping("/saveUser")
      public User save(@RequestBody UserAddressRequest request){
         User user = request.getUser();
         Address address = request.getAddress();
@@ -63,7 +73,7 @@ public class UserRestController {
 
         Address createdAddress = userService.saveAddress(address);
 
-        return createdUser;
+        return (createdUser);
      }
 
 

@@ -1,4 +1,4 @@
-import { Dashboard } from "../../components/headerComponent/Dashboard";
+import { Dashboard } from "../components/Dashboard";
 
 
 export function DashboardPage() {

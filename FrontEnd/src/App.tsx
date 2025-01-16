@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import LoginPage from "./pages/loginPage/LoginPage.tsx";
-import HomePage from "./pages/homepage/HomePage.tsx";
-import RegisterPage from "./pages/registerPage/RegisterPage.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
+import HomePage from "./pages/HomePage.tsx";
+import RegisterPage from "./pages/RegisterPage.tsx";
 import "./style.css";
-import Header from "./components/headerComponent/Header.tsx";
+import Header from "./components/Header.tsx";
 import { AuthProvider } from "./util/AuthContext.tsx";
-import { ProtectedRoute } from "./components/ProtectedRoute.tsx";
-import DashboardPage from "./pages/DashboardPage/DashboardPage.tsx";
+import { ProtectedRoute } from "./util/ProtectedRoute.tsx";
+import ProfilePage from "./pages/ProfilePage.tsx";
 
 function App() {
 
@@ -27,9 +27,9 @@ function App() {
           <Route path="/LoginPage" element={<LoginPage />} />
           <Route path="/RegisterPage" element={<RegisterPage />}></Route>
           {/*Védett elérések */}
-          <Route path="/dashboard" element={
-            <ProtectedRoute roles={["ADMIN"]}>
-              <DashboardPage />
+          <Route path="/profil" element={
+            <ProtectedRoute >
+              <ProfilePage />
             </ProtectedRoute>
           } />
           {/*Admin elérések */}

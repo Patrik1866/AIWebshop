@@ -36,10 +36,15 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User save(User user) {
-        user.setPassword(passwordEncoder.encode(user    .getPassword()));
+        String password = user.getPassword();
+        if (userDao.findById(user.getId()) != null) {
+            password = userDao.findById(user.getId()).getPassword();
+        } else {
+            password = passwordEncoder.encode(password);
+        }
+        user.setPassword(password);
         return userDao.save(user);
     }
-
     @Override
     public void deleteById(int id) {
         User user = userDao.findById(id);
@@ -49,6 +54,11 @@ public class UserServiceImp implements UserService {
     @Override
     public Address saveAddress(Address address) {
         return userDao.saveAddress(address);
+    }
+
+    @Override
+    public Address findAddressByUserId(int userId) {
+        return userDao.findAddressByUserId(userId);
     }
 
 

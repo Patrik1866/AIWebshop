@@ -12,5 +12,6 @@ public interface UserDao {
     User save(User user);
     User deleteById(User user);
     Address saveAddress(Address address);
+    Address findAddressByUserId(int userId);
 }
 

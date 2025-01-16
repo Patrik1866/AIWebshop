@@ -70,5 +70,19 @@ public class UserDaoImp implements UserDao {
         return dbaddress;
     }
 
+    @Override
+    public Address findAddressByUserId(int userId) {
+        try {
+            TypedQuery theQuerry = entityManager.createQuery("FROM Address WHERE userId = :userId", Address.class);
+            theQuerry.setParameter("userId", userId);
+
+            return (Address) theQuerry.getSingleResult();
+
+        } catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+
+    }
+
 
 }

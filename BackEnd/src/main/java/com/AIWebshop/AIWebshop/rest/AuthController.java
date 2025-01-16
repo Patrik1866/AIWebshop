@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,18 +44,26 @@ public class AuthController {
         try {
             User user = userService.findByUsername(authRequest.getUsername());
             if (user == null || !passwordEncoder.matches(authRequest.getPassword(), user.getPassword())) {
-                throw new AuthenticationException("Invalid username or password") {
+                throw new org.springframework.security.core.AuthenticationException("Invalid username or password") {
                 };
             }
+
             List<GrantedAuthority> authorities = new ArrayList<>();
-            if (user.getIsAdmin()){
+            if (user.getIsAdmin()) {
                 authorities.add(new SimpleGrantedAuthority("ADMIN"));
             }
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+            if (user.getIsModerator()) {
+                authorities.add(new SimpleGrantedAuthority("MODERATOR"));
+            }
+
+            Authentication authentication = new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword(), authorities);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
             String token = jwtUtil.generateToken(authRequest.getUsername());
             return ResponseEntity.ok(new AuthResponse(token, user));
         } catch (org.springframework.security.core.AuthenticationException e) {
-            return ResponseEntity.status(401).build();
+            return ResponseEntity.status(401).body("Invalid username or password");
         }
     }
+
 }

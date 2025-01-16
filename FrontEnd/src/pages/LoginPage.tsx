@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import './loginPage.css';
-import { useAuth } from "../../util/AuthContext";
+import '../styles/loginPage.css';
+import { useAuth } from "../util/AuthContext";
 
 export function LoginPage() {
   const { user, setUser } = useAuth();
@@ -17,13 +17,12 @@ export function LoginPage() {
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
 
-
     try {
       const response = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
+          "Authorization": `Bearer ${sessionStorage.getItem("token")}`
         },
         credentials: 'include',
         body: JSON.stringify(loginFormData)
@@ -35,11 +34,12 @@ export function LoginPage() {
         sessionStorage.setItem("token", data.token);
 
         const safeData = {
-          username: data.user.username,
+          id: data.user.id,
           surname: data.user.surname,
           firstname: data.user.firstname,
           email: data.user.email,
           phone: data.user.phone,
+          username: data.user.username,
           isAdmin: data.user.isAdmin,
           isModerator: data.user.isModerator
         }

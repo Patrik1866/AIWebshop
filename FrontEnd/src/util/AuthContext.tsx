@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
 import React from "react";
 import { User } from "../entities/User";
 
@@ -20,6 +20,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const savedUser = sessionStorage.getItem('currentUser');
         return savedUser ? JSON.parse(savedUser) : null;
     });
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const token = sessionStorage.getItem('token');
+            if (token) {
+                try {
+                    const response = await fetch(`http://localhost:8080/users/${user?.id}`, {
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                            "Content-Type": "application/json"
+                        }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        setUser(data);
+                    } else {
+                        console.error("Failed to fetch");
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+        };
+        fetchUserData();
+    }, []);
 
     const isAuthenticated = !!user;
 

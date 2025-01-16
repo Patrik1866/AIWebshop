@@ -1,5 +1,5 @@
-import { useAuth } from "../../util/AuthContext";
-import "./header.css";
+import { useAuth } from "../util/AuthContext";
+import "../styles/header.css";
 
 function Header() {
   const { user, hasRole } = useAuth();
@@ -48,6 +48,12 @@ function Header() {
                 </a>
               </div>
             )}
+
+            <div className="nav-item">
+              <a href="/profil" className="nav-link">
+                Saját profil
+              </a>
+            </div>
 
 
             <div className="nav-item">
