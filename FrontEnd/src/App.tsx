@@ -10,6 +10,8 @@ import { ProtectedRoute } from "./util/ProtectedRoute.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
 import ManageProductsPage from "./pages/ManageProductsPage.tsx";
 import GeminiChatPage from "./pages/GeminiChatPage.tsx";
+import UnathorizedPage from "./pages/UnauthorizedPage.tsx";
+import ProductsPage from "./pages/ProductsPage.tsx";
 
 function App() {
 
@@ -30,6 +32,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/LoginPage" element={<LoginPage />} />
           <Route path="/RegisterPage" element={<RegisterPage />}></Route>
+          <Route path="/unauthorized" element={<UnathorizedPage/>}></Route>
 
           {/*Védett elérések */}
 
@@ -49,10 +52,18 @@ function App() {
           {/*Admin elérések */}
 
           <Route path="/manageProducts" element={
-            <ProtectedRoute roles={["ADMIN"]}>
+            <ProtectedRoute roles={["ADMIN", "MODERATOR"]}>
               <ManageProductsPage/>
             </ProtectedRoute>
           }></Route>
+
+          <Route path="productList" element={
+            <ProtectedRoute roles={["ADMIN", "MODERATOR"]}>
+              <ProductsPage/>
+            </ProtectedRoute>
+          }>
+
+          </Route>
 
           
 

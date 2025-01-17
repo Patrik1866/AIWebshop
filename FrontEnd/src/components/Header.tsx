@@ -46,7 +46,7 @@ function Header() {
                 </a>
               </div>
             )}
-            {hasRole(["ADMIN"]) && (
+            {hasRole(["ADMIN", "MODERATOR"]) && (
               <div className="nav-item">
                 <a href="/manageProducts" className="nav-link">Termékek kezelése</a> 
               </div>
