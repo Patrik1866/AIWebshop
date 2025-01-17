@@ -4,7 +4,7 @@ import { useAuth } from "../util/AuthContext";
 import Notification from "../components/Notification";
 
 export function LoginPage() {
-  const { user, setUser } = useAuth();
+  const { setUser } = useAuth();
   const [showNotification, setShowNotification] = useState(false);
   const [loginFormData, setLoginFormData] = useState({
     username: "",
