@@ -39,6 +39,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (!user) return false;
 
         const currentRole = getUserRole();
+        console.log("test")
 
         if (currentRole === "ADMIN") return true;
 
