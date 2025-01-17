@@ -4,6 +4,7 @@ import com.AIWebshop.AIWebshop.entity.Product;
 import com.AIWebshop.AIWebshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,12 +37,14 @@ public class ProductRestController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public ResponseEntity<Product> save(@RequestBody Product product){
         Product createdProduct = productService.save(product);
         return ResponseEntity.ok(createdProduct);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Product> deleteById(@PathVariable int id){
         Product product = productService.findByProductId(id);
 

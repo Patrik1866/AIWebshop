@@ -4,6 +4,7 @@ import com.AIWebshop.AIWebshop.Components.JwtUtil;
 import com.AIWebshop.AIWebshop.entity.User;
 import com.AIWebshop.AIWebshop.req.AuthRequest;
 import com.AIWebshop.AIWebshop.req.AuthResponse;
+import com.AIWebshop.AIWebshop.service.CustomUserDetailsService;
 import com.AIWebshop.AIWebshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,31 +41,23 @@ public class AuthController {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
-        try {
-            User user = userService.findByUsername(authRequest.getUsername());
-            if (user == null || !passwordEncoder.matches(authRequest.getPassword(), user.getPassword())) {
-                throw new org.springframework.security.core.AuthenticationException("Invalid username or password") {
-                };
-            }
-
-            List<GrantedAuthority> authorities = new ArrayList<>();
-            if (user.getIsAdmin()) {
-                authorities.add(new SimpleGrantedAuthority("ADMIN"));
-            }
-            if (user.getIsModerator()) {
-                authorities.add(new SimpleGrantedAuthority("MODERATOR"));
-            }
-
-            Authentication authentication = new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword(), authorities);
+public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(authRequest.getUsername());
+        if (passwordEncoder.matches(authRequest.getPassword(), userDetails.getPassword())) {
+            // User credentials are valid, proceed with authentication
+            Authentication authentication = new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword());
+            authentication = authenticationManager.authenticate(authentication);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String token = jwtUtil.generateToken(authRequest.getUsername());
-            return ResponseEntity.ok(new AuthResponse(token, user));
-        } catch (org.springframework.security.core.AuthenticationException e) {
+            return ResponseEntity.ok(new AuthResponse(token, userService.findByUsername(authRequest.getUsername())));
+        } else {
+            // User credentials are invalid, return an error response
             return ResponseEntity.status(401).body("Invalid username or password");
         }
-    }
-
+}
 }
