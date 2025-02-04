@@ -48,15 +48,15 @@ public class AuthController {
 public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(authRequest.getUsername());
         if (passwordEncoder.matches(authRequest.getPassword(), userDetails.getPassword())) {
-            // User credentials are valid, proceed with authentication
+            
             Authentication authentication = new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword());
+
             authentication = authenticationManager.authenticate(authentication);
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             String token = jwtUtil.generateToken(authRequest.getUsername());
             return ResponseEntity.ok(new AuthResponse(token, userService.findByUsername(authRequest.getUsername())));
         } else {
-            // User credentials are invalid, return an error response
             return ResponseEntity.status(401).body("Invalid username or password");
         }
 }
