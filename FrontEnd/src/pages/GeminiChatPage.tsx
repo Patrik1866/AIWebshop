@@ -11,23 +11,20 @@ const GeminiChatPage = () => {
 
     const handleSendMessage = async () => {
         try{
-            const chatRequest = {message};
+            const chatRequest = message;
             const response = await fetch("http://localhost:8080/chat/geminiMessage", {
                 method: "POST",
                 headers: {
+                    "Content-Type": "application/json",
                     "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
-                    "Content-Type": "application/json"
                 },
-                body: JSON.stringify(chatRequest)
+                body: JSON.stringify({
+                    userId: user?.id,
+                    message: chatRequest    
+                }
+                )
             });
-
-            const responseData = await response.json();
-           
-            const messages = responseData.map((message: any)=>({
-                question: message.question,
-                message: message.message
-            }))
-            setResponse(messages);
+            
         } catch (error){
             console.error(error);
         }
@@ -48,7 +45,7 @@ const GeminiChatPage = () => {
             });
             const responseData = await response.json();
 
-            setResponse(responseData);
+            setResponse(responseData.map((response: any) => ({question: response.question, message: response.message})));
         } catch (error){
             console.error(error);
         }

@@ -37,13 +37,13 @@ function App() {
           {/*Védett elérések */}
 
           <Route path="/profil" element={
-            <ProtectedRoute >
+            <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
               <ProfilePage />
             </ProtectedRoute>
           } />
 
           <Route path="/chat" element={
-            <ProtectedRoute >
+            <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
               <GeminiChatPage/>
             </ProtectedRoute>
           
@@ -58,7 +58,7 @@ function App() {
           }></Route>
 
           <Route path="productList" element={
-            <ProtectedRoute roles={["ADMIN", "MODERATOR"]}>
+            <ProtectedRoute roles={["ADMIN"]}>
               <ProductsPage/>
             </ProtectedRoute>
           }>

@@ -35,20 +35,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     };
 
-    const hasRole = (requiredRoles: Role[]): boolean => {
+    const hasRole = (requiredRoles: Role[] = []): boolean => {
         if (!user) return false;
-
+    
         const currentRole = getUserRole();
-        console.log("test")
-
+    
         if (currentRole === "ADMIN") return true;
-
-        if (currentRole === "MODERATOR") return requiredRoles.some(role => ["MODERATOR"].includes(role))
-
-        return requiredRoles.includes("USER");
+    
+        if (requiredRoles.includes("MODERATOR") && currentRole === "MODERATOR") return true;
+    
+        if (requiredRoles.includes("USER") && currentRole=== "USER") return true; 
+    
+        return false;
     };
-
-
     return (
         <AuthContext.Provider value={{ user, setUser, isAuthenticated, hasRole, getUserRole }}>
             {children}

@@ -9,7 +9,9 @@ export function RegisterPage() {
     firstname: "",
     email: "",
     password: "",
-    phone: ""
+    phone: "",
+    isAdmin: false,
+    isModerator: false
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,12 +22,12 @@ export function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/register", {
-        method: "POST",
+      const response = await fetch("http://localhost:8080/users", {
+        method: "PUT",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
+          "Content-Type": "application/json"
         },
-        body: new URLSearchParams(registerFormData as any).toString()
+        body: JSON.stringify(registerFormData)
       });
 
       if (response.ok) {
