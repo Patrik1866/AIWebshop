@@ -46,7 +46,7 @@ export function RegisterPage() {
       <h2>Regisztráció</h2>
       <form className="registerForm" onSubmit={handleSubmit}>
         <div className="form_group">
-          <label>Felhasználónév</label>
+          <label>Felhasználónév</label><br />
           <input placeholder="felhasználónév" type="text" id="username" name="username" required value={registerFormData.username} onChange={handleChange} />
         </div>
         <div className="form_group">

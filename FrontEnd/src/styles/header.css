@@ -1,9 +1,9 @@
 .header {
-  background-color: var(--primary-color-brown);
-  padding: 1rem 0;
-  border: 1px solid black;
-  margin: 1em;
-  border-radius: 0.8em;
+  margin: 1rem;
+  margin-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .navbar {
@@ -51,6 +51,19 @@
   transition: background-color 0.3s ease;
 }
 
-.navbar .button:hover {
-  background-color: #3498db;
+
+.login-button-header{
+  text-decoration: none;
+  font-weight: bold;
+  background-color: rgb(243, 145, 145);
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  box-shadow: 8px 8px 8px rgba(233, 15, 15, 0.2);
+  transition:  0.4s ease-in-out;
+}
+
+.login-button-header:hover{
+  background-color: #ad1d00c0;
+  color: black;
+  transition: 0.4s ease-in-out;
 }

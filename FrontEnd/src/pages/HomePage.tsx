@@ -1,9 +1,27 @@
-
+import Header from "../components/Header";
+import "../styles/HomePage.css"
 
 export function HomePage() {
 
     return <>
-
+        <div className="home-container">
+            <div>
+                
+            </div>
+            <div>
+                <div>
+                    <h1>hi</h1>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <h2>hello</h2>
+                </div>
+            </div>
+            <div>
+                <p>tessék</p>
+            </div>
+        </div>
     </>;
 
 }

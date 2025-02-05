@@ -76,7 +76,7 @@ function Header() {
             className="nav-item"
             style={{ marginLeft: "auto", marginRight: "2rem" }}
           >
-            <a href="/LoginPage" className="nav-link">
+            <a href="/LoginPage" className="login-button-header">
               Bejelentkezés
               <i
                 style={{ paddingLeft: "0.2rem" }}

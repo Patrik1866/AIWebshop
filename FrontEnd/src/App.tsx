@@ -4,7 +4,6 @@ import LoginPage from "./pages/LoginPage.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import "./style.css";
-import Header from "./components/Header.tsx";
 import { AuthProvider } from "./util/AuthContext.tsx";
 import { ProtectedRoute } from "./util/ProtectedRoute.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
@@ -12,6 +11,7 @@ import ManageProductsPage from "./pages/ManageProductsPage.tsx";
 import GeminiChatPage from "./pages/GeminiChatPage.tsx";
 import UnathorizedPage from "./pages/UnauthorizedPage.tsx";
 import ProductsPage from "./pages/ProductsPage.tsx";
+import Header from "./components/Header.tsx";
 
 function App() {
 
@@ -23,7 +23,7 @@ function App() {
 
   return (
     <AuthProvider>
-      <Header />
+        <Header></Header>
       <BrowserRouter>
         <Routes>
 
