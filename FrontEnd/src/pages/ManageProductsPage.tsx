@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../util/AuthContext";
+import "../styles/manageProducts.css"
 
 interface ProductProps {
   name: string;
@@ -51,7 +52,7 @@ const ManageProductsPage = () => {
   };
 
   return (
-    <div>
+    <div className="product-manage-container">
       <h2>Termék hozzáadása</h2>
       <form>
         <div>
