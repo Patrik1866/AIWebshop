@@ -1,9 +1,10 @@
 .loginContainer {
-    border: 0.11em solid black;
-    border-radius: 0.8em;
+    background-color: rgb(245, 229, 199);
+    border-radius: 40px;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(170, 165, 165, 0.22);
     padding: 1em;
-    width: 100%;
-    height: 20em;
+    width: auto;
+    height: auto;
     max-width: 20em;
     max-height: 100%;
     display: flex;
@@ -27,6 +28,9 @@
 
     input {
         margin-top: 1em;
+        width: 100%;
+        height: 1.5em;
+        border-radius: 20px;
     }
 
     button {
@@ -46,14 +50,14 @@ button {
     border-radius: 0.5em;
     border: none;
     padding: 0.4em;
-    background-color: var(--primary-color-brown);
+    background-color: var(--button-red);
     color: black;
     cursor: pointer;
     transition: 0.3s ease-in-out;
 }
 
 button:hover {
-    background-color: var(--primary-color);
+    background-color: var(--button-red-background);
     color: var(--primary-color-brown);
     transition: 0.3s ease-in-out;
 }
