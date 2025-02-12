@@ -57,35 +57,31 @@ function Header() {
                 Saját profil
               </a>
             </div>
-
-            <div className="nav-item">
-              <a
+            <div className="nav-auth">
+              <a 
                 href="/"
-                className="nav-link"
+                className="logout-button-header"
                 onClick={() => {
                   localStorage.clear();
                   sessionStorage.clear();
                 }}
               >
                 Kijelentkezés
+                <i style={{margin: "0 0 0 0.5em"}} className="fas fa-sign-out-alt"></i>
               </a>
             </div>
           </>
         ) : (
-          <div
-            className="nav-item"
-            style={{ marginLeft: "auto", marginRight: "2rem" }}
-          >
+          <div className="nav-auth">
             <a href="/LoginPage" className="login-button-header">
               Bejelentkezés
-              <i
-                style={{ paddingLeft: "0.2rem" }}
-                className="fas fa-sign-in-alt"
-              ></i>
+              <i style={{margin: "0 0 0 0.5em"}} className="fas fa-sign-in-alt"></i>
             </a>
           </div>
         )}
+        
       </nav>
+      
     </header>
   );
 }

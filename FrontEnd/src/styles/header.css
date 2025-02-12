@@ -1,19 +1,27 @@
 .header {
-  margin: 1rem;
+  margin-top: 1.5rem;
   margin-bottom: 5rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 .navbar {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
+  gap: 1em;
+}
+
+.nav-auth{
+  position: relative;
+  margin-left: auto;
+  margin-right: 1.5em;
 }
 
 .nav-item {
   position: relative;
+  border-right: 1px solid black;
 }
 
 .nav-link {
@@ -52,7 +60,7 @@
 }
 
 
-.login-button-header{
+.login-button-header, .logout-button-header{
   text-decoration: none;
   font-weight: bold;
   background-color: rgb(243, 145, 145);
