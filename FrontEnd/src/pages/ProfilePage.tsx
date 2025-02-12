@@ -106,7 +106,7 @@ export function ProfilePage(this: any) {
         <header className="profile-header">
             <h2>Saját profil oldal</h2>
         </header>
-        <legend className="profile-page-form">
+        <div className="profile-page-form">
             <div className="profile-data">
                 <h3>Személyes adatok</h3>
                 <div>
@@ -149,10 +149,8 @@ export function ProfilePage(this: any) {
                     <input type="text" name="zipcode" value={address.zipcode} onChange={handleDeliveryAddress} />
                 </div>
             </div>
-        </legend>
+        </div>
         <button className="profile-save-button" onClick={savePersonalData}>Mentés</button>
-
-
         {notificationMessage && <Notification message={notificationMessage} />}
     </>
 
