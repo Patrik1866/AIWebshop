@@ -12,7 +12,7 @@ const GeminiChatPage = () => {
     const handleSendMessage = async () => {
         try{
             const chatRequest = message;
-            const response = await fetch("http://localhost:8080/chat/geminiMessage", {
+             await fetch("http://localhost:8080/chat/geminiMessage", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
