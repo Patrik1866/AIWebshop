@@ -10,10 +10,20 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_id")
     private int id;
-    @Column(name = "user_id")
-    private int userId;
-    @Column(name = "product_id")
-    private int productId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    public Cart(){}
+
+    public Cart(User user, Product product, int quantity){
+        this.user = user;
+        this.product = product;
+        this.quantity = quantity;
+    }
 
     public int getId() {
         return id;
@@ -23,21 +33,22 @@ public class Cart {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public int getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
+
 
     public int getQuantity() {
         return quantity;

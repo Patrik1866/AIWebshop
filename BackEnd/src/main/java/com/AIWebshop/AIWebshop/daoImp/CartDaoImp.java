@@ -2,6 +2,7 @@ package com.AIWebshop.AIWebshop.daoImp;
 
 import com.AIWebshop.AIWebshop.dao.CartDao;
 import com.AIWebshop.AIWebshop.entity.Cart;
+import com.AIWebshop.AIWebshop.entity.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -47,5 +48,13 @@ public class CartDaoImp implements CartDao {
         entityManager.remove(cart);
 
         return null;
+    }
+
+    @Transactional
+    @Override
+    public Cart saveCart(Cart cart) {
+        Cart savedCart = entityManager.merge(cart);
+
+        return savedCart;
     }
 }

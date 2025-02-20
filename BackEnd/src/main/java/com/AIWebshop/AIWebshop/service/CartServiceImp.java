@@ -1,7 +1,9 @@
 package com.AIWebshop.AIWebshop.service;
 
 import com.AIWebshop.AIWebshop.dao.CartDao;
+import com.AIWebshop.AIWebshop.dao.UserDao;
 import com.AIWebshop.AIWebshop.entity.Cart;
+import com.AIWebshop.AIWebshop.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,9 @@ public class CartServiceImp implements CartService{
 
     @Autowired
     private CartDao cartDao;
+
+    @Autowired
+    private UserDao userDao;
 
     @Override
     public List<Cart> findAll() {
@@ -32,5 +37,11 @@ public class CartServiceImp implements CartService{
     public void deleteById(int id) {
         Cart theCart = cartDao.findById(id);
         cartDao.deleteById(theCart);
+    }
+
+    @Override
+    public Cart saveCart(Cart cart) {
+
+        return cartDao.saveCart(cart);
     }
 }

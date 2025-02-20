@@ -1,10 +1,14 @@
 package com.AIWebshop.AIWebshop.rest;
 
 import com.AIWebshop.AIWebshop.entity.Cart;
+import com.AIWebshop.AIWebshop.entity.Product;
 import com.AIWebshop.AIWebshop.entity.User;
+import com.AIWebshop.AIWebshop.req.CartRequest;
 import com.AIWebshop.AIWebshop.service.CartService;
+import com.AIWebshop.AIWebshop.service.ProductService;
 import com.AIWebshop.AIWebshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +21,8 @@ public class CartController {
     private CartService cartService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ProductService productService;
 
     @GetMapping
     public List<Cart> findAll(){
@@ -56,5 +62,16 @@ public class CartController {
         cartService.deleteById(cartId);
 
         return "DELETED";
+    }
+
+    @PostMapping("/save")
+    public void saveCart(@RequestBody CartRequest cartRequest){
+        User user = userService.findById(cartRequest.getUser());
+        Product product = productService.findByProductId(cartRequest.getProduct());
+
+        Cart cart = new Cart(user,product, cartRequest.getQuantity());
+
+        cartService.saveCart(cart);
+
     }
 }
