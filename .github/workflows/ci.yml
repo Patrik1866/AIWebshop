@@ -20,7 +20,7 @@ jobs:
           distribution: "temurin"
           cache: maven
 
-          
+
       - name: Build Backend
         run: |
           cd BackEnd
@@ -37,6 +37,13 @@ jobs:
 
       - name: Build Docker Images Without Cache
         run: docker-compose build --no-cache
+
+      - name: Run Docker Containers
+        run: |
+          docker-compose up -d
+
+      - name: List Running Containers
+        run: docker ps
 
 
     # Uncomment to run backend tests
