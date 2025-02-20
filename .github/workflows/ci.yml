@@ -22,10 +22,12 @@ jobs:
 
       - name: Install Maven
         run: |
-          curl -O https://downloads.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.zip
-          unzip apache-maven-3.8.6-bin.zip -d ${{ runner.temp }}
-          echo "MAVEN_HOME=${{ runner.temp }}/apache-maven-3.8.6" >> $GITHUB_ENV
-          echo "${{ runner.temp }}/apache-maven-3.8.6/bin" >> $GITHUB_PATH
+            $url = "https://downloads.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.zip"
+            $output = "${{ runner.temp }}\apache-maven-3.8.6-bin.zip"
+            Invoke-WebRequest -Uri $url -OutFile $output
+            Expand-Archive -Path $output -DestinationPath "${{ runner.temp }}"
+            echo "MAVEN_HOME=${{ runner.temp }}\apache-maven-3.8.6" >> $GITHUB_ENV
+            echo "${{ runner.temp }}\apache-maven-3.8.6\bin" >> $GITHUB_PATH
 
       - name: Build Backend
         run: |
