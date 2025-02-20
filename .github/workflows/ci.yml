@@ -21,13 +21,11 @@ jobs:
           cache: maven
 
       - name: Build Backend
-        working-directory: ./BackEnd
         run: |
           cd BackEnd
           mvn clean package -DskipTests
 
       - name: Build Frontend
-        working-directory: ./FrontEnd
         run: |
           cd FrontEnd
           npm install
