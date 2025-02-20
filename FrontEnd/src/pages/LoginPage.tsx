@@ -35,6 +35,8 @@ export function LoginPage() {
         const data = await response.json();
         sessionStorage.setItem("token", data.token);
 
+        
+
         const safeData = {
           id: data.user.id,
           surname: data.user.surname,
