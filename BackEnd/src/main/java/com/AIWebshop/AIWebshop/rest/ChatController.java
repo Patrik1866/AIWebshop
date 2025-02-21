@@ -18,12 +18,11 @@ public class ChatController {
     @PostMapping("/message")
     public ResponseEntity<String> sendMessage(@RequestBody ChatRequest chatRequest) {
         try {
-            String response = openAIService.generateResponse(chatRequest.getMessage());
 
 
 
 
-            return ResponseEntity.ok(response);
+          return null;
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error communicating with OpenAI: " + e.getMessage());
         }

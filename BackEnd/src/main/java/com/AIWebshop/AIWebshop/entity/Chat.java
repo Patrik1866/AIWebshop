@@ -12,7 +12,9 @@ public class Chat {
     private int id;
     @Column(name = "user_id")
     private int userId;
+    @Column(length = 3500)
     private String message;
+    @Column(length = 3500)
     private String question;
 
     public String getQuestion() {
