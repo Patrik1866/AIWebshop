@@ -1,4 +1,4 @@
-package com.AIWebshop.AIWebshop.service;
+package com.AIWebshop.AIWebshop.serviceImp;
 
 import com.AIWebshop.AIWebshop.entity.User;
 import com.AIWebshop.AIWebshop.service.UserService;

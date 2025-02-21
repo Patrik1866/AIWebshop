@@ -1,14 +1,15 @@
-package com.AIWebshop.AIWebshop.service;
+package com.AIWebshop.AIWebshop.serviceImp;
 
 import com.AIWebshop.AIWebshop.dao.ReviewDao;
 import com.AIWebshop.AIWebshop.entity.Reviews;
+import com.AIWebshop.AIWebshop.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ReviewServiceImp implements ReviewService{
+public class ReviewServiceImp implements ReviewService {
 
     @Autowired
     private ReviewDao reviewDao;

@@ -1,16 +1,16 @@
-package com.AIWebshop.AIWebshop.service;
+package com.AIWebshop.AIWebshop.serviceImp;
 
 import com.AIWebshop.AIWebshop.dao.CartDao;
 import com.AIWebshop.AIWebshop.dao.UserDao;
 import com.AIWebshop.AIWebshop.entity.Cart;
-import com.AIWebshop.AIWebshop.entity.User;
+import com.AIWebshop.AIWebshop.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CartServiceImp implements CartService{
+public class CartServiceImp implements CartService {
 
     @Autowired
     private CartDao cartDao;

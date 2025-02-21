@@ -2,14 +2,12 @@ package com.AIWebshop.AIWebshop;
 
 import com.AIWebshop.AIWebshop.dao.UserDao;
 import com.AIWebshop.AIWebshop.entity.User;
-import com.AIWebshop.AIWebshop.service.UserServiceImp;
+import com.AIWebshop.AIWebshop.serviceImp.UserServiceImp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.autoconfigure.data.jdbc.AutoConfigureDataJdbc;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

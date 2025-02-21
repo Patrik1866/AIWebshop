@@ -1,19 +1,15 @@
 package com.AIWebshop.AIWebshop.rest;
 
 import com.AIWebshop.AIWebshop.Components.JwtUtil;
-import com.AIWebshop.AIWebshop.entity.User;
 import com.AIWebshop.AIWebshop.req.AuthRequest;
 import com.AIWebshop.AIWebshop.req.AuthResponse;
-import com.AIWebshop.AIWebshop.service.CustomUserDetailsService;
+import com.AIWebshop.AIWebshop.serviceImp.CustomUserDetailsService;
 import com.AIWebshop.AIWebshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,9 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/auth")

@@ -1,9 +1,9 @@
-package com.AIWebshop.AIWebshop.service;
+package com.AIWebshop.AIWebshop.serviceImp;
 
 import com.AIWebshop.AIWebshop.entity.Address;
 import com.AIWebshop.AIWebshop.entity.User;
 import com.AIWebshop.AIWebshop.dao.UserDao;
-import jakarta.transaction.Transactional;
+import com.AIWebshop.AIWebshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

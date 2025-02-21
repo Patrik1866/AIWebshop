@@ -1,4 +1,4 @@
-package com.AIWebshop.AIWebshop.service;
+package com.AIWebshop.AIWebshop.serviceImp;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

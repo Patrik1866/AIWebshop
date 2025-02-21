@@ -63,4 +63,12 @@ public class ReviewDaoImp implements ReviewDao {
         entityManager.remove(review);
         return null;
     }
+
+
+    @Override
+    @Transactional
+    public Reviews save(Reviews review) {
+        return entityManager.merge(review);
+    }
+
 }

@@ -2,7 +2,6 @@ package com.AIWebshop.AIWebshop.rest;
 
 import com.AIWebshop.AIWebshop.entity.Reviews;
 import com.AIWebshop.AIWebshop.service.ReviewService;
-import com.AIWebshop.AIWebshop.service.ReviewServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

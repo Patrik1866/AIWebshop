@@ -10,4 +10,5 @@ public interface ReviewDao {
     List<Reviews> findByUserId(int userId);
     List<Reviews> findByProductId(int productId);
     Reviews deleteById(Reviews review);
+    Reviews save(Reviews review);
 }

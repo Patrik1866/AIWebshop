@@ -1,9 +1,7 @@
 package com.AIWebshop.AIWebshop.rest;
 
-import com.AIWebshop.AIWebshop.entity.Chat;
 import com.AIWebshop.AIWebshop.req.ChatRequest;
-import com.AIWebshop.AIWebshop.service.ChatService;
-import com.AIWebshop.AIWebshop.service.OpenAIService;
+import com.AIWebshop.AIWebshop.serviceImp.OpenAIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

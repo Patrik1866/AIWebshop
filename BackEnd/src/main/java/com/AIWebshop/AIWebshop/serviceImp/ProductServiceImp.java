@@ -1,14 +1,15 @@
-package com.AIWebshop.AIWebshop.service;
+package com.AIWebshop.AIWebshop.serviceImp;
 
 import com.AIWebshop.AIWebshop.dao.ProductDao;
 import com.AIWebshop.AIWebshop.entity.Product;
+import com.AIWebshop.AIWebshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ProductServiceImp implements ProductService{
+public class ProductServiceImp implements ProductService {
 
     @Autowired
     private ProductDao productDao;

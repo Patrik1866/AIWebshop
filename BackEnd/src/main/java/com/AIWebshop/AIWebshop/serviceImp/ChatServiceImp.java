@@ -1,7 +1,8 @@
-package com.AIWebshop.AIWebshop.service;
+package com.AIWebshop.AIWebshop.serviceImp;
 
 import com.AIWebshop.AIWebshop.dao.ChatDao;
 import com.AIWebshop.AIWebshop.entity.Chat;
+import com.AIWebshop.AIWebshop.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
