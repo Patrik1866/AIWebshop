@@ -39,4 +39,9 @@ public class ReviewServiceImp implements ReviewService {
 
         reviewDao.deleteById(theReview);
     }
+
+    @Override
+    public Reviews save(Reviews review) {
+        return reviewDao.save(review);
+    }
 }

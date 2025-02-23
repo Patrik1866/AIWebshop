@@ -10,4 +10,5 @@ public interface ReviewService {
     List<Reviews> findByUserId(int userId);
     List<Reviews> findByProductId(int productId);
     void deleteById(int id);
+    Reviews save(Reviews review);
 }

@@ -17,6 +17,15 @@ public class Reviews {
     private int point;
     private String description;
 
+    public Reviews(){}
+
+    public Reviews(int userId, int productId, int point, String description) {
+        this.userId = userId;
+        this.productId = productId;
+        this.point = point;
+        this.description = description;
+    }
+
     public int getId() {
         return id;
     }

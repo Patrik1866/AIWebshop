@@ -36,7 +36,7 @@ public class ProductRestController {
         return productService.findBySubCategoryId(id);
     }
 
-    @PostMapping
+    @PutMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public ResponseEntity<Product> save(@RequestBody Product product){
         Product createdProduct = productService.save(product);

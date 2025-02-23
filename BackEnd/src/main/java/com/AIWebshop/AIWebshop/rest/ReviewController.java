@@ -1,10 +1,14 @@
 package com.AIWebshop.AIWebshop.rest;
 
+import com.AIWebshop.AIWebshop.entity.Product;
 import com.AIWebshop.AIWebshop.entity.Reviews;
+import com.AIWebshop.AIWebshop.service.ProductService;
 import com.AIWebshop.AIWebshop.service.ReviewService;
+import com.AIWebshop.AIWebshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -13,6 +17,11 @@ public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public List<Reviews> findAll(){
@@ -50,5 +59,19 @@ public class ReviewController {
         reviewService.deleteById(reviewId);
 
         return "DELETED";
+    }
+
+    @PostMapping
+    public String save(@RequestBody Reviews review, Principal principal) {
+
+        String username = principal.getName();
+        int userId = userService.findByUsername(username).getId();
+        Product product = productService.findByProductId(review.getProductId());
+
+
+        Reviews theReview = new Reviews(userId, product.getId(), review.getPoint(), review.getDescription());
+
+        reviewService.save(theReview);
+        return "Saved";
     }
 }
