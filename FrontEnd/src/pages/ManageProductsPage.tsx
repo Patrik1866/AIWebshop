@@ -13,7 +13,7 @@ interface ProductProps {
 
 const ManageProductsPage = () => {
     const {user} = useAuth();
-  const [product, setProduct] = useState<ProductProps>({
+    const [product, setProduct] = useState<ProductProps>({
     name: "",
     description: "",
     price: 0,
@@ -26,7 +26,7 @@ const ManageProductsPage = () => {
     console.log(product);
     try {
       const response = await fetch(`http://localhost:8080/products`,{
-        method: 'POST',
+        method: 'PUT',
         headers: {
           "Content-Type": "application/json",
             "Authorization": `Bearer ${sessionStorage.getItem("token")}`

@@ -9,30 +9,26 @@ const GeminiChatPage = () => {
     const [message, setMessage] = useState("");
     const [responses, setResponse] = useState<{question: string, message: string}[]>([]);
 
-    const handleSendMessage = async () => {
-        try{
-            const chatRequest = message;
-             await fetch("http://localhost:8080/chat/geminiMessage", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
-                },
-                body: JSON.stringify({
-                    userId: user?.id,
-                    message: chatRequest    
-                }
-                )
-            });
-            
-        } catch (error){
-            console.error(error);
-        }
-    };
-
     useEffect(() => {
         handleGetMessages();
     }, []);
+
+    const handleSendMessage = async () => {
+      try {
+        const chatRequest = { question: message };
+        console.log(chatRequest);
+        await fetch("http://localhost:8080/chat/geminiMessage", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(chatRequest)
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
     const handleGetMessages = async () => {
         try{
@@ -56,29 +52,38 @@ const GeminiChatPage = () => {
     };
 
 
-    return (<>
-        <header>
-            <h2>Gemini Chat szolgáltatás</h2>
-            <h3>Amennyiben kérdésed merülne fel, nyugodtan kérdezd a chatbotot :D</h3>
-        </header>
-
-        <div className="chat-container">
-            <div className="chat-messages">
-                <p>Üzenetek megjelennek itt</p>
-                {responses.map((response, index) => (
-                    <div key={`${index}_${response.question}_${response.message}`}>
-                        <span>Kérdés: {response.question}</span>
-                        <span>Válasz: {response.message}</span>
-                    </div>
-                ))}
+    return (
+        <>
+            <header>
+                <h2>Gemini Chat szolgáltatás</h2>
+                <h3>Amennyiben kérdésed merülne fel, nyugodtan kérdezd a chatbotot :D</h3>
+            </header>
+    
+            <div className="chat-container">
+                <div className="chat-messages">
+                    <p>Üzenetek megjelennek itt</p>
+                    {responses.map((response, index) => (
+                        <div key={`${index}_${response.question}_${response.message}`} className="chat-message">
+                            <div className="question">{response.question}</div><br />
+                            <div className="answer">{response.message}</div>
+                        </div>
+                    ))}
+                </div>
+                <div className="chat-input">
+                    <input
+                        type="text"
+                        id="chat-input"
+                        placeholder="Üzenet"
+                        value={message}
+                        onChange={handleInputChange}
+                    />
+                    <button id="chat-send" onClick={handleSendMessage}>Küldés</button>
+                </div>
             </div>
-            <div className="chat-input">
-                <input type="text" id="chat-input" placeholder="Üzenet" value={message} onChange={handleInputChange}/><br />
-                <button id="chat-send" onClick={handleSendMessage}>Küldés</button>
-            </div>
-        </div>
-    </>
+        </>
     )
-}
+    }
+    
+
 
 export default GeminiChatPage;

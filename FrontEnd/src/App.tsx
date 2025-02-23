@@ -4,7 +4,7 @@ import LoginPage from "./pages/LoginPage.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import "./style.css";
-import { AuthProvider } from "./util/AuthContext.tsx";
+import { AuthProvider } from "./util/AuthContext";
 import { ProtectedRoute } from "./util/ProtectedRoute.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
 import ManageProductsPage from "./pages/ManageProductsPage.tsx";
@@ -16,9 +16,6 @@ import Header from "./components/Header.tsx";
 function App() {
 
   useEffect(() => {
-    if (sessionStorage.getItem("currentUser")) {
-      console.log(sessionStorage.getItem("currentUser"));
-    }
   }, []);
 
 
