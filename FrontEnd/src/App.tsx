@@ -12,6 +12,7 @@ import GeminiChatPage from "./pages/GeminiChatPage.tsx";
 import UnathorizedPage from "./pages/UnauthorizedPage.tsx";
 import ProductsPage from "./pages/ProductsPage.tsx";
 import Header from "./components/Header.tsx";
+import ViewProductPage from "./pages/ViewProductPage.tsx";
 
 function App() {
 
@@ -40,6 +41,13 @@ function App() {
               <ProfilePage />
             </ProtectedRoute>
           } />
+
+          <Route path="/ViewProductPage" element={
+            <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
+              <ViewProductPage />
+            </ProtectedRoute>
+          }
+          />
 
           <Route path="/chat" element={
             <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>

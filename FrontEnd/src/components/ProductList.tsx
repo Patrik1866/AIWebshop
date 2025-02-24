@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Product } from "../entities/Product";
+import {useNavigate} from "react-router-dom";
 import "../styles/products.css";
 
 const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -19,7 +21,6 @@ const ProductList = () => {
         const fetchedData = await response.json();
         if (response.ok) {
           setProducts(fetchedData);
-          console.log('Products fetched successfully:', fetchedData);
         }
       } catch (error) {
         console.error(error);
@@ -47,8 +48,8 @@ const ProductList = () => {
   };
 
   const handleProductUpdate = async (productId: number) => {
-    try { 
-        window.location.href = `/manageProducts/${productId}`;
+    try {
+      window.location.href = `/manageProducts/${productId}`;
     } catch (error) {
       console.error(error);
     }
@@ -61,7 +62,7 @@ const ProductList = () => {
       </div>
       <div className="product-tile-container">
         {products.map((product, index) => (
-          <div className="product-tile" key={index}>
+          <div onClick={() => navigate(`/ViewProductPage`, { state: { product } })} className="product-tile" key={index}>
             <p>Termék neve: <span>{product.name}</span></p>
             <p>Termék leírása: <span> {product.description}</span></p>
             <p>Termék ára: <span>{product.price}-. (Ft) </span></p>
@@ -72,7 +73,7 @@ const ProductList = () => {
             </div>
           </div>
         ))}
-      </div>
+    </div >
     </>
   );
 };
