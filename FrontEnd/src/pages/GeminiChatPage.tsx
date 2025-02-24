@@ -16,8 +16,8 @@ const GeminiChatPage = () => {
     const handleSendMessage = async () => {
       try {
         const chatRequest = { question: message };
-        console.log(chatRequest);
-        await fetch("http://localhost:8080/chat/geminiMessage", {
+        setMessage("");
+        const response = await fetch("http://localhost:8080/chat/geminiMessage", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -25,6 +25,9 @@ const GeminiChatPage = () => {
           },
           body: JSON.stringify(chatRequest)
         });
+        if (response.ok){
+            handleGetMessages();
+        }
       } catch (error) {
         console.error(error);
       }

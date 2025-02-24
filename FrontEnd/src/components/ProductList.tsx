@@ -19,6 +19,7 @@ const ProductList = () => {
         const fetchedData = await response.json();
         if (response.ok) {
           setProducts(fetchedData);
+          console.log('Products fetched successfully:', fetchedData);
         }
       } catch (error) {
         console.error(error);
@@ -46,17 +47,8 @@ const ProductList = () => {
   };
 
   const handleProductUpdate = async (productId: number) => {
-    try {
-      const response = await fetch(`http://localhost:8080/products/${productId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
-        },
-      });
-      if (response.ok) {
-        setProducts([await response.json()]);
-      }
+    try { 
+        window.location.href = `/manageProducts/${productId}`;
     } catch (error) {
       console.error(error);
     }
@@ -76,7 +68,7 @@ const ProductList = () => {
             <p>Termék mennyisége: <span>{product.quantity} (db)</span></p>
             <div className="product-button-group">
               <button onClick={() => handleProductDelete(product.id)}>Törlés</button>
-              <button onClick={() => handleProductUpdate(product.id)}>Módosítás</button>
+              <button onClick={() => handleProductUpdate(Number(product.id))}>Módosítás</button>
             </div>
           </div>
         ))}

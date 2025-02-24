@@ -19,10 +19,10 @@ function App() {
   }, []);
 
 
-  
+
   return (
     <AuthProvider>
-        <Header></Header>
+      <Header></Header>
       <BrowserRouter>
         <Routes>
 
@@ -31,7 +31,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/LoginPage" element={<LoginPage />} />
           <Route path="/RegisterPage" element={<RegisterPage />}></Route>
-          <Route path="/unauthorized" element={<UnathorizedPage/>}></Route>
+          <Route path="/unauthorized" element={<UnathorizedPage />}></Route>
 
           {/*Védett elérések */}
 
@@ -43,28 +43,34 @@ function App() {
 
           <Route path="/chat" element={
             <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
-              <GeminiChatPage/>
+              <GeminiChatPage />
             </ProtectedRoute>
-          
-          }/>
+
+          } />
 
           {/*Admin elérések */}
 
           <Route path="/manageProducts" element={
             <ProtectedRoute roles={["ADMIN", "MODERATOR"]}>
-              <ManageProductsPage/>
+              <ManageProductsPage />
+            </ProtectedRoute>
+          }></Route>
+
+          <Route path="/manageProducts/:id" element={
+            <ProtectedRoute roles={["ADMIN", "MODERATOR"]}>
+              <ManageProductsPage />
             </ProtectedRoute>
           }></Route>
 
           <Route path="productList" element={
             <ProtectedRoute roles={["ADMIN"]}>
-              <ProductsPage/>
+              <ProductsPage />
             </ProtectedRoute>
           }>
 
           </Route>
 
-          
+
 
           {/*Admin és moderátor elérések */}
 

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../util/AuthContext";
 import "../styles/manageProducts.css"
+import { useParams } from "react-router-dom";
 
 interface ProductProps {
   name: string;
@@ -12,6 +13,7 @@ interface ProductProps {
 }
 
 const ManageProductsPage = () => {
+    const {id} = useParams();
     const {user} = useAuth();
     const [product, setProduct] = useState<ProductProps>({
     name: "",
@@ -21,6 +23,30 @@ const ManageProductsPage = () => {
     categoryId: 0,
     subCategoryId: 0,
   });
+
+
+
+  useEffect(() => {
+    loadProductIfUpdated(Number(id));
+  }, [id]);
+
+  const loadProductIfUpdated = async (productId: number) =>{
+    try{
+      const response = await fetch(`http://localhost:8080/products/${productId}`,{
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+        },
+      });
+      if (response.ok){
+        const data = await response.json();
+        setProduct(data);
+      }
+    }catch (e){
+
+    }
+  }
 
   const handleProductSave = async () => {
     console.log(product);
