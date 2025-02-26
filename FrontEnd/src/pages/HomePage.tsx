@@ -1,29 +1,29 @@
-
+import { Component } from "react";
 import "../styles/HomePage.css"
 
-export function HomePage() {
+class HomePage extends Component {
 
-    return <>
-        <div className="home-container">
-            <div>
-                
-            </div>
-            <div>
+    render() {
+        return <>
+            <div className="home-container">
                 <div>
-                    <h1>hi</h1>
+
+                </div>
+                <div>
+                    <div>
+                        <h1>hi</h1>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <h2>hello</h2>
+                    </div>
+                </div>
+                <div>
+                    <p>tessék</p>
                 </div>
             </div>
-            <div>
-                <div>
-                    <h2>hello</h2>
-                </div>
-            </div>
-            <div>
-                <p>tessék</p>
-            </div>
-        </div>
-    </>;
-
+        </>;
+    }
 }
-
 export default HomePage
