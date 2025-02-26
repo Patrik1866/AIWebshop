@@ -89,9 +89,15 @@ class Header extends Component<HeaderProps, HeaderState> {
             </>
           ) : (
             <div className="nav-auth">
-              <a href="/LoginPage" className="login-button-header">
-                Bejelentkezés
-                <i style={{ margin: "0 0 0 0.5em" }} className="fas fa-sign-in-alt"></i>
+              <a 
+                href="/"
+                className="logout-button-header"
+                onClick={() => {
+                  authService.logout();
+                }}
+              >
+                Kijelentkezés
+                <i style={{margin: "0 0 0 0.5em"}} className="fas fa-sign-out-alt"></i>
               </a>
             </div>
           )}
