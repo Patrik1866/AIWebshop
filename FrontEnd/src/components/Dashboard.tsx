@@ -1,7 +1,8 @@
-import { useAuth } from "../util/AuthService";
+import { useState } from "react";
+import authService from "../util/AuthService";
 
 export function Dashboard() {
-    const { user, isAuthenticated } = useAuth();
+    const [ user,isAuthenticated ] = useState(authService.getUser());
 
     if (!isAuthenticated) {
         return <p>Kérlek jelentkezz be hogy lásd az oldalt</p>;

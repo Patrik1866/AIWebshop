@@ -1,21 +1,37 @@
-import React, { useState } from "react";
+import React, { Component} from "react";
 import '../styles/loginPage.css';
 import Notification from "../components/Notification";
 import authService from "../util/AuthService";
+import { LoginForm } from "../entities/LoginForm";
 
-export function LoginPage() {
-  const [showNotification, setShowNotification] = useState(false);
-  const [loginFormData, setLoginFormData] = useState({
-    username: "",
-    password: "",
-  });
+interface LoginPageProps {
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+}
+interface LoginPageState{
+  loginForm: LoginForm;
+  showNotifification: boolean;
+}
+
+class LoginPage extends Component<LoginPageProps, LoginPageState> {
+  constructor(props: LoginPageProps) {
+    super(props);
+    this.state = {
+      loginForm: {
+        username: '',
+        password: ''
+      },
+      showNotifification:false
+    }
+
+  }
+  
+
+  private handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    setLoginFormData({ ...loginFormData, [id]: value })
+    this.setState({ loginForm: { ...this.state.loginForm, [id]: value }})
   }
 
-  const handleLogin = async (event: React.FormEvent) => {
+  private handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
 
     try {
@@ -26,7 +42,7 @@ export function LoginPage() {
           "Authorization": `Bearer ${sessionStorage.getItem("token")}`
         },
         credentials: 'include',
-        body: JSON.stringify(loginFormData)
+        body: JSON.stringify(this.state.loginForm)
       });
 
       if (response.ok) {
@@ -34,7 +50,7 @@ export function LoginPage() {
         const data = await response.json();
         sessionStorage.setItem("token", data.token);
 
-        
+
 
         const safeData = {
           id: data.user.id,
@@ -49,7 +65,7 @@ export function LoginPage() {
         sessionStorage.setItem("currentUser", JSON.stringify(safeData));
         authService.setUser(safeData);
 
-        setShowNotification(true);
+        this.setState({showNotifification:true})
 
         setTimeout(() => {
           window.location.href = "/";
@@ -65,36 +81,39 @@ export function LoginPage() {
     }
   };
 
-  return (<>
+  render(){
+    return (<>
 
-    <div className="loginContainer">
-      <h2>Bejelentkezés</h2>
-      <form className="loginForm" onSubmit={handleLogin}>
-        <div className="form-group">
-          <label>Felhasználónév</label>
+      <div className="loginContainer">
+        <h2>Bejelentkezés</h2>
+        <form className="loginForm" onSubmit={this.handleLogin}>
+          <div className="form-group">
+            <label>Felhasználónév</label>
+            <br />
+            <input placeholder="Felhasználónév" type="text" id="username" name="username" required value={this.state.loginForm.username} onChange={this.handleChange} />
+          </div>
+          <div className="form-group">
+            <label>Jelszó</label>
+            <br />
+            <input placeholder="Jelszó" type="password" id="password" name="password" required value={this.state.loginForm.password} onChange={this.handleChange} />
+          </div>
+          <button type="submit" className="login-button">
+            Bejelentkezés
+          </button>
           <br />
-          <input placeholder="Felhasználónév" type="text" id="username" name="username" required value={loginFormData.username} onChange={handleChange} />
-        </div>
-        <div className="form-group">
-          <label>Jelszó</label>
-          <br />
-          <input placeholder="Jelszó" type="password" id="password" name="password" required value={loginFormData.password} onChange={handleChange} />
-        </div>
-        <button type="submit" className="login-button">
-          Bejelentkezés
-        </button>
-        <br />
-        <label>
-          Még nincs profilja?<a style={{ textDecoration: "underline", color: "#A6A278" }} href="/RegisterPage">Regisztráció</a>
-        </label>
-      </form>
-    </div>
+          <label>
+            Még nincs profilja?<a style={{ textDecoration: "underline", color: "#A6A278" }} href="/RegisterPage">Regisztráció</a>
+          </label>
+        </form>
+      </div>
 
-    {showNotification && <Notification message="Sikeres bejelentkezés" />}
+      {this.state.showNotifification && <Notification message="Sikeres bejelentkezés" />}
 
-  </>
-  );
-};
+    </>
+    );
+  };
+}
+
 
 
 export default LoginPage

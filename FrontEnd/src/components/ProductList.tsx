@@ -68,7 +68,7 @@ const ProductList = () => {
             <p>Termék ára: <span>{product.price}-. (Ft) </span></p>
             <p>Termék mennyisége: <span>{product.quantity} (db)</span></p>
             <div className="product-button-group">
-              <button onClick={() => handleProductDelete(product.id)}>Törlés</button>
+              <button onClick={() => handleProductDelete(product.id!)}>Törlés</button>
               <button onClick={() => handleProductUpdate(Number(product.id))}>Módosítás</button>
             </div>
           </div>

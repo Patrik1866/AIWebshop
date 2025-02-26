@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import "../styles/gemini.css"
+import authService from "../util/AuthService";
 
 
 
 
 const GeminiChatPage = () => {
-    const {user} = useAuth();
+    const [user] = useState(authService.getUser());
     const [message, setMessage] = useState("");
     const [responses, setResponse] = useState<{question: string, message: string}[]>([]);
 
@@ -91,6 +92,3 @@ const GeminiChatPage = () => {
 
 export default GeminiChatPage;
 
-function useAuth(): { user: any; } {
-    throw new Error("Function not implemented.");
-}

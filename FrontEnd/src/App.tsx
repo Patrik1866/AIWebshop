@@ -19,22 +19,18 @@ function App() {
   const [, setIsAuthenticated] = useState(authService.isAuthenticated());
 
   useEffect(() => {
-    // Create a function to handle auth changes
     const handleAuthChange = () => {
       setIsAuthenticated(authService.isAuthenticated());
     };
 
-    // Listen for storage events (for multi-tab synchronization)
     window.addEventListener('storage', (event) => {
       if (event.key === 'currentUser') {
         handleAuthChange();
       }
     });
 
-    // Initialize auth state
     handleAuthChange();
 
-    // Optional: Set up any additional initialization here
     
     return () => {
       window.removeEventListener('storage', handleAuthChange);
