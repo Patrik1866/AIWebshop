@@ -1,14 +1,13 @@
 import "../styles/profile.css"
 import React, { useEffect, useState } from "react";
 import Notification from "../components/Notification";
+import authService from "../util/AuthService";
 
 
 export function ProfilePage(this: any) {
-    const { user, setUser } = useAuth();
+    const [user, setUser] = useState(authService.getUser());
     const [notificationMessage, setNotificationMessage] = useState<string | null>(null);
     const [address, setAddressForm] = useState({
-        id: 0,
-        userId: 0,
         city: "",
         street: "",
         address: "",
@@ -157,6 +156,3 @@ export function ProfilePage(this: any) {
 
 export default ProfilePage;
 
-function useAuth(): { user: any; setUser: any; } {
-    throw new Error("Function not implemented.");
-}
