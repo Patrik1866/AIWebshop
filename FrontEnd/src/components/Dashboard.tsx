@@ -1,18 +1,36 @@
-import { useState } from "react";
+import { Component} from "react";
+import { User } from "../entities/User";
 import authService from "../util/AuthService";
 
-export function Dashboard() {
-    const [ user,isAuthenticated ] = useState(authService.getUser());
+interface DashboardProps{
+}
+interface DashboardState{
+    user: User | null;
+}
 
-    if (!isAuthenticated) {
-        return <p>Kérlek jelentkezz be hogy lásd az oldalt</p>;
-    }
+class Dashboard extends Component<DashboardProps,DashboardState>{ 
+    constructor(props:DashboardProps){
+        super(props);
+        this.state={
+            user: authService.getUser()
+        }
+    };
 
-    return (
+
+    
+    render(){
+        if (!authService.isAuthenticated()) {
+            return <p>Kérlek jelentkezz be hogy lásd az oldalt</p>;
+        }
+    
+        return (
         <div>
             <h1>Dashboard</h1>
-            <p>User: {user?.username}</p> <br />
-            <p>Email {user?.email}</p>
+            <p>User: {this.state.user?.username}</p> <br />
+            <p>Email {this.state.user?.email}</p>
         </div>
     );
+    }
 }
+
+export default Dashboard;

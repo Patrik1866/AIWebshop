@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Component } from "react";
 import "../styles/manageProducts.css"
 import { Product } from "../entities/Product";
 
@@ -6,25 +6,33 @@ interface ManageProductsPageProps {
   id?: string;
 }
 
+interface ManageProductsPageState {
+  product: Product;
+}
+class ManageProductsPage extends Component<ManageProductsPageProps, ManageProductsPageState>{
+ constructor(props: ManageProductsPageProps) {
+   super(props);
+   this.state = {
+    product: {
+      id: null,
+      name: "",
+      description: "",
+      price: 0,
+      quantity: 0,
+      categoryId: 0,
+      subCategoryId: 0
+    }
+   }
+ }
 
-const ManageProductsPage = ({id}:ManageProductsPageProps ) => {
-  const [product, setProduct] = useState<Product>({
-    id: null,
-    name: "",
-    description: "",
-    price: 0,
-    quantity: 0,
-    categoryId: 0,
-    subCategoryId: 0,
-  });
+ componentDidMount(): void {
+  const { id } = this.props;
+  if (id) {
+    this.loadProductIfUpdated(Number(id));
+  }
+ }
 
-
-
-  useEffect(() => {
-    loadProductIfUpdated(Number(id));
-  }, [id]);
-
-  const loadProductIfUpdated = async (productId: number) => {
+  private loadProductIfUpdated = async (productId: number) => {
     try {
       const response = await fetch(`http://localhost:8080/products/${productId}`, {
         method: "GET",
@@ -35,15 +43,14 @@ const ManageProductsPage = ({id}:ManageProductsPageProps ) => {
       });
       if (response.ok) {
         const data = await response.json();
-        setProduct(data);
+        this.setState({product:data});
       }
     } catch (e) {
 
     }
   }
 
-  const handleProductSave = async () => {
-    console.log(product);
+  private handleProductSave = async () => {
     try {
       const response = await fetch(`http://localhost:8080/products`, {
         method: 'PUT',
@@ -51,7 +58,7 @@ const ManageProductsPage = ({id}:ManageProductsPageProps ) => {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${sessionStorage.getItem("token")}`
         },
-        body: JSON.stringify(product),
+        body: JSON.stringify(this.state.product),
       });
       console.log(response);
     } catch (error) {
@@ -59,18 +66,19 @@ const ManageProductsPage = ({id}:ManageProductsPageProps ) => {
     }
   };
 
-  const handleProductInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  private handleProductInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
   
       const productToSave = {
-        ...product,
+        ...this.state.product,
         [name]: value
       };
-      setProduct(productToSave);
+      this.setState({ product: productToSave });
     
 
   };
 
+  render(){
   return (
     <div className="product-manage-container">
       <h2>Termék hozzáadása</h2>
@@ -80,8 +88,8 @@ const ManageProductsPage = ({id}:ManageProductsPageProps ) => {
           <input
             type="text"
             name="name"
-            value={product.name}
-            onChange={handleProductInputChange}
+            value={this.state.product.name}
+            onChange={this.handleProductInputChange}
           />
         </div>
         <div>
@@ -89,8 +97,8 @@ const ManageProductsPage = ({id}:ManageProductsPageProps ) => {
           <input
             type="text"
             name="description"
-            value={product.description}
-            onChange={handleProductInputChange}
+            value={this.state.product.description}
+            onChange={this.handleProductInputChange}
           />
         </div>
         <div>
@@ -98,8 +106,8 @@ const ManageProductsPage = ({id}:ManageProductsPageProps ) => {
           <input
             type="text"
             name="price"
-            value={product.price}
-            onChange={handleProductInputChange}
+            value={this.state.product.price}
+            onChange={this.handleProductInputChange}
           />
         </div>
         <div>
@@ -107,8 +115,8 @@ const ManageProductsPage = ({id}:ManageProductsPageProps ) => {
           <input
             type="text"
             name="quantity"
-            value={product.quantity}
-            onChange={handleProductInputChange}
+            value={this.state.product.quantity}
+            onChange={this.handleProductInputChange}
           />
         </div>
         <div>
@@ -116,8 +124,8 @@ const ManageProductsPage = ({id}:ManageProductsPageProps ) => {
           <input
             type="text"
             name="categoryId"
-            value={product.categoryId}
-            onChange={handleProductInputChange}
+            value={this.state.product.categoryId}
+            onChange={this.handleProductInputChange}
           />
         </div>
         <div>
@@ -125,12 +133,12 @@ const ManageProductsPage = ({id}:ManageProductsPageProps ) => {
           <input
             type="text"
             name="subCategoryId"
-            value={product.subCategoryId}
-            onChange={handleProductInputChange}
+            value={this.state.product.subCategoryId}
+            onChange={this.handleProductInputChange}
           />
         </div>
 
-        <button onClick={handleProductSave}>Mentés</button>
+        <button onClick={this.handleProductSave}>Mentés</button>
       </form>
       <a href="/productList">
         <button>Termékek megtekintése</button>
@@ -139,4 +147,5 @@ const ManageProductsPage = ({id}:ManageProductsPageProps ) => {
   );
 };
 
+}
 export default ManageProductsPage;

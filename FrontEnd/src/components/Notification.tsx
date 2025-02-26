@@ -1,28 +1,39 @@
-import React, { useState, useEffect } from "react";
+import { Component } from "react";
 import "../styles/notification.css";
 
 interface NotificationProps {
     message: string;
 }
 
-const Notification: React.FC<NotificationProps> = ({ message }) => {
-    const [visible, setVisible] = useState(false);
+interface NotificationState {
+    visible: boolean;
+}
 
-    useEffect(() => {
-        setVisible(true);
-        const timer = setTimeout(() => {
-            setVisible(false);
+class Notification extends Component<NotificationProps, NotificationState> {
+    constructor(props: NotificationProps) {
+        super(props);
+        this.state = {
+            visible: false,
+        };
+    }
+
+    componentDidMount(): void {
+        this.setState({ visible: true });
+        setTimeout(() => {
+            this.setState({ visible: false });
         }, 6000);
-        return () => clearTimeout(timer);
-    }, [message]);
+    }
 
-    return (
-        visible && (
-            <div className="notification">
-                <p>{message}</p>
-            </div>
-        )
-    );
+    render(){
+        return (
+            this.state.visible && (
+                <div className="notification">
+                    <p>{this.props.message}</p>
+                </div>
+            )
+        );
+    }
+    
 };
 
 export default Notification;
