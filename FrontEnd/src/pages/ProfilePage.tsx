@@ -1,4 +1,3 @@
-import { useAuth } from "../util/AuthContext";
 import "../styles/profile.css"
 import React, { useEffect, useState } from "react";
 import Notification from "../components/Notification";
@@ -157,3 +156,7 @@ export function ProfilePage(this: any) {
 }
 
 export default ProfilePage;
+
+function useAuth(): { user: any; setUser: any; } {
+    throw new Error("Function not implemented.");
+}

@@ -47,10 +47,25 @@
 }
 
 .productReviews {
+    margin-top: 2%;
     padding: 20px;
     background-color: #f7f7f7;
     border-top: 1px solid #ddd;
 }
+
+.stars {
+    display: flex;
+  }
+  
+  .star {
+    font-size: 24px;
+    color: #ccc;
+    margin-right: 5px;
+  }
+  
+  .star.active {
+    color: #ffd700;
+  }
 
 @media only screen and (max-width: 768px) {
     .productContainer {
@@ -63,5 +78,39 @@
 
     .productReviews {
         padding: 10px;
+    }
+}
+
+.review{
+    padding: 20px;
+
+    .reviewDescription{
+        margin-top: 5px;
+    }
+}
+
+.addDescriptionButton{
+    display: flex;
+    justify-content: end;
+}
+
+.addReviewArea{
+    margin: auto;
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    div{
+        margin-bottom: 1%;
+        cursor: pointer;
+        margin-left: auto;
+    }
+    input{
+        outline: none;
+    };
+
+    .sendReview{
+        margin-top: 1%;
     }
 }

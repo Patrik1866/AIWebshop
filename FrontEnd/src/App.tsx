@@ -1,10 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import "./style.css";
-import { AuthProvider } from "./util/AuthContext";
 import { ProtectedRoute } from "./util/ProtectedRoute.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
 import ManageProductsPage from "./pages/ManageProductsPage.tsx";
@@ -13,16 +12,39 @@ import UnathorizedPage from "./pages/UnauthorizedPage.tsx";
 import ProductsPage from "./pages/ProductsPage.tsx";
 import Header from "./components/Header.tsx";
 import ViewProductPage from "./pages/ViewProductPage.tsx";
+import authService from "./util/AuthService.ts";
 
 function App() {
 
+  const [, setIsAuthenticated] = useState(authService.isAuthenticated());
+
   useEffect(() => {
+    // Create a function to handle auth changes
+    const handleAuthChange = () => {
+      setIsAuthenticated(authService.isAuthenticated());
+    };
+
+    // Listen for storage events (for multi-tab synchronization)
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'currentUser') {
+        handleAuthChange();
+      }
+    });
+
+    // Initialize auth state
+    handleAuthChange();
+
+    // Optional: Set up any additional initialization here
+    
+    return () => {
+      window.removeEventListener('storage', handleAuthChange);
+    };
   }, []);
 
 
 
   return (
-    <AuthProvider>
+    <>
       <Header></Header>
       <BrowserRouter>
         <Routes>
@@ -84,7 +106,7 @@ function App() {
 
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+    </>
   );
 }
 

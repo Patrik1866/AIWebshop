@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import '../styles/loginPage.css';
-import { useAuth } from "../util/AuthContext";
 import Notification from "../components/Notification";
+import authService from "../util/AuthService";
 
 export function LoginPage() {
-  const { setUser } = useAuth();
   const [showNotification, setShowNotification] = useState(false);
   const [loginFormData, setLoginFormData] = useState({
     username: "",
@@ -48,7 +47,7 @@ export function LoginPage() {
           isModerator: data.user.isModerator
         }
         sessionStorage.setItem("currentUser", JSON.stringify(safeData));
-        setUser(data.user);
+        authService.setUser(safeData);
 
         setShowNotification(true);
 

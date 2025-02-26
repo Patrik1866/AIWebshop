@@ -1,21 +1,15 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../util/AuthContext";
 import "../styles/manageProducts.css"
-import { useParams } from "react-router-dom";
+import { Product } from "../entities/Product";
 
-interface ProductProps {
-  name: string;
-  description: string;
-  price: number;
-  quantity: number;
-  categoryId: number;
-  subCategoryId: number;
+interface ManageProductsPageProps {
+  id?: string;
 }
 
-const ManageProductsPage = () => {
-    const {id} = useParams();
-    const {user} = useAuth();
-    const [product, setProduct] = useState<ProductProps>({
+
+const ManageProductsPage = ({id}:ManageProductsPageProps ) => {
+  const [product, setProduct] = useState<Product>({
+    id: null,
     name: "",
     description: "",
     price: 0,
@@ -30,20 +24,20 @@ const ManageProductsPage = () => {
     loadProductIfUpdated(Number(id));
   }, [id]);
 
-  const loadProductIfUpdated = async (productId: number) =>{
-    try{
-      const response = await fetch(`http://localhost:8080/products/${productId}`,{
+  const loadProductIfUpdated = async (productId: number) => {
+    try {
+      const response = await fetch(`http://localhost:8080/products/${productId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${sessionStorage.getItem("token")}`
         },
       });
-      if (response.ok){
+      if (response.ok) {
         const data = await response.json();
         setProduct(data);
       }
-    }catch (e){
+    } catch (e) {
 
     }
   }
@@ -51,11 +45,11 @@ const ManageProductsPage = () => {
   const handleProductSave = async () => {
     console.log(product);
     try {
-      const response = await fetch(`http://localhost:8080/products`,{
+      const response = await fetch(`http://localhost:8080/products`, {
         method: 'PUT',
         headers: {
           "Content-Type": "application/json",
-            "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+          "Authorization": `Bearer ${sessionStorage.getItem("token")}`
         },
         body: JSON.stringify(product),
       });
@@ -67,13 +61,13 @@ const ManageProductsPage = () => {
 
   const handleProductInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-        if (user) {
-            const productToSave = {
-                ...product,
-                [name]: value
-            };
-            setProduct(productToSave);
-        }
+  
+      const productToSave = {
+        ...product,
+        [name]: value
+      };
+      setProduct(productToSave);
+    
 
   };
 
@@ -138,8 +132,8 @@ const ManageProductsPage = () => {
 
         <button onClick={handleProductSave}>Mentés</button>
       </form>
-        <a href="/productList">
-      <button>Termékek megtekintése</button>
+      <a href="/productList">
+        <button>Termékek megtekintése</button>
       </a>
     </div>
   );

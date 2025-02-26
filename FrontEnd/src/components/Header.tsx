@@ -1,8 +1,9 @@
-import { useAuth } from "../util/AuthContext";
+import { useState } from "react";
 import "../styles/header.css";
+import authService from "../util/AuthService";
 
 function Header() {
-  const { user, hasRole } = useAuth();
+  const [user] = useState(authService.getUser());
 
   return (
     <header className="header">
@@ -39,14 +40,14 @@ function Header() {
               <a href="/chat" className="nav-link">Gemini chat</a>
 
             </div>
-            {hasRole(["ADMIN"]) && (
+            {authService.hasRole(["ADMIN"]) && (
               <div className="nav-item">
                 <a href="/dashboard" className="nav-link">
                   Kezelőfelület
                 </a>
               </div>
             )}
-            {hasRole(["ADMIN", "MODERATOR"]) && (
+            {authService.hasRole(["ADMIN", "MODERATOR"]) && (
               <div className="nav-item">
                 <a href="/manageProducts" className="nav-link">Termékek kezelése</a> 
               </div>
@@ -86,3 +87,4 @@ function Header() {
   );
 }
 export default Header;
+

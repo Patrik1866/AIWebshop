@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../styles/gemini.css"
-import { useAuth } from "../util/AuthContext";
+
 
 
 
@@ -90,3 +90,7 @@ const GeminiChatPage = () => {
 
 
 export default GeminiChatPage;
+
+function useAuth(): { user: any; } {
+    throw new Error("Function not implemented.");
+}
