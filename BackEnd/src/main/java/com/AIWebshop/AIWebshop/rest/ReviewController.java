@@ -2,8 +2,10 @@ package com.AIWebshop.AIWebshop.rest;
 
 import com.AIWebshop.AIWebshop.entity.Product;
 import com.AIWebshop.AIWebshop.entity.Reviews;
+import com.AIWebshop.AIWebshop.entity.ReviewsWithUsername;
 import com.AIWebshop.AIWebshop.service.ProductService;
 import com.AIWebshop.AIWebshop.service.ReviewService;
+import com.AIWebshop.AIWebshop.service.ReviewsWithUsernameServce;
 import com.AIWebshop.AIWebshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,8 @@ public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private ReviewsWithUsernameServce reviewsWithUsernameServce;
 
     @Autowired
     private ProductService productService;
@@ -40,8 +44,8 @@ public class ReviewController {
     }
 
     @GetMapping("/productId/{productId}")
-    public List<Reviews> findByProductId(@PathVariable int productId){
-        List<Reviews> theReview = reviewService.findByProductId(productId);
+    public List<ReviewsWithUsername> findByProductId(@PathVariable int productId){
+        List<ReviewsWithUsername> theReview = reviewsWithUsernameServce.findByProductId(productId);
 
         if (theReview.isEmpty()){
             throw new RuntimeException("Nem található vélemény ehhez a termékhez");
