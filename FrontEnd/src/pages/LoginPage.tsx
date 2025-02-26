@@ -1,37 +1,23 @@
-import React, { Component} from "react";
+import React, { useState } from "react";
 import '../styles/loginPage.css';
 import Notification from "../components/Notification";
 import authService from "../util/AuthService";
 import { LoginForm } from "../entities/LoginForm";
 
-interface LoginPageProps {
 
-}
-interface LoginPageState{
-  loginForm: LoginForm;
-  showNotifification: boolean;
-}
+const LoginPage = () => {
+  const [loginForm, setLoginForm] = useState<LoginForm>({
+    username: '',
+    password: ''
+  });
+  const [showNotifification, setShowNotifification] = useState(false);
 
-class LoginPage extends Component<LoginPageProps, LoginPageState> {
-  constructor(props: LoginPageProps) {
-    super(props);
-    this.state = {
-      loginForm: {
-        username: '',
-        password: ''
-      },
-      showNotifification:false
-    }
-
-  }
-  
-
-  private handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    this.setState({ loginForm: { ...this.state.loginForm, [id]: value }})
+    setLoginForm({ ...loginForm, [id]: value })
   }
 
-  private handleLogin = async (event: React.FormEvent) => {
+  const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
 
     try {
@@ -42,15 +28,13 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
           "Authorization": `Bearer ${sessionStorage.getItem("token")}`
         },
         credentials: 'include',
-        body: JSON.stringify(this.state.loginForm)
+        body: JSON.stringify(loginForm)
       });
 
       if (response.ok) {
 
         const data = await response.json();
         sessionStorage.setItem("token", data.token);
-
-
 
         const safeData = {
           id: data.user.id,
@@ -65,7 +49,7 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
         sessionStorage.setItem("currentUser", JSON.stringify(safeData));
         authService.setUser(safeData);
 
-        this.setState({showNotifification:true})
+        setShowNotifification(true)
 
         setTimeout(() => {
           window.location.href = "/";
@@ -81,21 +65,21 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
     }
   };
 
-  render(){
-    return (<>
+  return (
+    <>
 
       <div className="loginContainer">
         <h2>Bejelentkezés</h2>
-        <form className="loginForm" onSubmit={this.handleLogin}>
+        <form className="loginForm" onSubmit={handleLogin}>
           <div className="form-group">
             <label>Felhasználónév</label>
             <br />
-            <input placeholder="Felhasználónév" type="text" id="username" name="username" required value={this.state.loginForm.username} onChange={this.handleChange} />
+            <input placeholder="Felhasználónév" type="text" id="username" name="username" required value={loginForm.username} onChange={handleChange} />
           </div>
           <div className="form-group">
             <label>Jelszó</label>
             <br />
-            <input placeholder="Jelszó" type="password" id="password" name="password" required value={this.state.loginForm.password} onChange={this.handleChange} />
+            <input placeholder="Jelszó" type="password" id="password" name="password" required value={loginForm.password} onChange={handleChange} />
           </div>
           <button type="submit" className="login-button">
             Bejelentkezés
@@ -107,13 +91,10 @@ class LoginPage extends Component<LoginPageProps, LoginPageState> {
         </form>
       </div>
 
-      {this.state.showNotifification && <Notification message="Sikeres bejelentkezés" />}
+      {showNotifification && <Notification message="Sikeres bejelentkezés" />}
 
     </>
-    );
-  };
-}
+  );
+};
 
-
-
-export default LoginPage
+export default LoginPage;

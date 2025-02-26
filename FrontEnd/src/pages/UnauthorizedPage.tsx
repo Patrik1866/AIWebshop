@@ -1,16 +1,10 @@
-import { Component } from "react";
 
-class UnathorizedPage extends Component {
+const UnauthorizedPage = () => {
+  return (
+    <div>
+      <h1>Unauthorized</h1>
+    </div>
+  );
+};
 
-
-    render() {
-        return (
-            <div>
-                <h1>Unauthorized</h1>
-            </div>
-        );
-    }
-}
-
-
-export default UnathorizedPage;
+export default UnauthorizedPage;
