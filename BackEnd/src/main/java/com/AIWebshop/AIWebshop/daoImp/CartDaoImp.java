@@ -30,14 +30,12 @@ public class CartDaoImp implements CartDao {
     }
 
     @Override
-    public List<Cart> findByUserId(int id) {
+    public List<Cart> findByUserId(int userId) {
         try {
-            TypedQuery<Cart> theQuerry = entityManager.createQuery("FROM Cart WHERE userId = :id", Cart.class);
-            theQuerry.setParameter("id",id);
-            List<Cart> carts = theQuerry.getResultList();
-
-            return carts;
-        } catch (Exception e){
+            TypedQuery<Cart> theQuery = entityManager.createQuery("FROM Cart c WHERE c.user = :userId", Cart.class);
+            theQuery.setParameter("userId", userId);
+            return theQuery.getResultList();
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }

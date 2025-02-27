@@ -9,7 +9,7 @@ import java.util.List;
 public interface CartDao {
     List<Cart> findAll();
     Cart findById(int id);
-    List<Cart> findByUserId(int id);
+    List<Cart> findByUserId(int userId);
     Cart deleteById(Cart cart);
     Cart saveCart(Cart cart);
 }

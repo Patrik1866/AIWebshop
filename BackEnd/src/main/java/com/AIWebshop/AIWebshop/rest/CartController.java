@@ -1,16 +1,19 @@
 package com.AIWebshop.AIWebshop.rest;
 
 import com.AIWebshop.AIWebshop.entity.Cart;
+import com.AIWebshop.AIWebshop.entity.CartView;
 import com.AIWebshop.AIWebshop.entity.Product;
 import com.AIWebshop.AIWebshop.entity.User;
 import com.AIWebshop.AIWebshop.req.CartRequest;
 import com.AIWebshop.AIWebshop.service.CartService;
+import com.AIWebshop.AIWebshop.service.CartViewService;
 import com.AIWebshop.AIWebshop.service.ProductService;
 import com.AIWebshop.AIWebshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -23,6 +26,8 @@ public class CartController {
     private UserService userService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private CartViewService cartViewService;
 
     @GetMapping
     public List<Cart> findAll(){
@@ -39,12 +44,12 @@ public class CartController {
     }
 
     @GetMapping("/userId/{userId}")
-    public List<Cart> findCartByUserId(@PathVariable int userId){
+    public List<CartView> findCartByUserId(@PathVariable int userId){
         User theUser = userService.findById(userId);
         if (theUser == null){
             throw new RuntimeException("Felhasználó nem létezik");
         }
-        List<Cart> carts = cartService.findByUserId(userId);
+        List<CartView> carts = cartViewService.findByUserId(userId);
 
         if (carts.isEmpty()){
             throw new RuntimeException("A kosár Üres");
@@ -65,13 +70,18 @@ public class CartController {
     }
 
     @PostMapping("/save")
-    public void saveCart(@RequestBody CartRequest cartRequest){
-        User user = userService.findById(cartRequest.getUser());
+    public void saveCart(@RequestBody CartRequest cartRequest, Principal principal) {
+        String username = principal.getName();
+        User user = userService.findByUsername(username);
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+
         Product product = productService.findByProductId(cartRequest.getProduct());
 
-        Cart cart = new Cart(user,product, cartRequest.getQuantity());
+        Cart cart = new Cart(user.getId(), product, cartRequest.getQuantity());
 
         cartService.saveCart(cart);
-
     }
+
 }
