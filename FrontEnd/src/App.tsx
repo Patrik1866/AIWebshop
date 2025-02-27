@@ -13,6 +13,7 @@ import ProductsPage from "./pages/ProductsPage.tsx";
 import Header from "./components/Header.tsx";
 import ViewProductPage from "./pages/ViewProductPage.tsx";
 import authService from "./util/AuthService.ts";
+import CartPage from "./pages/CartPage.tsx";
 
 function App() {
 
@@ -53,6 +54,12 @@ function App() {
           <Route path="/unauthorized" element={<UnathorizedPage />}></Route>
 
           {/*Védett elérések */}
+
+          <Route path="/cart" element={
+            <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
+              <CartPage />
+            </ProtectedRoute>
+          } />
 
           <Route path="/profil" element={
             <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>

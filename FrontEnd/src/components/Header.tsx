@@ -56,23 +56,29 @@ const Header = () => {
                 <a href="/manageProducts" className="nav-link">Termékek kezelése</a>
               </div>
             )}
-            <div className="nav-item">
-              <a href="/profil" className="nav-link">
-                Saját profil
-              </a>
-            </div>
-            <div className="nav-auth">
-              <a
-                href="/"
-                className="logout-button-header"
-                onClick={() => {
-                  localStorage.clear();
-                  sessionStorage.clear();
-                }}
-              >
-                Kijelentkezés
-                <i style={{ margin: "0 0 0 0.5em" }} className="fas fa-sign-out-alt"></i>
-              </a>
+            <div className="nav-right">
+              <div className="nav-item">
+                <a href="/cart" className="nav-link">
+                  <i className="fas fa-shopping-cart"></i>
+                </a>
+              </div>
+              <div className="nav-item">
+                <a href="/profil" className="nav-link">
+                  <i className="fas fa-user"></i>
+                </a>
+              </div>
+              <div className="nav-auth">
+                <a
+                  href="/"
+                  className="logout-button-header"
+                  onClick={() => {
+                    localStorage.clear();
+                    sessionStorage.clear();
+                  }}
+                >
+                  <i className="fas fa-sign-out-alt"></i>
+                </a>
+              </div>
             </div>
           </>
         ) : (
@@ -80,7 +86,7 @@ const Header = () => {
             <a
               href="/LoginPage"
               className="login-button-header"
-             
+
             >
               Bejelentkezés
               <i style={{ margin: "0 0 0 0.5em" }} className="fas fa-sign-out-alt"></i>

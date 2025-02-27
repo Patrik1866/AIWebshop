@@ -3,6 +3,7 @@ import '../styles/loginPage.css';
 import Notification from "../components/Notification";
 import authService from "../util/AuthService";
 import { LoginForm } from "../entities/LoginForm";
+import cartService from "../util/CartService";
 
 
 const LoginPage = () => {
@@ -48,6 +49,11 @@ const LoginPage = () => {
         }
         sessionStorage.setItem("currentUser", JSON.stringify(safeData));
         authService.setUser(safeData);
+
+        const cartContent = await cartService.fetchCartContent();
+        cartService.setCartContent(cartContent);
+
+        console.log(cartContent)
 
         setShowNotifification(true)
 

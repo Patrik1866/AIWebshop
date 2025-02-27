@@ -62,7 +62,7 @@
 }
 
 
-.login-button-header, .logout-button-header{
+.login-button-header{
   text-decoration: none;
   font-weight: bold;
   background-color: rgb(243, 145, 145);
@@ -76,4 +76,20 @@
   background-color: #ad1d00c0;
   color: black;
   transition: 0.4s ease-in-out;
+}
+
+.logout-button-header{
+  text-decoration: none;
+  padding: 1.3rem;
+  border-radius: 0.3rem;
+}
+
+.nav-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.nav-right .nav-item {
+  margin-left: 20px;
 }
