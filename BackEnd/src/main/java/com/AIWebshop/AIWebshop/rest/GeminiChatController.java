@@ -5,6 +5,8 @@ import com.AIWebshop.AIWebshop.req.ChatRequest;
 import com.AIWebshop.AIWebshop.service.ChatService;
 import com.AIWebshop.AIWebshop.serviceImp.GeminiService;
 import com.AIWebshop.AIWebshop.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +21,7 @@ import java.util.Map;
 @RequestMapping("/chat")
 public class GeminiChatController {
 
+    private static final Logger log = LoggerFactory.getLogger(GeminiChatController.class);
     @Autowired
     private GeminiService geminiService;
 
@@ -50,6 +53,7 @@ public class GeminiChatController {
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
+            log.info(e.getMessage());
             return ResponseEntity.status(500).body("Error communicating with Gemini API: " + e.getMessage());
         }
     }

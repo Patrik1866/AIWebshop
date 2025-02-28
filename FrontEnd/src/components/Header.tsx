@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "../styles/header.css";
 import authService from "../util/AuthService";
 import { User } from "../entities/User";
+import cartService from "../util/CartService";
 
 const Header = () => {
   const [user, setUser] = useState<User | null>(authService.getUser());
@@ -60,8 +61,14 @@ const Header = () => {
               <div className="nav-item">
                 <a href="/cart" className="nav-link">
                   <i className="fas fa-shopping-cart"></i>
+                  {cartService.getCartContent()!.length > 0 ? (
+                    <span className="cart-count">{cartService.getCartContent()!.length}</span>
+                  ) : (
+                    <span className="cart-count">0</span>
+                  )}
                 </a>
               </div>
+  
               <div className="nav-item">
                 <a href="/profil" className="nav-link">
                   <i className="fas fa-user"></i>

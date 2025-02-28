@@ -7,6 +7,7 @@ const GeminiChatPage = () => {
     const [user] = useState<User | null>(authService.getUser());
     const [message, setMessage] = useState("");
     const [responses, setResponses] = useState<{ question: string, message: string }[]>([]);
+    
 
     useEffect(() => {
         handleGetMessages();

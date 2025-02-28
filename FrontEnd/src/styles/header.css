@@ -93,3 +93,13 @@
 .nav-right .nav-item {
   margin-left: 20px;
 }
+.cart-count {
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  background-color: red;
+  padding: 2px 5px;
+  border-radius: 50%;
+  position: absolute;
+  top: -5px;
+}

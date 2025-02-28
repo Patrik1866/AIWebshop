@@ -11,27 +11,59 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class GeminiService {
-
     private final String apiKey;
 
     public GeminiService(){
         Dotenv dotenv = Dotenv.load();
         this.apiKey = dotenv.get("GEMINI_API_KEY");
         if (apiKey == null) {
-            throw new RuntimeException("OpenAI API token not found in environment variable");
+            throw new RuntimeException("Gemini API key not found in environment variable");
         }
     }
 
-    private final String API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
+    private final String API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
     public String generateResponse(String prompt) {
+        // Check if prompt is null
+        if (prompt == null) {
+            prompt = "Hello";
+        }
+
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpPost request = new HttpPost(API_BASE_URL + "?key=" + apiKey);
             request.setHeader("Content-Type", "application/json");
 
-            String json = "{\"contents\":[{\"parts\":[{\"text\":\"" + prompt + "\"}]}]}";
+            // Build the JSON request exactly matching the documentation
+            Map<String, Object> requestBody = new HashMap<>();
+
+            // Create the contents array with a single element
+            List<Map<String, Object>> contents = new ArrayList<>();
+            Map<String, Object> content = new HashMap<>();
+
+            // Create parts array with a single element
+            List<Map<String, Object>> parts = new ArrayList<>();
+            Map<String, Object> part = new HashMap<>();
+            part.put("text", prompt);
+            parts.add(part);
+
+            // Add parts to content
+            content.put("parts", parts);
+
+            // Add content to contents
+            contents.add(content);
+
+            // Add contents to request
+            requestBody.put("contents", contents);
+
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(requestBody);
 
             StringEntity entity = new StringEntity(json);
             request.setEntity(entity);
@@ -39,8 +71,8 @@ public class GeminiService {
             CloseableHttpResponse response = httpClient.execute(request);
             String responseBody = EntityUtils.toString(response.getEntity());
 
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode rootNode = mapper.readTree(responseBody);
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readTree(responseBody);
 
             if (rootNode.has("candidates") && rootNode.get("candidates").isArray() &&
                     rootNode.get("candidates").size() > 0) {
