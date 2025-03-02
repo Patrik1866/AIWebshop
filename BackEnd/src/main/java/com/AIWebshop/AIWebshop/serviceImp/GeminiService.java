@@ -31,7 +31,6 @@ public class GeminiService {
     private final String API_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
     public String generateResponse(String prompt) {
-        // Check if prompt is null
         if (prompt == null) {
             prompt = "Hello";
         }
@@ -40,26 +39,20 @@ public class GeminiService {
             HttpPost request = new HttpPost(API_BASE_URL + "?key=" + apiKey);
             request.setHeader("Content-Type", "application/json");
 
-            // Build the JSON request exactly matching the documentation
             Map<String, Object> requestBody = new HashMap<>();
 
-            // Create the contents array with a single element
             List<Map<String, Object>> contents = new ArrayList<>();
             Map<String, Object> content = new HashMap<>();
 
-            // Create parts array with a single element
             List<Map<String, Object>> parts = new ArrayList<>();
             Map<String, Object> part = new HashMap<>();
             part.put("text", prompt);
             parts.add(part);
 
-            // Add parts to content
             content.put("parts", parts);
 
-            // Add content to contents
             contents.add(content);
 
-            // Add contents to request
             requestBody.put("contents", contents);
 
             ObjectMapper mapper = new ObjectMapper();

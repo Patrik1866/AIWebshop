@@ -31,8 +31,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**", "/cart/**", "/reviews/**", "/users/**", "/payment/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/moderator/**", "/products/**").hasAnyRole("MODERATOR", "ADMIN")
-                        .requestMatchers("/chat/**").hasAnyRole("USER", "MODERATOR", "ADMIN")
+                        .requestMatchers("/moderator/**") .hasAnyRole("MODERATOR", "ADMIN")
+                        .requestMatchers("/chat/**", "/products/**").hasAnyRole("USER", "MODERATOR", "ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

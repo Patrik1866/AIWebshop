@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -52,7 +53,7 @@ public class CartController {
         List<CartView> carts = cartViewService.findByUserId(userId);
 
         if (carts.isEmpty()){
-            throw new RuntimeException("A kosár Üres");
+            return Collections.emptyList(); // vagy egy üzenetet adhatunk vissza, pl. "A kosár üres"
         }
         return carts;
     }

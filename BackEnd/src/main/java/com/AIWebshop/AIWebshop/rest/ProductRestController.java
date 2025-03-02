@@ -17,6 +17,7 @@ public class ProductRestController {
     private ProductService productService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR', 'ROLE_USER')")
     public List<Product> findAll(){
         return productService.findAll();
     }
