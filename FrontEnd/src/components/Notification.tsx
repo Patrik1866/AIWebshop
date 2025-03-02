@@ -12,13 +12,14 @@ const Notification = ({ message }: NotificationProps) => {
     setVisible(true);
     const timer = setTimeout(() => {
       setVisible(false);
-    }, 6000);
+    }, 4000);
     return () => clearTimeout(timer);
   }, []);
 
   return visible && (
     <div className="notification">
-      <p>{message}</p>
+      <div className="header">Siker!</div>
+      <div className="message">{message}</div>
     </div>
   );
 };

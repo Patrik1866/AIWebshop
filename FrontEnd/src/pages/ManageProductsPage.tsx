@@ -66,72 +66,106 @@ const ManageProductsPage = () => {
     setProduct(productToSave);
   };
 
-  return (
+  const handleSelectChange = (event: { target: { name: any; value: any; }; }) => {
+    const { name, value } = event.target;
+    switch (name) {
+      case "categoryId":
+        setProduct({ ...product, categoryId: value });
+        break;
+      case "subCategoryId":
+        setProduct({ ...product, subCategoryId: value });
+        break;
+      default:
+        break;
+    }
+  };
+
+  return (<>
+    <button onClick={() => window.location.replace("/products")} className="back-button">
+          <i style={{ marginRight: "10px" }} className="fas fa-arrow-left"></i>Vissza
+        </button>
     <div className="product-manage-container">
-      <h2>Termék hozzáadása</h2>
-      <form>
-        <div>
+      <div className="header">
+        <h2>Termék hozzáadása</h2>
+        
+      </div>
+      <form className="product-form">
+        <div className="form-group">
           <label>Termék neve</label>
           <input
             type="text"
             name="name"
             value={product.name}
             onChange={handleProductInputChange}
+            className="form-control"
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Termék leírása</label>
           <input
             type="text"
             name="description"
             value={product.description}
             onChange={handleProductInputChange}
+            className="form-control"
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Termék ára</label>
           <input
             type="text"
             name="price"
             value={product.price}
             onChange={handleProductInputChange}
+            className="form-control"
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Termék mennyisége</label>
           <input
             type="text"
             name="quantity"
             value={product.quantity}
             onChange={handleProductInputChange}
+            className="form-control"
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Kategória kiválasztása</label>
-          <input
-            type="text"
+          <select
             name="categoryId"
             value={product.categoryId}
-            onChange={handleProductInputChange}
-          />
+            onChange={handleSelectChange}
+            className="form-control"
+          >
+            <option value="">Válasszon kategóriát</option>
+            {/* options */}
+          </select>
         </div>
-        <div>
+        <div className="form-group">
           <label>Alkategória kiválasztása</label>
-          <input
-            type="text"
+          <select
             name="subCategoryId"
             value={product.subCategoryId}
-            onChange={handleProductInputChange}
-          />
+            onChange={handleSelectChange}
+            className="form-control"
+          >
+            <option value="">Válasszon alkategóriát</option>
+            {/* options */}
+          </select>
         </div>
-
-        <button onClick={handleProductSave}>Mentés</button>
+  
+        <button onClick={handleProductSave} className="btn btn-primary">
+          Mentés
+        </button>
       </form>
       <a href="/productList">
-        <button>Termékek megtekintése</button>
+        <button className="btn btn-secondary">
+          Termékek megtekintése
+        </button>
       </a>
     </div>
-  );
+    </>);
 };
 
 export default ManageProductsPage;

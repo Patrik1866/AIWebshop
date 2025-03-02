@@ -25,17 +25,6 @@ const Header = () => {
               <a href="/products" className="nav-link dropdown-toggle">
                 Termékek
               </a>
-              <div className="dropdown-menu">
-                <a href="/products/category1" className="dropdown-item">
-                  Kategória 1
-                </a>
-                <a href="/products/category2" className="dropdown-item">
-                  Kategória 2
-                </a>
-                <a href="/products/category3" className="dropdown-item">
-                  Kategória 3
-                </a>
-              </div>
             </div>
             <div className="nav-item">
               <a href="/contact" className="nav-link">
@@ -54,7 +43,7 @@ const Header = () => {
             )}
             {authService.hasRole(["ADMIN", "MODERATOR"]) && (
               <div className="nav-item">
-                <a href="/manageProducts" className="nav-link">Termékek kezelése</a>
+                <a href="/products" className="nav-link">Termékek kezelése</a>
               </div>
             )}
             <div className="nav-right">
@@ -90,13 +79,9 @@ const Header = () => {
           </>
         ) : (
           <div className="nav-auth">
-            <a
-              href="/LoginPage"
-              className="login-button-header"
-
-            >
+            <a href="/LoginPage" className="login-button-header">
               Bejelentkezés
-              <i style={{ margin: "0 0 0 0.5em" }} className="fas fa-sign-out-alt"></i>
+              <i style={{ margin: "0 0 0 0.5em" }} className="fas fa-sign-in-alt"></i>
             </a>
           </div>
         )}

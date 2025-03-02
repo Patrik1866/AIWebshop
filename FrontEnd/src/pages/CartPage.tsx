@@ -1,38 +1,77 @@
-import cartService from "../util/CartService";
-
+import { useEffect, useState } from 'react';
+import '../styles/cartPage.scss';
+import cartService from '../util/CartService';
+import Notification from '../components/Notification';
 
 const CartPage = () => {
-    const content = cartService.getCartContent();
+    const [cartContent, setCartContent] = useState(cartService.getCartContent());
+    const [showNotifification, setShowNotifification] = useState(false);
+  
+    useEffect(() => {
+      setCartContent(cartService.getCartContent());
+    }, [cartService]);
+  
+    const handleCartDelete = async (index: number) => {
+      try {
+        console.log(cartContent)
+        console.log(cartContent![index].cartId);
+        const response = await fetch(`http://localhost:8080/cart/${cartContent![index].cartId}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+          },
+        });
+  
+        if (response.ok) {
+          cartService.setCartContent(cartContent!.filter(item => item.cartId !== cartContent![index].cartId));
+          setCartContent(cartService.getCartContent());
+          setShowNotifification(true);
+          setTimeout(() => {
+            setShowNotifification(false);
+          }, 4000);
+        } else {
+          throw new Error(`Failed to delete cart: ${response.statusText}`);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
 
-    console.log(content)
+    return (<>
+        <div className="cart-page">
+            <h1 className="cart-header">A bevásárló kosarad</h1>
 
-
-    return (
-        <>
-            <div>
-                <label>
-                    CartPage
-                </label>
-            </div>
-            <div>
-                {content?.map((item, index) => 
-                   (
-                    <div key={index}>
-                        <div>
-                            <label>
-                                {item.productName}
-                            </label>
-                        </div>
-                        <div>
-
-                        </div>
+            <div className="cart-items">
+                {cartContent?.length === 0 ? (
+                    <div className="empty-cart">
+                        <p>A kosarad üres!</p>
+                        <button className="empty-cart-btn" onClick={() => { window.location.href = "/products" }}>
+                            Vásárolj itt
+                        </button>
                     </div>
-                    )
+                ) : (
+                    cartContent!.map((item, index) => (
+                        <div key={index} className="cart-item">
+                            <div className="product-details">
+                                <div className="product-name">{item.productName}</div>
+                                <div className="product-price">${item.productPrice.toFixed(2)}</div>
+                            </div>
+                            <div className="remove-btn-container">
+                                <button
+                                    className="remove-btn"
+                                    onClick={handleCartDelete.bind(this, index)}
+                                >
+                                    Törlés
+                                </button>
+                            </div>
+                        </div>
+                    ))
                 )}
             </div>
-        </>
-
-    )
-}
+        </div>
+        {showNotifification && <Notification message="A termék sikeresen törölve a kosárból!" />}
+        </>);
+};
 
 export default CartPage;

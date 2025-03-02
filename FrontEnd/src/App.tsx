@@ -14,6 +14,7 @@ import Header from "./components/Header.tsx";
 import ViewProductPage from "./pages/ViewProductPage.tsx";
 import authService from "./util/AuthService.ts";
 import CartPage from "./pages/CartPage.tsx";
+import ContactPage from "./pages/ContactPage.tsx";
 
 function App() {
 
@@ -55,6 +56,13 @@ function App() {
 
           {/*Védett elérések */}
 
+          <Route path="/contact"  element={
+            <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
+              <ContactPage />
+            </ProtectedRoute>
+          }
+          ></Route>
+
           <Route path="/cart" element={
             <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
               <CartPage />
@@ -73,6 +81,12 @@ function App() {
             </ProtectedRoute>
           }
           />
+          <Route path="/products" element={
+            <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
+              <ProductsPage />
+            </ProtectedRoute>
+          }
+          ></Route>
 
           <Route path="/chat" element={
             <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
@@ -95,7 +109,7 @@ function App() {
             </ProtectedRoute>
           }></Route>
 
-          <Route path="productList" element={
+          <Route path="/productList" element={
             <ProtectedRoute roles={["ADMIN"]}>
               <ProductsPage />
             </ProtectedRoute>

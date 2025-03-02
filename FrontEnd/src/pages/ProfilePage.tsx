@@ -100,57 +100,117 @@ export function ProfilePage(this: any) {
         }
     }
 
-    return <>
-        <header className="profile-header">
+    return (<>
+        <div className="profile-page">
+          <header className="profile-header">
             <h2>Saját profil oldal</h2>
-        </header>
-        <div className="profile-page-form">
-            <div className="profile-data">
-                <h3>Személyes adatok</h3>
-                <div>
-                    <label>Felhasználónév</label>
-                    <input type="text" name="username" value={user?.username} onChange={handlePersonalDataChange} />
-                </div>
-                <div>
-                    <label>Családnév</label>
-                    <input type="text" name="surname" value={user?.surname} onChange={handlePersonalDataChange} />
-                </div>
-                <div>
-                    <label>Keresztnév</label>
-                    <input type="text" name="firstname" value={user?.firstname} onChange={handlePersonalDataChange} />
-                </div>
-                <div>
-                    <label>E-mail</label>
-                    <input type="text" name="email" value={user?.email} onChange={handlePersonalDataChange} />
-                </div>
-                <div>
-                    <label>Telefonszám</label>
-                    <input type="text" name="phone" value={user?.phone} onChange={handlePersonalDataChange} />
-                </div>
+          </header>
+          <div className="profile-page-form">
+            <div className="profile-section">
+              <h3>Személyes adatok</h3>
+              <div className="profile-form-group">
+                <label>Felhasználónév</label>
+                <input
+                  type="text"
+                  name="username"
+                  value={user?.username}
+                  onChange={handlePersonalDataChange}
+                  className="profile-input"
+                />
+              </div>
+              <div className="profile-form-group">
+                <label>Családnév</label>
+                <input
+                  type="text"
+                  name="surname"
+                  value={user?.surname}
+                  onChange={handlePersonalDataChange}
+                  className="profile-input"
+                />
+              </div>
+              <div className="profile-form-group">
+                <label>Keresztnév</label>
+                <input
+                  type="text"
+                  name="firstname"
+                  value={user?.firstname}
+                  onChange={handlePersonalDataChange}
+                  className="profile-input"
+                />
+              </div>
+              <div className="profile-form-group">
+                <label>E-mail</label>
+                <input
+                  type="text"
+                  name="email"
+                  value={user?.email}
+                  onChange={handlePersonalDataChange}
+                  className="profile-input"
+                />
+              </div>
+              <div className="profile-form-group">
+                <label>Telefonszám</label>
+                <input
+                  type="text"
+                  name="phone"
+                  value={user?.phone}
+                  onChange={handlePersonalDataChange}
+                  className="profile-input"
+                />
+              </div>
             </div>
-            <div className="profile-data">
-                <h3>Szállítási adatok</h3>
-                <div>
-                    <label>Település</label>
-                    <input type="text" name="city" value={address.city} onChange={handleDeliveryAddress} />
-                </div>
-                <div>
-                    <label>Út/Utca</label>
-                    <input type="text" name="street" value={address.street} onChange={handleDeliveryAddress} />
-                </div>
-                <div>
-                    <label>Házszám</label>
-                    <input type="text" name="address" value={address.address} onChange={handleDeliveryAddress} />
-                </div>
-                <div>
-                    <label>Postakód</label>
-                    <input type="text" name="zipcode" value={address.zipcode} onChange={handleDeliveryAddress} />
-                </div>
+            <div className="profile-section">
+              <h3>Szállítási adatok</h3>
+              <div className="profile-form-group">
+                <label>Település</label>
+                <input
+                  type="text"
+                  name="city"
+                  value={address.city}
+                  onChange={handleDeliveryAddress}
+                  className="profile-input"
+                />
+              </div>
+              <div className="profile-form-group">
+                <label>Út/Utca</label>
+                <input
+                  type="text"
+                  name="street"
+                  value={address.street}
+                  onChange={handleDeliveryAddress}
+                  className="profile-input"
+                />
+              </div>
+              <div className="profile-form-group">
+                <label>Házszám</label>
+                <input
+                  type="text"
+                  name="address"
+                  value={address.address}
+                  onChange={handleDeliveryAddress}
+                  className="profile-input"
+                />
+              </div>
+              <div className="profile-form-group">
+                <label>Postakód</label>
+                <input
+                  type="text"
+                  name="zipcode"
+                  value={address.zipcode}
+                  onChange={handleDeliveryAddress}
+                  className="profile-input"
+                />
+              </div>
             </div>
+          </div>
+          <button className="profile-save-button" onClick={savePersonalData}>
+            Mentés
+          </button>
         </div>
-        <button className="profile-save-button" onClick={savePersonalData}>Mentés</button>
         {notificationMessage && <Notification message={notificationMessage} />}
-    </>
+      </>);
+        
+    
 
 }
 

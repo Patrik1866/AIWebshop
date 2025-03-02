@@ -23,6 +23,7 @@ class CartService {
     }
   }
 
+  
   isCartEmpty(): boolean {
     return !this.cartContent || this.cartContent.length === 0;
   }
@@ -36,6 +37,10 @@ class CartService {
           "Authorization": `Bearer ${sessionStorage.getItem("token")}`
         }
       });
+      if (response.status === 404) {
+        console.log("A kosár üres");
+        return null;
+      }
       if (response.ok) {
         const data = await response.json();
         this.setCartContent(data);

@@ -74,28 +74,28 @@ const LoginPage = () => {
   return (
     <>
 
-      <div className="loginContainer">
-        <h2>Bejelentkezés</h2>
-        <form className="loginForm" onSubmit={handleLogin}>
-          <div className="form-group">
-            <label>Felhasználónév</label>
-            <br />
-            <input placeholder="Felhasználónév" type="text" id="username" name="username" required value={loginForm.username} onChange={handleChange} />
-          </div>
-          <div className="form-group">
-            <label>Jelszó</label>
-            <br />
-            <input placeholder="Jelszó" type="password" id="password" name="password" required value={loginForm.password} onChange={handleChange} />
-          </div>
-          <button type="submit" className="login-button">
-            Bejelentkezés
-          </button>
-          <br />
-          <label>
-            Még nincs profilja?<a style={{ textDecoration: "underline", color: "#A6A278" }} href="/RegisterPage">Regisztráció</a>
-          </label>
-        </form>
-      </div>
+<div className="login-container">
+  <h2>Bejelentkezés</h2>
+  <form className="login-form" onSubmit={handleLogin}>
+    <div className="form-group">
+      <label>Felhasználónév</label>
+      <br />
+      <input placeholder="Felhasználónév" type="text" id="username" name="username" required value={loginForm.username} onChange={handleChange} />
+    </div>
+    <div className="form-group">
+      <label>Jelszó</label>
+      <br />
+      <input placeholder="Jelszó" type="password" id="password" name="password" required value={loginForm.password} onChange={handleChange} />
+    </div>
+    <button type="submit" className="login-button">
+      Bejelentkezés
+    </button>
+    <br />
+    <label>
+      Még nincs profilja?<a className="register-link" href="/RegisterPage">Regisztráció</a>
+    </label>
+  </form>
+</div>
 
       {showNotifification && <Notification message="Sikeres bejelentkezés" />}
 

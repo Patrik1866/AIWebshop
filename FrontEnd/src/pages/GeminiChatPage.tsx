@@ -12,6 +12,11 @@ const GeminiChatPage = () => {
     useEffect(() => {
         handleGetMessages();
     }, []);
+    useEffect(() => {
+        const chatMessagesContainer = document.querySelector('.chat-messages');
+        chatMessagesContainer!.scrollTop = chatMessagesContainer!.scrollHeight;
+        chatMessagesContainer!.classList.add('scroll-to-bottom');
+      }, [responses]);
 
     const handleSendMessage = async () => {
         try {

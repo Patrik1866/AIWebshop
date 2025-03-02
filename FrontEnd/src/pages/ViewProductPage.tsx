@@ -57,6 +57,9 @@ export function ViewProductPage() {
     }
     return (
         <>
+            <div>
+                <button onClick={() => window.location.replace("/products")} className="back-button"><i style={{ marginRight: "10px" }} className="fas fa-arrow-left"></i>Vissza</button>
+            </div>
             <div className="productPage">
                 <div className="productContainer">
                     <div className="productHeader">
