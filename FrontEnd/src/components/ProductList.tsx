@@ -11,13 +11,25 @@ const ProductList = () => {
   const [, setCartContent] = useState(cartService.getCartContent());
   const [showNotifification, setShowNotifification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
+  const [selectedSubCategoryId, setSelectedSubCategoryId] = useState<number | null>(null);
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:8080/products", {
+        let url = "http://localhost:8080/products";
+        if (selectedCategoryId) {
+          url = `http://localhost:8080/products/category/${selectedCategoryId}`;
+        } else if (selectedSubCategoryId) {
+          url = `http://localhost:8080/products/subcategory/${selectedSubCategoryId}`;
+        }
+
+        const response = await fetch(url, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -34,7 +46,57 @@ const ProductList = () => {
       }
     };
     fetchProducts();
+  }, [selectedCategoryId, selectedSubCategoryId]);
+
+  useEffect(() => {
+    loadCategories();
   }, []);
+
+  const handleCategorySelect = (categoryId: number) => {
+    setSelectedCategoryId(categoryId);
+    setSelectedSubCategoryId(null);
+  };
+
+  const handleSubCategorySelect = (subCategoryId: number) => {
+    setSelectedSubCategoryId(subCategoryId);
+    setSelectedCategoryId(null);
+  };
+
+  const loadCategories = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/category`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setCategories(data);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const loadSubCategories = async (categoryId: number) => {
+    try {
+      const response = await fetch(`http://localhost:8080/subCategory/${categoryId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setSubCategories(data);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const handleProductDelete = async (productId: number) => {
     try {
@@ -95,13 +157,49 @@ const ProductList = () => {
     }
   };
 
+  const filteredProducts = products.filter((product) => {
+    return product.name.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
   return (
     <>
       <div>
         <button onClick={() => window.location.replace("/")} className="back-button"><i style={{ marginRight: "10px" }} className="fas fa-arrow-left"></i>Vissza</button>
       </div>
+      <div className="filter-container">
+        <div className="filter-title-container">
+        <label >Szűrő</label>
+      </div>
+        <input
+          type="text" 
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Keresés"
+          className="search-input"
+        />
+        <label>Kategória</label>
+        <select className="category-select" onChange={(e) => {handleCategorySelect(Number(e.target.value))
+          loadSubCategories(Number(e.target.value));
+        }}>
+          <option value="">Válassz kategóriát</option>
+          {categories.map((category: any) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+          <label> Alkategória</label>
+        <select className="subcategory-select" onChange={(e) => handleSubCategorySelect(Number(e.target.value))}>
+          <option value="">Válassz alkategóriát</option>
+          {subCategories.map((subCategory : any) => (
+            <option key={subCategory.id} value={subCategory.id}>
+              {subCategory.name}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="product-tile-container">
-        {products.map((product, index) => (
+        {filteredProducts.map((product, index) => (
           <div onClick={() => navigate(`/ViewProductPage`, { state: { product } })} className="product-tile" key={index}>
             <p>Termék neve: <span>{product.name}</span></p>
             <p>Termék leírása: <span> {product.description}</span></p>
@@ -109,12 +207,12 @@ const ProductList = () => {
             <p>Termék mennyisége: <span>{product.quantity} (db)</span></p>
             {authService.hasRole(["ADMIN", "MODERATOR"]) &&
               <div className="product-button-group">
-                <button onClick={(e) =>{e.stopPropagation(); handleProductDelete(Number(product.id!))}}>Törlés</button>
-                <button onClick={(e) => {e.stopPropagation(); handleProductUpdate(Number(product.id))}}>Módosítás</button>
+                <button onClick={(e) => { e.stopPropagation(); handleProductDelete(Number(product.id!)) }}>Törlés</button>
+                <button onClick={(e) => { e.stopPropagation(); handleProductUpdate(Number(product.id)) }}>Módosítás</button>
               </div>}
             {authService.hasRole(["USER"]) &&
               <div className="product-button-group">
-                <button onClick={(e) => {e.stopPropagation(); handleSaveCart(Number(product.id), 1)}}>Hozzáadás kosárhoz</button>
+                <button onClick={(e) => { e.stopPropagation(); handleSaveCart(Number(product.id), 1) }}>Hozzáadás kosárhoz</button>
               </div>
             }
           </div>

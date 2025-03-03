@@ -5,4 +5,5 @@ export interface Reviews{
     point: number;
     description: string;
     username: string;
+    productName: string;
 }

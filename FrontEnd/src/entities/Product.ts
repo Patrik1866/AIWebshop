@@ -5,5 +5,5 @@ export interface Product {
     price: number;
     quantity: number;
     categoryId: number;
-    subCategoryId: number;
+    subCategoryId: number |null;
 }

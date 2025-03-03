@@ -14,13 +14,24 @@ const ManageProductsPage = () => {
     categoryId: 0,
     subCategoryId: 0
   });
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
 
   const { id } = useParams<{ id: string }>();
   useEffect(() => {
     if (id) {
-      loadProductIfUpdated(Number(id));
+      loadProductIfUpdated(Number(id)).then(() => {
+        loadCategories();
+      });
     }
   }, [id]);
+  
+  useEffect(() => {
+    if (product.categoryId) {
+      loadSubCategories(product.categoryId);
+    }
+  }, [product.categoryId]);
+  
 
   const loadProductIfUpdated = async (productId: number) => {
     try {
@@ -33,7 +44,17 @@ const ManageProductsPage = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        setProduct(data);
+
+        const dataToSave = {
+          id: data.id,
+          name: data.name,
+          description: data.description,
+          price: data.price,
+          quantity: data.quantity,
+          categoryId: data.categoryId,
+          subCategoryId: data.subCategoryId
+        }
+        setProduct(dataToSave);
       }
     } catch (e) {
 
@@ -66,28 +87,65 @@ const ManageProductsPage = () => {
     setProduct(productToSave);
   };
 
-  const handleSelectChange = (event: { target: { name: any; value: any; }; }) => {
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
-    switch (name) {
-      case "categoryId":
-        setProduct({ ...product, categoryId: value });
-        break;
-      case "subCategoryId":
-        setProduct({ ...product, subCategoryId: value });
-        break;
-      default:
-        break;
+    let updatedProduct = { ...product };
+
+    if (name === "categoryId") {
+      updatedProduct.categoryId = Number(value);
+      loadSubCategories(Number(value));
+    } else if (name === "subCategoryId") {
+      updatedProduct.subCategoryId = Number(value);
+    }
+
+    setProduct(updatedProduct);
+  };
+
+  const loadCategories = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/category`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setCategories(data);
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
 
+  const loadSubCategories = async (categoryId: number) => {
+    try {
+      const response = await fetch(`http://localhost:8080/subCategory/${categoryId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setSubCategories(data);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+
   return (<>
     <button onClick={() => window.location.replace("/products")} className="back-button">
-          <i style={{ marginRight: "10px" }} className="fas fa-arrow-left"></i>Vissza
-        </button>
+      <i style={{ marginRight: "10px" }} className="fas fa-arrow-left"></i>Vissza
+    </button>
     <div className="product-manage-container">
       <div className="header">
         <h2>Termék hozzáadása</h2>
-        
+
       </div>
       <form className="product-form">
         <div className="form-group">
@@ -135,26 +193,37 @@ const ManageProductsPage = () => {
           <select
             name="categoryId"
             value={product.categoryId}
-            onChange={handleSelectChange}
+            onChange={(e) => {
+              handleSelectChange(e);
+              loadSubCategories(Number(e.target.value));
+            }}
             className="form-control"
           >
             <option value="">Válasszon kategóriát</option>
-            {/* options */}
+            {categories.map((category: any) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
           </select>
         </div>
         <div className="form-group">
           <label>Alkategória kiválasztása</label>
           <select
             name="subCategoryId"
-            value={product.subCategoryId}
-            onChange={handleSelectChange}
+            value={Number(product.subCategoryId)!}
+            onChange={(e) => handleSelectChange(e)}
             className="form-control"
           >
             <option value="">Válasszon alkategóriát</option>
-            {/* options */}
+            {subCategories.map((subCategory: any) => (
+              <option key={subCategory.id} value={subCategory.id}>
+                {subCategory.name}
+              </option>
+            ))}
           </select>
         </div>
-  
+
         <button onClick={handleProductSave} className="btn btn-primary">
           Mentés
         </button>
@@ -165,7 +234,7 @@ const ManageProductsPage = () => {
         </button>
       </a>
     </div>
-    </>);
+  </>);
 };
 
 export default ManageProductsPage;
