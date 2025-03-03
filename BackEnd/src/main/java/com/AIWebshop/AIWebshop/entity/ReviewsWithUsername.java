@@ -74,5 +74,16 @@ public class ReviewsWithUsername {
     @Column(name = "username")
     private String username;
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    @Column(name = "product_name")
+    private String productName;
+
     // getters and setters
 }

@@ -5,12 +5,13 @@ import com.AIWebshop.AIWebshop.entity.Reviews;
 import com.AIWebshop.AIWebshop.entity.ReviewsWithUsername;
 import com.AIWebshop.AIWebshop.service.ProductService;
 import com.AIWebshop.AIWebshop.service.ReviewService;
-import com.AIWebshop.AIWebshop.service.ReviewsWithUsernameServce;
+import com.AIWebshop.AIWebshop.service.ReviewsWithUsernameService;
 import com.AIWebshop.AIWebshop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -20,7 +21,7 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
     @Autowired
-    private ReviewsWithUsernameServce reviewsWithUsernameServce;
+    private ReviewsWithUsernameService reviewsWithUsernameService;
 
     @Autowired
     private ProductService productService;
@@ -30,6 +31,13 @@ public class ReviewController {
     @GetMapping
     public List<Reviews> findAll(){
         return reviewService.findAll();
+    }
+
+    @GetMapping("/random")
+    public List<ReviewsWithUsername> findRandom(){
+        List<ReviewsWithUsername> allReviews = reviewsWithUsernameService.findAll();
+        Collections.shuffle(allReviews);
+        return allReviews.subList(0, 3);
     }
 
     @GetMapping("/userId/{userId}")
@@ -45,7 +53,7 @@ public class ReviewController {
 
     @GetMapping("/productId/{productId}")
     public List<ReviewsWithUsername> findByProductId(@PathVariable int productId){
-        List<ReviewsWithUsername> theReview = reviewsWithUsernameServce.findByProductId(productId);
+        List<ReviewsWithUsername> theReview = reviewsWithUsernameService.findByProductId(productId);
 
         if (theReview.isEmpty()){
             throw new RuntimeException("Nem található vélemény ehhez a termékhez");
