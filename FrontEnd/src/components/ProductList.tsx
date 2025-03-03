@@ -6,6 +6,8 @@ import authService from "../util/AuthService";
 import cartService from "../util/CartService";
 import Notification from "../components/Notification";
 
+declare var webkitSpeechRecognition: any;
+
 const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [, setCartContent] = useState(cartService.getCartContent());
@@ -16,6 +18,7 @@ const ProductList = () => {
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isMicrophoneActive, setIsMicrophoneActive] = useState(false);
 
   const navigate = useNavigate();
 
@@ -157,6 +160,26 @@ const ProductList = () => {
     }
   };
 
+  const handleMicrophoneClick = () => {
+    if (!isMicrophoneActive) {
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(_stream => {
+          const recognition = new webkitSpeechRecognition();
+          recognition.lang = 'hu-HU';
+          recognition.maxResults = 10;
+          recognition.onresult = (event: any) => {
+            const transcript = event.results[0][0].transcript;
+            setSearchTerm(transcript);
+          };
+          recognition.start();
+          setIsMicrophoneActive(true);
+        })
+        .catch(error => console.error('Error activating microphone:', error));
+    } else {
+      setIsMicrophoneActive(false);
+    }
+  };
+
   const filteredProducts = products.filter((product) => {
     return product.name.toLowerCase().includes(searchTerm.toLowerCase());
   });
@@ -168,17 +191,25 @@ const ProductList = () => {
       </div>
       <div className="filter-container">
         <div className="filter-title-container">
-        <label >Szűrő</label>
-      </div>
+          <label >Szűrő</label>
+        </div>
         <input
-          type="text" 
+          type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Keresés"
           className="search-input"
         />
+        <button className="microphone-button" onClick={handleMicrophoneClick}>
+          {isMicrophoneActive ? (
+            <i className="fas fa-microphone-slash"></i>
+          ) : (
+            <i className="fas fa-microphone"></i>
+          )}
+        </button>
         <label>Kategória</label>
-        <select className="category-select" onChange={(e) => {handleCategorySelect(Number(e.target.value))
+        <select className="category-select" onChange={(e) => {
+          handleCategorySelect(Number(e.target.value))
           loadSubCategories(Number(e.target.value));
         }}>
           <option value="">Válassz kategóriát</option>
@@ -188,10 +219,10 @@ const ProductList = () => {
             </option>
           ))}
         </select>
-          <label> Alkategória</label>
+        <label> Alkategória</label>
         <select className="subcategory-select" onChange={(e) => handleSubCategorySelect(Number(e.target.value))}>
           <option value="">Válassz alkategóriát</option>
-          {subCategories.map((subCategory : any) => (
+          {subCategories.map((subCategory: any) => (
             <option key={subCategory.id} value={subCategory.id}>
               {subCategory.name}
             </option>
