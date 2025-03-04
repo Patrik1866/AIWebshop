@@ -34,7 +34,7 @@ public class EmailService {
                     emailRequest.getFrom(),
                     emailRequest.getBody()
             );
-            
+
             helper.setText(enhancedBody, true);
             mailSender.send(message);
 

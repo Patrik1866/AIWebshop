@@ -1,15 +1,17 @@
 import { useState } from "react";
 import "../styles/ContactPage.css"
 import authService from "../util/AuthService";
+import Notification from "../components/Notification";
 
 const ContactPage = () => {
   const name = authService.getUser()?.surname + " " + authService.getUser()?.firstname;
   const email = authService.getUser()?.email;
   const [content, setContent] = useState({ from: "", subject: "", body: "" });
+  const [notification, setNorification] = useState(false);
 
-  const handleSendEmail = () => {
+  const handleSendEmail = async () => {
     try {
-      fetch("http://localhost:8080/email", {
+      const response = await fetch("http://localhost:8080/email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,6 +25,10 @@ const ContactPage = () => {
           body: content.body!
         })
       });
+      if (response.ok){
+        setNorification(true);
+        setContent({ from: "", subject: "", body: "" });
+      }
     } catch (error) {
       console.error(error);
     }
@@ -62,8 +68,10 @@ const ContactPage = () => {
         <h2>Információk</h2>
         <p>Cím: 3300 Eger, Magyarország</p>
         <p>Telefon: 555-555-5555</p>
-        <p>Email: [info@example.com](mailto:info@example.com)</p>
+        <p>Email: ttesztdoga@gmail.com</p>
       </div>
+
+      {notification && <Notification message="Az email sikeresen el lett kuldve"/>}
     </div>
   )
 }
