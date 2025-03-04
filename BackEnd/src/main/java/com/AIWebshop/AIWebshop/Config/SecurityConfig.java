@@ -32,7 +32,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**", "/cart/**", "/reviews/**", "/users/**", "/payment/**", "/category/**","/subCategory/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/moderator/**") .hasAnyRole("MODERATOR", "ADMIN")
-                        .requestMatchers("/chat/**", "/products/**").hasAnyRole("USER", "MODERATOR", "ADMIN")
+                        .requestMatchers("/chat/**", "/products/**", "/email/**").hasAnyRole("USER", "MODERATOR", "ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
