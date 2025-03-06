@@ -15,6 +15,7 @@ import ViewProductPage from "./pages/ViewProductPage.tsx";
 import authService from "./util/AuthService.ts";
 import CartPage from "./pages/CartPage.tsx";
 import ContactPage from "./pages/ContactPage.tsx";
+import UsersPage from "./pages/UsersPage.tsx";
 
 function App() {
 
@@ -113,10 +114,13 @@ function App() {
             <ProtectedRoute roles={["ADMIN"]}>
               <ProductsPage />
             </ProtectedRoute>
-          }>
+          }></Route>
+
+          <Route path="/users" element={<ProtectedRoute roles={["ADMIN"]}>
+            <UsersPage/>
+          </ProtectedRoute>}>
 
           </Route>
-
 
 
           {/*Admin és moderátor elérések */}

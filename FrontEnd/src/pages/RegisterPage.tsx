@@ -32,6 +32,7 @@ export function RegisterPage() {
 
       if (response.ok) {
         alert("User registered successfully");
+        window.location.href = "/loginPage";
       } else {
         const errorText = await response.text();
         alert(`Failed to register user: ${errorText}`);

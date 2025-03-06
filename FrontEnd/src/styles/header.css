@@ -38,38 +38,43 @@
   color: #ccc;
 }
 
-.dropdown {
+.arrow-container{
+  display: inline-block;
+  margin: auto;
+  margin-left: 0.5em;
+}
+
+.dropdown-menu-container {
   position: relative;
 }
 
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  background-color: #333;
+.dropdown-menu-button {
   color: #fff;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  padding: 10px;
+  cursor: pointer;
 }
 
-.dropdown-menu.show {
-  display: block;
+.dropdown-menu {
+  position: absolute;
+  top: 40px;
+  margin: auto;
+  background-color: #444;
+  border: 1px solid #333;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
 .dropdown-item {
-  text-decoration: none;
-  padding: 0.5rem 1rem;
   display: block;
-  background-color: #333;
+  padding: 10px 15px;
   color: #fff;
-  border-bottom: 1px solid #ccc;
-  transition: background-color 0.3s ease;
+  text-decoration: none;
 }
 
 .dropdown-item:hover {
-  background-color: #444;
-  color: #fff;
+  background-color: #555;
 }
 
 .login-button-header {

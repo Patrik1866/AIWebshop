@@ -6,6 +6,11 @@ import cartService from "../util/CartService";
 
 const Header = () => {
   const [user, setUser] = useState<User | null>(authService.getUser());
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
 
   useEffect(() => {
     setUser(authService.getUser());
@@ -21,7 +26,7 @@ const Header = () => {
                 Főoldal
               </a>
             </div>
-            <div className="nav-item dropdown">
+            <div className="nav-item">
               <a href="/products" className="nav-link dropdown-toggle">
                 Termékek
               </a>
@@ -42,9 +47,33 @@ const Header = () => {
               </div>
             )}
             {authService.hasRole(["ADMIN", "MODERATOR"]) && (
-              <div className="nav-item">
-                <a href="/products" className="nav-link">Termékek kezelése</a>
-              </div>
+              <div className="dropdown-menu-container">
+              <a
+                href="#"
+                className="nav-link"
+                onClick={toggleDropdown}
+              >
+                Admin felületek
+                <div className="arrow-container">
+                {dropdownOpen ? (
+                  <i className="fas fa-caret-down"></i>
+                ): <i className="fas fa-caret-up"></i>}
+                </div>
+              </a>
+              {dropdownOpen && (
+                <div className="dropdown-menu">
+                  <a href="/products" className="dropdown-item">
+                    Termékek kezelése
+                  </a>
+                  <a href="/users" className="dropdown-item">
+                    Felhasználók kezelése
+                  </a>
+                  <a href="/orders" className="dropdown-item">
+                    Rendelések kezelése
+                  </a>
+                </div>
+              )}
+            </div>
             )}
             <div className="nav-right">
               <div className="nav-item">
