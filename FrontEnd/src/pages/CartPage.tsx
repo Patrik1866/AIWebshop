@@ -68,6 +68,10 @@ const CartPage = () => {
                         </div>
                     ))
                 )}
+                <div>
+                  <label>Végösszeg: ${cartContent?.reduce((total, item) => total + item.productPrice, 0).toFixed(2)}</label>
+                  <button onClick={() => { window.location.href = "/order" }}>Rendelés</button>
+                </div>
             </div>
         </div>
         {showNotifification && <Notification message="A termék sikeresen törölve a kosárból!" />}

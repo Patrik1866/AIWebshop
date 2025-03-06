@@ -16,6 +16,7 @@ import authService from "./util/AuthService.ts";
 import CartPage from "./pages/CartPage.tsx";
 import ContactPage from "./pages/ContactPage.tsx";
 import UsersPage from "./pages/UsersPage.tsx";
+import OrderPage from "./pages/OrderPage.tsx";
 
 function App() {
 
@@ -93,8 +94,12 @@ function App() {
             <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
               <GeminiChatPage />
             </ProtectedRoute>
-
-          } />
+          } ></Route>
+          <Route path="/order" element={
+            <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
+              <OrderPage />
+              </ProtectedRoute>}
+            > </Route>
 
           {/*Admin elérések */}
 
