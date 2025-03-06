@@ -2,7 +2,8 @@ package com.AIWebshop.AIWebshop.service;
 
 import com.AIWebshop.AIWebshop.entity.UsersWithAddress;
 
+import java.util.List;
 
 public interface UserWithAddressService {
-    UsersWithAddress findUserWithAddressByUserId(int userId);
+    List<UsersWithAddress> findUserWithAddressByUserId(int userId);
 }

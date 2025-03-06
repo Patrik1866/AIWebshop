@@ -2,12 +2,11 @@ package com.AIWebshop.AIWebshop.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.Immutable;
-import org.hibernate.annotations.View;
 
 @Entity
 @Immutable
-@Table(name = "user_with_address")
-public class UserWithAddress {
+@Table(name = "users_with_address")
+public class UsersWithAddress {
 
     public int getUserId() {
         return userId;
