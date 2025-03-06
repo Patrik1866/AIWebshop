@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,9 @@ public class UserRestController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping
     public List<User> findAll(){
@@ -52,7 +56,46 @@ public class UserRestController {
     public User updateUser(@RequestBody User user){
         User theUser = userService.save(user);
 
+        if (theUser == null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        } else {
+            User existingUser = userService.findById(theUser.getId());
+            user.setPassword(existingUser.getPassword());
+        }
         return theUser;
+    }
+
+    @PutMapping("/password/{id}")
+    public User updatePassword(@PathVariable int id, @RequestBody User user) {
+        User theUser = userService.findById(id);
+
+        if (theUser != null) {
+
+            String encodedPassword = passwordEncoder.encode(user.getPassword());
+
+            theUser.setPassword(encodedPassword);
+
+            // Frissített felhasználó mentése
+            userService.save(theUser);
+
+            return theUser;
+        } else {
+            // Ha a felhasználó nem létezik, kivétel dobása
+            throw new RuntimeException("Felhasználó nem létezik");
+        }
+    }
+
+
+    @PutMapping("/{id}")
+    public User updateUserById(@PathVariable int id, @RequestBody User user){
+        User theUser = userService.findById(id);
+
+        if (theUser != null) {
+            userService.save(user);
+            return theUser;
+        }else{
+               throw new RuntimeException("Felhasználó nem létezik");
+        }
     }
 
     @PostMapping
@@ -63,18 +106,33 @@ public class UserRestController {
         return new ResponseEntity<>(createdUser,HttpStatus.CREATED);
     }
 
-     @PutMapping("/saveUser")
-     public User save(@RequestBody UserAddressRequest request){
+    @PutMapping("/saveUser")
+    public User saveUser(@RequestBody UserAddressRequest request) {
         User user = request.getUser();
         Address address = request.getAddress();
 
+        if (user == null) {
+            throw new IllegalArgumentException("User cannot be null.");
+        }
+
+        if (user.getId() != null) {
+            User existingUser = userService.findById(user.getId());
+
+            user.setPassword(existingUser.getPassword());
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
         User createdUser = userService.save(user);
-        address.setUserId(createdUser.getId());
 
-        Address createdAddress = userService.saveAddress(address);
+        if (address != null) {
+            address.setUserId(createdUser.getId());
+            userService.saveAddress(address);
+        }
 
-        return (createdUser);
-     }
+        return createdUser;
+    }
+
 
 
     @DeleteMapping("/{userId}")

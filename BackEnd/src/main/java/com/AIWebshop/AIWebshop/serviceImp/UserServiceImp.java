@@ -36,12 +36,6 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User save(User user) {
-        if (user.getId() == null) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        } else {
-            User existingUser = userDao.findById(user.getId());
-            user.setPassword(existingUser.getPassword());
-        }
         return userDao.save(user);
     }
     @Override
