@@ -1,4 +1,10 @@
 package com.AIWebshop.AIWebshop.dao;
 
+import com.AIWebshop.AIWebshop.entity.Order;
+
+import java.util.List;
+
 public interface OrderDao {
+    List<Order> findAll();
+    Order save(Order order);
 }

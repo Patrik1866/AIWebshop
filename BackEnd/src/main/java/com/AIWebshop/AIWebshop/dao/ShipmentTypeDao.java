@@ -1,4 +1,9 @@
 package com.AIWebshop.AIWebshop.dao;
 
-public interface ShypmentTypeDao {
+import com.AIWebshop.AIWebshop.entity.ShipmentType;
+
+import java.util.List;
+
+public interface ShipmentTypeDao {
+    List<ShipmentType> findAll();
 }
