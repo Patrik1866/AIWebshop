@@ -28,6 +28,10 @@ class CartService {
     return !this.cartContent || this.cartContent.length === 0;
   }
 
+  clearCart(): void {
+    this.setCartContent(null);
+  }
+
   async fetchCartContent(): Promise<Cart[] | null> {
     try {
       const response = await fetch(`http://localhost:8080/cart/userId/${authService.getUser()?.id}`, {

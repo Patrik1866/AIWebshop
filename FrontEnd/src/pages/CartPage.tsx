@@ -43,7 +43,7 @@ const CartPage = () => {
             <h1 className="cart-header">A bevásárló kosarad</h1>
 
             <div className="cart-items">
-                {cartContent?.length === 0 ? (
+                {!cartContent ? (
                     <div className="empty-cart">
                         <p>A kosarad üres!</p>
                         <button className="empty-cart-btn" onClick={() => { window.location.href = "/products" }}>
@@ -55,7 +55,7 @@ const CartPage = () => {
                         <div key={index} className="cart-item">
                             <div className="product-details">
                                 <div className="product-name">{item.productName}</div>
-                                <div className="product-price">${item.productPrice.toFixed(2)}</div>
+                                <div className="product-price">{item.productPrice} HUF</div>
                             </div>
                             <div className="remove-btn-container">
                                 <button
@@ -68,10 +68,14 @@ const CartPage = () => {
                         </div>
                     ))
                 )}
+                {cartService.getCartContent() &&
+                
                 <div>
-                  <label>Végösszeg: ${cartContent?.reduce((total, item) => total + item.productPrice, 0).toFixed(2)}</label>
+                  <label>Végösszeg: {cartContent?.reduce((total, item) => total + item.productPrice, 0)} HUF</label>
                   <button onClick={() => { window.location.href = "/order" }}>Rendelés</button>
                 </div>
+                }
+                
             </div>
         </div>
         {showNotifification && <Notification message="A termék sikeresen törölve a kosárból!" />}

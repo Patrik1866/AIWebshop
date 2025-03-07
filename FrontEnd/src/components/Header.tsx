@@ -68,7 +68,7 @@ const Header = () => {
                   <a href="/users" className="dropdown-item">
                     Felhasználók kezelése
                   </a>
-                  <a href="/orders" className="dropdown-item">
+                  <a href="/manageOrders" className="dropdown-item">
                     Rendelések kezelése
                   </a>
                 </div>
@@ -79,7 +79,7 @@ const Header = () => {
               <div className="nav-item">
                 <a href="/cart" className="nav-link">
                   <i className="fas fa-shopping-cart"></i>
-                  {cartService.getCartContent()!.length > 0 ? (
+                  {cartService.getCartContent() ? (
                     <span className="cart-count">{cartService.getCartContent()!.length}</span>
                   ) : (
                     <span className="cart-count">0</span>

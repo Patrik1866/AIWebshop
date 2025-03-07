@@ -17,6 +17,8 @@ import CartPage from "./pages/CartPage.tsx";
 import ContactPage from "./pages/ContactPage.tsx";
 import UsersPage from "./pages/UsersPage.tsx";
 import OrderPage from "./pages/OrderPage.tsx";
+import SuccessfulOrderPage from "./pages/SuccessfulOrderPage.tsx";
+import ManageOrdersPage from "./pages/ManageOrdersPage.tsx";
 
 function App() {
 
@@ -101,6 +103,14 @@ function App() {
               </ProtectedRoute>}
             > </Route>
 
+          <Route path="/successfulOrder" element={
+            <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
+              <SuccessfulOrderPage />
+            </ProtectedRoute>
+          }>
+
+          </Route>
+
           {/*Admin elérések */}
 
           <Route path="/manageProducts" element={
@@ -124,7 +134,12 @@ function App() {
           <Route path="/users" element={<ProtectedRoute roles={["ADMIN"]}>
             <UsersPage/>
           </ProtectedRoute>}>
+          </Route>
 
+          <Route path="/manageOrders" element={
+            <ProtectedRoute roles={["ADMIN", "MODERATOR"]}>
+               <ManageOrdersPage /> 
+            </ProtectedRoute>}>
           </Route>
 
 
