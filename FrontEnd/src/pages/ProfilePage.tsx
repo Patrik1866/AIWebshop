@@ -15,39 +15,38 @@ export function ProfilePage(this: any) {
     });
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`http://localhost:8080/users/address/${user?.id}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${sessionStorage.getItem("token")}`
-                    },
-                    credentials: 'include',
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-
-                    const safeDate = {
-                        id: data.id,
-                        userId: user?.id!,
-                        city: data.city,
-                        street: data.street,
-                        address: data.address,
-                        zipcode: data.zipcode
-                    }
-
-                    setAddressForm(safeDate);
-                }
-            } catch (error) {
-                throw error;
-            }
-        };
-
         fetchData();
     }, []);
 
+    async function fetchData() {
+        try {
+            const response = await fetch(`http://localhost:8080/users/address/${user?.id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+                },
+                credentials: 'include',
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+
+                const safeDate = {
+                    id: data.id,
+                    userId: user?.id!,
+                    city: data.city,
+                    street: data.street,
+                    address: data.address,
+                    zipcode: data.zipcode
+                }
+                setAddressForm(safeDate);
+            }
+        } catch (error) {
+            throw error;
+        }
+    };
+  
     async function savePersonalData() {
         try {
 
@@ -62,10 +61,19 @@ export function ProfilePage(this: any) {
             });
 
             if (response.ok) {
-                setNotificationMessage("Sikeres mentés!")
-                setTimeout(() => {
-                    setNotificationMessage(null);
-                }, 5000)
+              
+              const updatedUser = await response.json(); 
+
+              setNotificationMessage("Sikeres mentés!");
+              setTimeout(() => {
+                  setNotificationMessage(null);
+              }, 5000);
+  
+              authService.setUser(updatedUser);
+   
+              setUser(updatedUser);
+  
+              fetchData();
             }
         } catch (error) {
             throw error;
@@ -209,10 +217,8 @@ export function ProfilePage(this: any) {
         </div>
         {notificationMessage && <Notification message={notificationMessage} />}
       </>);
-        
-    
+    }
 
-}
 
 export default ProfilePage;
 

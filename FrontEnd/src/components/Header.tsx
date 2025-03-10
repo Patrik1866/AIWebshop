@@ -42,13 +42,7 @@ const Header = () => {
             <div className="nav-item">
               <a href={`/viewCustomerOrders/${user.id}`} className="nav-link">Rendeléseim</a>
             </div>
-            {authService.hasRole(["ADMIN"]) && (
-              <div className="nav-item">
-                <a href="/dashboard" className="nav-link">
-                  Kezelőfelület
-                </a>
-              </div>
-            )}
+            
             {authService.hasRole(["ADMIN", "MODERATOR"]) && (
               <div className="dropdown-menu-container">
               <a

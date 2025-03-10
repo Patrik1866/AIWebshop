@@ -5,6 +5,7 @@ import cartService from "../util/CartService";
 import { Payment } from "../entities/Payment";
 import { Order } from "../entities/Order";
 import { States } from "../entities/States";
+import LoadingBanner from "../components/LoadingBanner";
 
 
 const OrderPage = () => {
@@ -12,9 +13,10 @@ const OrderPage = () => {
     const [payment, setPayment] = useState<Payment[]>([]);
     const [shipping, setShipping] = useState<Payment[]>([]);
     const [states, setStates] = useState<States[]>([]);
-    const [selectedPaymentType, setSelectedPaymentType] = useState<number |null>(null);
-    const [selectedShippingType, setSelectedShippingType] = useState<number |null>(null);
-    const [selectedState, setSelectedState] = useState<number |null>(null);
+    const [selectedPaymentType, setSelectedPaymentType] = useState<number | null>(null);
+    const [selectedShippingType, setSelectedShippingType] = useState<number | null>(null);
+    const [selectedState, setSelectedState] = useState<number | null>(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         loadAddressWithUser();
@@ -54,12 +56,13 @@ const OrderPage = () => {
             price: item.productPrice
         }))
 
-        const requestBody = { 
+        const requestBody = {
             order: orderToSave,
             orderItems: orderItemstoSave
         }
 
         try {
+            setLoading(true);
             const response = await fetch("http://localhost:8080/order", {
                 method: "PUT",
                 headers: {
@@ -73,9 +76,10 @@ const OrderPage = () => {
                 const data = await response.json();
                 console.log(data);
                 cartService.setCartContent([]);
+                setLoading(false);
                 setTimeout(() => {
-                    window.location.href = "/";
-                }, 2000);
+                    window.location.href = "/successful";
+                }, 500);
             } else {
                 throw new Error(`Failed to save order: ${response.statusText}`);
             }
@@ -84,7 +88,7 @@ const OrderPage = () => {
             alert("Failed to save order!");
         }
     };
-    
+
     const loadAddressWithUser = async () => {
         try {
             const response = await fetch(`http://localhost:8080/userWithAddress`, {
@@ -147,7 +151,7 @@ const OrderPage = () => {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${sessionStorage.getItem("token")}`
                 }
-            });            
+            });
             if (response.ok) {
                 const data = await response.json();
                 setStates(data);
@@ -156,8 +160,8 @@ const OrderPage = () => {
             console.error(e);
         }
     }
-    
-        
+
+
 
     function handlePaymentChange(e: number) {
         setSelectedPaymentType(e);
@@ -169,7 +173,7 @@ const OrderPage = () => {
         setSelectedState(value);
     }
 
-    return (
+    return (<>
         <div className="order-page">
             <h1 className="order-h1">Rendelés leadása</h1>
             <form onSubmit={handleOrderSubmit}>
@@ -232,7 +236,7 @@ const OrderPage = () => {
                             value={userDetails?.city}
                             onChange={handleInputChange}
                             placeholder="Adja meg a szállítási címét"
-                            
+
                         />
                     </div>
 
@@ -244,7 +248,7 @@ const OrderPage = () => {
                             value={userDetails?.city}
                             onChange={handleInputChange}
                             placeholder="Adja meg a városát"
-                            
+
                         />
                     </div>
 
@@ -256,7 +260,7 @@ const OrderPage = () => {
                             value={userDetails?.zipCode}
                             onChange={handleInputChange}
                             placeholder="Adja meg az irányítószámot"
-                           
+
                         />
                     </div>
 
@@ -265,10 +269,10 @@ const OrderPage = () => {
                         <input
                             type="text"
                             name="zipCode"
-                            value={userDetails?.zipCode }
+                            value={userDetails?.zipCode}
                             onChange={handleInputChange}
                             placeholder="Adja meg az irányítószámot"
-                          
+
                         />
                     </div>
                 </div>
@@ -276,9 +280,9 @@ const OrderPage = () => {
                 <div className="shippin-delivery-info">
                     <div className="form-group">
                         <label>Fizetési mód</label>
-                        <select name="paymentMethod" onChange={(e)=>handlePaymentChange(Number(e.target.value))}>
+                        <select name="paymentMethod" onChange={(e) => handlePaymentChange(Number(e.target.value))}>
                             <option value="">Válassz fizetési lehetőséget</option>
-                            {payment!.map((payment:any) => (
+                            {payment!.map((payment: any) => (
                                 <option key={payment.id} value={payment.id}>
                                     {payment.name}
                                 </option>
@@ -287,9 +291,9 @@ const OrderPage = () => {
                     </div>
                     <div className="form-group">
                         <label>Szállítási mód</label>
-                        <select name="shippingMethod" onChange={(e)=>handleShippingChange(Number(e.target.value))}>
+                        <select name="shippingMethod" onChange={(e) => handleShippingChange(Number(e.target.value))}>
                             <option value="">Válasszon szállítási módot</option>
-                            {shipping!.map((shipping:any) => (
+                            {shipping!.map((shipping: any) => (
                                 <option key={shipping.id} value={shipping.id}>
                                     {shipping.name}
                                 </option>
@@ -309,8 +313,9 @@ const OrderPage = () => {
 
 
             </form>
+            {loading && <LoadingBanner message="Rendelés feldolgozása..." />}
         </div>
-    );
+    </>);
 };
 
 export default OrderPage;

@@ -105,7 +105,7 @@ function App() {
             </ProtectedRoute>}
           > </Route>
 
-          <Route path="/successfulOrder" element={
+          <Route path="/successful" element={
             <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
               <SuccessfulOrderPage />
             </ProtectedRoute>

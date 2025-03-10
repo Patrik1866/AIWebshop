@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Order } from "../entities/Order";
 import { OrderItems } from "../entities/OrderItems";
-import { User } from "../entities/User";
 import "../styles/OrderList.css"
 
 interface OrderListProps {
