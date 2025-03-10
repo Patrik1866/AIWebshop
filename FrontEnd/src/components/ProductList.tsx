@@ -65,6 +65,49 @@ const ProductList = () => {
     setSelectedCategoryId(null);
   };
 
+
+  // Enm AI alapokat használó felolvasó, hanem Web Service-t használ.
+  const speak = (text: string) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'hu-HU'; // Set language to Hungarian
+      window.speechSynthesis.speak(utterance);
+    } else {
+      console.log('Text-to-speech not supported in this browser.');
+    }
+  };
+
+  //Na ez már AI alapú TTS/Text To Speech felolvasó (Magyar nyelvre állítva BackEnd-en)
+  const speakFromBackend = async (text: string) => {
+    try {
+      console.log('Sending request to TTS service...');
+      const response = await fetch('http://localhost:8080/tts/speak', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain',
+          'Authorization': `Bearer ${sessionStorage.getItem("token")}`,
+        },
+        body: text
+      });
+
+      if (response.ok) {
+        const audioBlob = await response.blob();
+
+
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+
+        try {
+          await audio.play();
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const loadCategories = async () => {
     try {
       const response = await fetch(`http://localhost:8080/category`, {
@@ -232,8 +275,18 @@ const ProductList = () => {
       <div className="product-tile-container">
         {filteredProducts.map((product, index) => (
           <div onClick={() => navigate(`/ViewProductPage`, { state: { product } })} className="product-tile" key={index}>
-            <p>Termék neve: <span>{product.name}</span></p>
+            <div className="product-info-speak">
+              <p>Termék neve: <span>{product.name}</span></p>
+              <button className="speak-button" onClick={(e) => { e.stopPropagation(); speakFromBackend(product.name); }}>
+                <i className="fas fa-volume-up"></i>
+              </button>
+            </div>
+            <div className="product-info-speak">
             <p>Termék leírása: <span> {product.description}</span></p>
+            <button className="speak-button" onClick={(e) => { e.stopPropagation(); speak(product.description); }}>
+              <i className="fas fa-volume-up"></i>
+            </button>
+            </div>
             <p>Termék ára: <span>{product.price}-. (Ft) </span></p>
             <p>Termék mennyisége: <span>{product.quantity} (db)</span></p>
             {authService.hasRole(["ADMIN", "MODERATOR"]) &&

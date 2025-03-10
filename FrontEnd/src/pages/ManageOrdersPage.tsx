@@ -1,5 +1,7 @@
 
-const ManageOrdersPage = () => {
+
+const ManageOrdersPage = ()=> {
+
     return (
         <div>
             <h1>Manage Orders</h1>
