@@ -21,4 +21,9 @@ public class OrderServiceImp implements OrderService {
     public Order save(Order order) {
         return orderDao.save(order);
     }
+
+    @Override
+    public List<Order> findByUserId(int userId) {
+        return orderDao.findByUserId(userId);
+    }
 }

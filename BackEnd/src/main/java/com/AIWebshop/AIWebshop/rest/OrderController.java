@@ -26,6 +26,11 @@ public class OrderController {
         return orderService.findAll();
     }
 
+    @GetMapping("/{userId}")
+    public List<Order> findAllByUserId(@PathVariable int userId) {
+        return orderService.findByUserId(userId);
+    }
+
     @PutMapping
     @Transactional
     public Order saveOrder(@RequestBody OrderRequest orderRequest) {

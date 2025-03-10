@@ -30,4 +30,12 @@ public class OrderDaoImp implements OrderDao {
 
         return theOrder;
     }
+
+    @Override
+    public List<Order> findByUserId(int userId) {
+        TypedQuery theQuerry = entityManager.createQuery("FROM Order WHERE userId = :userId", Order.class);
+        theQuerry.setParameter("userId", userId);
+        List<Order> results = theQuerry.getResultList();
+        return results;
+    }
 }

@@ -1,9 +1,6 @@
 package com.AIWebshop.AIWebshop.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "order_items_with_user_data")
@@ -120,8 +117,31 @@ public class OrderItemsWithUserData {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+    public String getProductName() {
+        return productName;
+    }
 
-    @Id
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
+
+    public int getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
+    }
+
+
     @Column(name = "order_id")
     private int orderId;
     @Column(name = "user_id")
@@ -136,8 +156,15 @@ public class OrderItemsWithUserData {
     private String address;
     @Column(name = "zip_code")
     private String zipCode;
+    @Id
+    @Column(name = "item_id")
+    private int itemId;
     @Column(name = "product_id")
     private int productId;
     private int quantity;
     private int price;
+    @Column(name = "product_name")
+    private String productName;
+    @Column(name = "product_description")
+    private String productDescription;
 }

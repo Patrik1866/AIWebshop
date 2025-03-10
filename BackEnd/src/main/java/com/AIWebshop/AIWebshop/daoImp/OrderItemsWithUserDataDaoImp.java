@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Repository
 public class OrderItemsWithUserDataDaoImp implements OrderItemsWithUserDataDao {
@@ -25,10 +27,23 @@ public class OrderItemsWithUserDataDaoImp implements OrderItemsWithUserDataDao {
 
     @Override
     public List<OrderItemsWithUserData> findByOrderId(int orderId) {
-        TypedQuery theQuerry = entityManager.createQuery("FROM OrderItemsWithUserData WHERE orderId = :orderId", OrderItemsWithUserData.class);
-        theQuerry.setParameter("orderId", orderId);
-        List<OrderItemsWithUserData> results = theQuerry.getResultList();
-        return results;
+        TypedQuery<OrderItemsWithUserData> query = entityManager.createQuery(
+                "SELECT o FROM OrderItemsWithUserData o WHERE o.orderId = :orderId",
+                OrderItemsWithUserData.class
+        );
+        query.setParameter("orderId", orderId);
+        List<OrderItemsWithUserData> results = query.getResultList();
+
+        // Szűrjük a duplikátumokat Java-ban
+        return results.stream()
+                .collect(Collectors.toMap(
+                        o -> o.getProductId(), // kulcs
+                        Function.identity(), // érték
+                        (existing, replacement) -> existing // ha duplikátum van, megtartjuk az elsőt
+                ))
+                .values()
+                .stream()
+                .collect(Collectors.toList());
     }
 
     @Override

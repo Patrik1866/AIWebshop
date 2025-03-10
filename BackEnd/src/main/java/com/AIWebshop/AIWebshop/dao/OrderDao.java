@@ -7,4 +7,5 @@ import java.util.List;
 public interface OrderDao {
     List<Order> findAll();
     Order save(Order order);
+    List<Order> findByUserId(int userId);
 }
