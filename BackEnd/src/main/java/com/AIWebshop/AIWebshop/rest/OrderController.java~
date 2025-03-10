@@ -66,8 +66,10 @@ public class OrderController {
                     orderItemsService.save(orderItem);
                 }
 
+                // Send email
                 String emailResponse = sendOrderConfirmationEmail(orderRequest, principal);
 
+                // Create a response object that includes both the saved order and the email response
                 Map<String, Object> response = new HashMap<>();
                 response.put("order", savedOrder);
                 response.put("emailResponse", emailResponse);
@@ -84,20 +86,25 @@ public class OrderController {
 
     private String sendOrderConfirmationEmail(OrderRequest orderRequest, Principal principal) {
         try {
+            // Get user's email from principal
             String userEmail = userService.findByUsername(principal.getName()).getEmail();
 
+            // Create email content
             String emailBody = createOrderConfirmationEmailBody(orderRequest);
 
+            // Create EmailRequest object
             EmailRequest emailRequest = new EmailRequest();
-            emailRequest.setFrom("teszttdoga@gmail.com");
-            emailRequest.setTo(userEmail);
+            emailRequest.setFrom("your-shop@example.com"); // Set your shop's email
+            emailRequest.setTo(userEmail); // Set the email from the authenticated user
             emailRequest.setSubject("Order Confirmation - Order #" + orderRequest.getOrder().getId());
             emailRequest.setBody(emailBody);
 
+            // Send email
             emailService.sendMail(emailRequest);
 
             return "Order confirmation email sent successfully";
         } catch (Exception e) {
+            // Log the error but don't prevent the order from being saved
             System.err.println("Failed to send order confirmation email: " + e.getMessage());
             return "Failed to send order confirmation email";
         }
@@ -125,7 +132,7 @@ public class OrderController {
                     .append("</li>");
         }
         body.append("</ul>");
-        body.append("<p>Összesen: HUF").append(String.format("%.2f", total)).append("</p>");
+        body.append("<p>Összesen: $").append(String.format("%.2f", total)).append("</p>");
         body.append("<footer><i>Ez egy automatikusan generált üzenet. Kérem ne válaszoljon!</i></footer>");
         return body.toString();
     }

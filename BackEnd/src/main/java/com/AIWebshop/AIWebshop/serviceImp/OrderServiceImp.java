@@ -26,4 +26,9 @@ public class OrderServiceImp implements OrderService {
     public List<Order> findByUserId(int userId) {
         return orderDao.findByUserId(userId);
     }
+
+    @Override
+    public List<Order> findByOrderId(int orderId) {
+        return orderDao.findByOrderId(orderId);
+    }
 }

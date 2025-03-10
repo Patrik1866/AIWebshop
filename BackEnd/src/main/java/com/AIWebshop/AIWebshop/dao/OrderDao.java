@@ -8,4 +8,5 @@ public interface OrderDao {
     List<Order> findAll();
     Order save(Order order);
     List<Order> findByUserId(int userId);
+    List<Order> findByOrderId(int orderId);
 }

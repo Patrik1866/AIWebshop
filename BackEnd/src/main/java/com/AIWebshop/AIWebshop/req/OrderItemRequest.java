@@ -1,11 +1,13 @@
 package com.AIWebshop.AIWebshop.req;
 
+import java.math.BigDecimal;
+
 public class OrderItemRequest {
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -27,5 +29,8 @@ public class OrderItemRequest {
 
     private int productId;
     private int quantity;
-    private int price;
+
+
+
+    private double price;
 }

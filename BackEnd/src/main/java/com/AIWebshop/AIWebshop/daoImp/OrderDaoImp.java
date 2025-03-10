@@ -38,4 +38,12 @@ public class OrderDaoImp implements OrderDao {
         List<Order> results = theQuerry.getResultList();
         return results;
     }
+
+    @Override
+    public List<Order> findByOrderId(int orderId) {
+        TypedQuery theQuerry = entityManager.createQuery("FROM Order WHERE orderId = :orderId", Order.class);
+        theQuerry.setParameter("orderId", orderId);
+        List<Order> results = theQuerry.getResultList();
+        return results;
+    }
 }

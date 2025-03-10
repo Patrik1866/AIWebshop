@@ -22,12 +22,12 @@ public class EmailService {
 
 
             helper.setFrom(emailRequest.getFrom());
-            helper.setReplyTo(emailRequest.getTo()); // Dynamic sender's email
+            helper.setReplyTo(emailRequest.getTo());
             helper.setTo(emailRequest.getTo());
             helper.setSubject(emailRequest.getSubject());
 
             String enhancedBody = String.format(
-                    "<p><strong>Message from:</strong> %s</p>" +
+                    "<p><strong>Feladó:</strong> %s</p>" +
                             "<p>%s</p>",
                     emailRequest.getFrom(),
                     emailRequest.getBody()
@@ -36,10 +36,10 @@ public class EmailService {
             helper.setText(enhancedBody, true);
             mailSender.send(message);
 
-            logger.info("Email sent successfully");
+            logger.info("Email sikeresen elküldve");
         } catch (Exception e) {
-            logger.error("Failed to send email", e);
-            throw new RuntimeException("Failed to send email: " + e.getMessage(), e);
+            logger.error("Hiba az email küldése közben", e);
+            throw new RuntimeException("Az email-t nem sikerült elküldeni:: " + e.getMessage(), e);
         }
     }
 }

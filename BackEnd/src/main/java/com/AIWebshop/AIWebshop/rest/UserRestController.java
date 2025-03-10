@@ -75,12 +75,10 @@ public class UserRestController {
 
             theUser.setPassword(encodedPassword);
 
-            // Frissített felhasználó mentése
             userService.save(theUser);
 
             return theUser;
         } else {
-            // Ha a felhasználó nem létezik, kivétel dobása
             throw new RuntimeException("Felhasználó nem létezik");
         }
     }
