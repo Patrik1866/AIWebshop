@@ -1,8 +1,6 @@
-package com.AIWebshop.AIWebshop.rest;
+package com.AIWebshop.AIWebshop.EmailComponent;
 
-import com.AIWebshop.AIWebshop.req.EmailRequest;
 import com.AIWebshop.AIWebshop.service.UserService;
-import com.AIWebshop.AIWebshop.serviceImp.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

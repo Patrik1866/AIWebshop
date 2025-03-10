@@ -1,4 +1,4 @@
-package com.AIWebshop.AIWebshop.req;
+package com.AIWebshop.AIWebshop.EmailComponent;
 
 public class EmailRequest {
 
