@@ -23,7 +23,7 @@
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   border: 1px solid #ddd;
   padding: 20px;
   border-radius: 10px;
@@ -142,4 +142,7 @@ option {
 }
 .speak-button:hover {
   background-color: #555;
+}
+.product-image{
+  width: 40px;
 }

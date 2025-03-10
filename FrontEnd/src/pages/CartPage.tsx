@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import '../styles/cartPage.scss';
+import '../styles/cartPage.css';
 import cartService from '../util/CartService';
 import Notification from '../components/Notification';
 

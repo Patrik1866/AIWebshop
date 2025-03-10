@@ -58,3 +58,10 @@
     padding: 1em;
     text-align: center;
   }
+  .stars .fa-star {
+    color: #ccc;
+  }
+  
+  .stars .fa-star.active {
+    color: #ffd700;
+  }

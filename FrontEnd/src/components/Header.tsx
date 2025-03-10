@@ -39,6 +39,9 @@ const Header = () => {
             <div className="nav-item">
               <a href="/chat" className="nav-link">Gemini chat</a>
             </div>
+            <div className="nav-item">
+              <a href={`/viewCustomerOrders/${user.id}`} className="nav-link">Rendeléseim</a>
+            </div>
             {authService.hasRole(["ADMIN"]) && (
               <div className="nav-item">
                 <a href="/dashboard" className="nav-link">

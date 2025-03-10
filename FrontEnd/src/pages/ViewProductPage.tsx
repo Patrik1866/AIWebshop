@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import "../styles/viewProductpage.scss"
+import "../styles/viewProductpage.css"
 import { useEffect, useState } from "react";
 import { Reviews } from "../entities/Reviews";
 
@@ -50,6 +50,7 @@ export function ViewProductPage() {
             if (response.ok) {
                 loadReviewsForProduct(product.id);
                 setIsComment(false);
+                setPoint(0);
             }
         } catch (e) {
             console.error(e)

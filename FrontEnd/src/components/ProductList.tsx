@@ -6,6 +6,7 @@ import authService from "../util/AuthService";
 import cartService from "../util/CartService";
 import Notification from "../components/Notification";
 
+
 declare var webkitSpeechRecognition: any;
 
 const ProductList = () => {
@@ -19,6 +20,16 @@ const ProductList = () => {
   const [subCategories, setSubCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isMicrophoneActive, setIsMicrophoneActive] = useState(false);
+  const images = import.meta.glob("../assets/*.svg", {eager: true, as: "url"});
+  const categoryImages: { [key: number]: string } = {
+    1200: images["../assets/electronics.svg"],
+    2200: images["../assets/clothing.svg"],
+    3200: images["../assets/beauty.svg"], 
+    4200: images["../assets/household.svg"],
+    5200: images["../assets/sport.svg"],
+    6200: images["../assets/food.svg"],
+    7200: images["../assets/books.svg"],
+  }
 
   const navigate = useNavigate();
 
@@ -275,6 +286,9 @@ const ProductList = () => {
       <div className="product-tile-container">
         {filteredProducts.map((product, index) => (
           <div onClick={() => navigate(`/ViewProductPage`, { state: { product } })} className="product-tile" key={index}>
+            <div className="product-image-container">
+              <img className="product-image" src={categoryImages[product.categoryId] || ""} alt={product.name} />
+            </div>
             <div className="product-info-speak">
               <p>Termék neve: <span>{product.name}</span></p>
               <button className="speak-button" onClick={(e) => { e.stopPropagation(); speakFromBackend(product.name); }}>

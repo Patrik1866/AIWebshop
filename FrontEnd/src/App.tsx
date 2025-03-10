@@ -19,6 +19,8 @@ import UsersPage from "./pages/UsersPage.tsx";
 import OrderPage from "./pages/OrderPage.tsx";
 import SuccessfulOrderPage from "./pages/SuccessfulOrderPage.tsx";
 import ManageOrdersPage from "./pages/ManageOrdersPage.tsx";
+import ViewUserOrder from "./pages/ViewUserOrder.tsx";
+import ViewOrdersCustomer from "./pages/ViewCustomerOrders.tsx";
 
 function App() {
 
@@ -37,7 +39,7 @@ function App() {
 
     handleAuthChange();
 
-    
+
     return () => {
       window.removeEventListener('storage', handleAuthChange);
     };
@@ -60,7 +62,7 @@ function App() {
 
           {/*Védett elérések */}
 
-          <Route path="/contact"  element={
+          <Route path="/contact" element={
             <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
               <ContactPage />
             </ProtectedRoute>
@@ -100,16 +102,22 @@ function App() {
           <Route path="/order" element={
             <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
               <OrderPage />
-              </ProtectedRoute>}
-            > </Route>
+            </ProtectedRoute>}
+          > </Route>
 
           <Route path="/successfulOrder" element={
             <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
               <SuccessfulOrderPage />
             </ProtectedRoute>
-          }>
+          }></Route>
 
-          </Route>
+
+          <Route path="/viewCustomerOrders/:userId" element={
+            <ProtectedRoute roles={["ADMIN", "MODERATOR", "USER"]}>
+              <ViewOrdersCustomer />
+            </ProtectedRoute>
+          }></Route>
+
 
           {/*Admin elérések */}
 
@@ -132,16 +140,21 @@ function App() {
           }></Route>
 
           <Route path="/users" element={<ProtectedRoute roles={["ADMIN"]}>
-            <UsersPage/>
+            <UsersPage />
           </ProtectedRoute>}>
           </Route>
 
           <Route path="/manageOrders" element={
             <ProtectedRoute roles={["ADMIN", "MODERATOR"]}>
-               <ManageOrdersPage /> 
+              <ManageOrdersPage />
             </ProtectedRoute>}>
           </Route>
 
+          <Route path="/viewUserOrder/:userId" element={
+            <ProtectedRoute roles={["ADMIN", "MODERATOR"]}>
+              <ViewUserOrder />
+            </ProtectedRoute>
+          }></Route>
 
           {/*Admin és moderátor elérések */}
 

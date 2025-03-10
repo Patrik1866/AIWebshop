@@ -1,0 +1,33 @@
+.orders-page-container{
+    margin: 5em;
+    background-color: #f9f9f9;
+    border-radius: 40px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: auto;
+    height: fit-content;
+}
+.orders-page-header{
+    text-align: center;
+}
+
+.orders-page-content{
+    display: flex;
+    flex-direction: column;
+}
+
+.user-order-tile{
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+ border: 0.5px solid #ddd;
+ border-radius: 5px;
+ padding: 10px;
+ margin: 0.5%;
+ background-color: #f9f9f9;
+ transition: transform 0.2s, box-shadow 0.2s;
+}
+.user-order-tile:hover{
+    transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
