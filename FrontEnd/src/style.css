@@ -1,7 +1,23 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+@import "tailwindcss";
+
+@theme {
+    --breakpoint-*: initial;
+    --breakpoint-sm: 480px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
+    --color-main-white: #E0E0E0;
+    --color-main-beige: #c4b3a6;
+    --color-main-brown: #99755C;
+    --color-main-brown-hover: #b88b6b;
+    --color-main-green-title: #374735;
+    --color-main-green: #3c5a38;
+}
 
 :root {
-    --primary-color: #f7f7f7;
+    --primary-color:  #c4b3a6;
     --primary-color-brown: #a68e6c;
     --button-red: rgb(243, 145, 145);
     --button-red-background: #ad1d00c0;
@@ -10,27 +26,17 @@
 
 body {
     color: black;
-    background-color: #fff;
-    font-family: open-sans, sans-serif;
+    background-color: var(--color-main-white);
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     margin: 0;
     padding: 0;
     width: 100%;
     min-height: 100vh;
     font-size:18px;
 }
-div, a, p, label{
-    font-family: open-sans, sans-serif;
-}
 
-p,
-a {
-    color: #0F0F0F;
-}
 
-p,
-a:hover {
-    color: #b22106;
-}
+
 
 input {
     height: 1em;
@@ -49,17 +55,3 @@ input {
     margin: 0 auto;
 }
 
-button {
-    background-color: #aaa9a9;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  button:hover {
-    color: #b22106;
-    background-color: #afaeae;
-  }

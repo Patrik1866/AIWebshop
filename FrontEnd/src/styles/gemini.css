@@ -78,3 +78,38 @@ body {
       max-width: 100%;
     }
   }
+
+
+  .chat-products-container{
+    display: flex;
+    flex-direction: column;
+    margin: 2%;
+    padding: 30px;
+    border: 0.5 solid #ccc;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .chat-products-header{
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 1%;
+  }
+  .chat-product{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    border: 0.5 solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+    border-radius: 10px;
+    margin: 1%;
+    padding: 15px;
+  }
+
+  .chat-product:hover{
+    transition: transform 0.3s ease-in-out;
+    transform: translateY(-13%);
+  }

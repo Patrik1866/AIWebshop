@@ -241,7 +241,7 @@ const ProductList = () => {
   return (
     <>
       <div>
-        <button onClick={() => window.location.replace("/")} className="back-button"><i style={{ marginRight: "10px" }} className="fas fa-arrow-left"></i>Vissza</button>
+        <button onClick={() => window.history.back()} className="back-button"><i style={{ marginRight: "10px" }} className="fas fa-arrow-left"></i>Vissza</button>
       </div>
       <div className="filter-container">
         <div className="filter-title-container">

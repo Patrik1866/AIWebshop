@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "../styles/header.css";
 import authService from "../util/AuthService";
 import { User } from "../entities/User";
 import cartService from "../util/CartService";
@@ -17,102 +16,110 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="header">
-      <nav className="navbar">
-        {user ? (
-          <>
-            <div className="nav-item">
-              <a href="/" className="nav-link">
+    <header className="bg-white shadow-md">
+    <nav className="container mx-auto px-4 py-3">
+      {user ? (
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6">
+            <div className="p-1">
+              <a href="/" className="text-main-green-title hover:text-main-green font-medium">
                 Főoldal
               </a>
             </div>
-            <div className="nav-item">
-              <a href="/products" className="nav-link dropdown-toggle">
+            <div className="p-1">
+              <a href="/products" className="text-main-green-title hover:text-main-green font-medium">
                 Termékek
               </a>
             </div>
-            <div className="nav-item">
-              <a href="/contact" className="nav-link">
+            <div className="p-1">
+              <a href="/contact" className="text-main-green-title hover:text-main-green font-medium">
                 Kapcsolat
               </a>
             </div>
-            <div className="nav-item">
-              <a href="/chat" className="nav-link">Gemini chat</a>
+            <div className="p-1">
+              <a href="/chat" className="text-main-green-title hover:text-main-green font-medium">Chat</a>
             </div>
-            <div className="nav-item">
-              <a href={`/viewCustomerOrders/${user.id}`} className="nav-link">Rendeléseim</a>
+            <div className="p-1">
+              <a href={`/viewCustomerOrders/${user.id}`} className="text-main-green-title hover:text-main-green font-medium">Rendeléseim</a>
             </div>
             
             {authService.hasRole(["ADMIN", "MODERATOR"]) && (
-              <div className="dropdown-menu-container">
-              <a
-                href="#"
-                className="nav-link"
-                onClick={toggleDropdown}
-              >
-                Admin felületek
-                <div className="arrow-container">
-                {dropdownOpen ? (
-                  <i className="fas fa-caret-down"></i>
-                ): <i className="fas fa-caret-up"></i>}
-                </div>
-              </a>
-              {dropdownOpen && (
-                <div className="dropdown-menu">
-                  <a href="/products" className="dropdown-item">
-                    Termékek kezelése
-                  </a>
-                  <a href="/users" className="dropdown-item">
-                    Felhasználók kezelése
-                  </a>
-                  <a href="/manageOrders" className="dropdown-item">
-                    Rendelések kezelése
-                  </a>
-                </div>
-              )}
-            </div>
-            )}
-            <div className="nav-right">
-              <div className="nav-item">
-                <a href="/cart" className="nav-link">
-                  <i className="fas fa-shopping-cart"></i>
-                  {cartService.getCartContent() ? (
-                    <span className="cart-count">{cartService.getCartContent()!.length}</span>
-                  ) : (
-                    <span className="cart-count">0</span>
-                  )}
-                </a>
-              </div>
-  
-              <div className="nav-item">
-                <a href="/profil" className="nav-link">
-                  <i className="fas fa-user"></i>
-                </a>
-              </div>
-              <div className="nav-auth">
+              <div className="relative p-1">
                 <a
-                  href="/"
-                  className="logout-button-header"
-                  onClick={() => {
-                    localStorage.clear();
-                    sessionStorage.clear();
-                  }}
+                  href="#"
+                  className="text-main-green-title hover:text-main-green font-medium flex items-center justify-center"
+                  onClick={toggleDropdown}
                 >
-                  <i className="fas fa-sign-out-alt"></i>
+                  Admin felületek
+                  <span className="ml-2">
+                    {dropdownOpen ? (
+                      <i className="fas fa-caret-down"></i>
+                    ) : <i className="fas fa-caret-up"></i>}
+                  </span>
                 </a>
+                {dropdownOpen && (
+                  <div className="absolute flex flex-col text-center items-center justify-center z-10 mt-2 w-48 bg-white rounded-md shadow-lg py-1">
+                    <a href="/products" className="block px-4 py-2 text-sm text-main-green-title hover:bg-gray-100">
+                      Termékek kezelése
+                    </a>
+                    <a href="/users" className="block px-4 py-2 text-sm text-main-green-title hover:bg-gray-100">
+                      Felhasználók kezelése
+                    </a>
+                    <a href="/manageOrders" className="block px-4 py-2 text-sm text-gmain-green-title hover:bg-gray-100">
+                      Rendelések kezelése
+                    </a>
+                  </div>
+                )}
               </div>
-            </div>
-          </>
-        ) : (
-          <div className="nav-auth">
-            <a href="/LoginPage" className="login-button-header">
-              Bejelentkezés
-              <i style={{ margin: "0 0 0 0.5em" }} className="fas fa-sign-in-alt"></i>
-            </a>
+            )}
           </div>
-        )}
-      </nav>
-    </header>
+          
+          <div className="flex md:flex-row justify-center items-center space-x-4 mt-4 md:mt-0">
+            <div className="p-2">
+              <a href="/cart" className="text-main-green-title hover:text-main-green relative">
+                <i className="fas fa-shopping-cart text-xl"></i>
+                {cartService.getCartContent() ? (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    {cartService.getCartContent()!.length}
+                  </span>
+                ) : (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                    0
+                  </span>
+                )}
+              </a>
+            </div>
+            
+            <div className="p-2">
+              <a href="/profil" className="text-main-green-title hover:text-main-green">
+                <i className="fas fa-user text-xl"></i>
+              </a>
+            </div>
+            
+            <div className="p-2">
+              <a
+                href="/"
+                className="text-main-green-title hover:text-main-green"
+                onClick={() => {
+                  localStorage.clear();
+                  sessionStorage.clear();
+                }}
+              >
+                <i className="fas fa-sign-out-alt text-xl"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="flex justify-end">
+          <a href="/LoginPage" className="inline-flex items-center px-4 py-2  bg-main-brown text-main-green-title font-bold rounded-md hover:bg-main-brown-hover transition duration-300">
+            Bejelentkezés
+            <i className="fas fa-sign-in-alt ml-2"></i>
+          </a>
+        </div>
+      )}
+    </nav>
+  </header>
   );
 };
 
