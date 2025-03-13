@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
-import { Role } from "../util/AuthService.ts";
-import authService from "../util/AuthService.ts";
+import { Role } from "./AuthService.ts";
+import authService from "./AuthService.ts";
 
 interface ProtectedRouteProps {
   roles: Role[];

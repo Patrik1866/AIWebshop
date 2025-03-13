@@ -20,8 +20,6 @@ const GeminiChatPage = () => {
 
     const handleSendMessage = async () => {
         try {
-            console.log(message)
-            console.log(responses);
             const chatRequest = { question: message };
             setMessage("");
             const response = await fetch("http://localhost:8080/chat/geminiMessage", {
