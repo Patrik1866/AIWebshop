@@ -288,7 +288,7 @@ const ProductList = () => {
         {/* product tiles */}
         <div className="grid flex-col md:grid-cols-2 lg:grid-cols-3 gap-4 sm:grid-cols-1 ">
           {filteredProducts.map((product, index) => (
-            <div onClick={() => navigate(`/ViewProductPage`, { state: { product } })} className="tile-container w-full h-full maw-w-2xl flex flex-col justify-start m-auto py-3 px-2 border rounded-2xl shadow-lg hover:shadow-2xl hover:scale-102 transition duration-300 border-main-green-title" key={index}>
+            <div onClick={() => navigate(`/ViewProductPage`, { state: { product } })} className="tile-container w-full h-full maw-w-2xl flex flex-col justify-start m-auto py-3 px-2 border rounded-2xl shadow-lg hover:shadow-2xl hover:scale-102 transition duration-300 border-main-green-title bg-product-tile" key={index}>
               <div className="py-2 px-2 mt-2 flex justify-center">
                 <img className="w-20" src={categoryImages[product.categoryId] || ""} alt={product.name} />
               </div>
@@ -309,11 +309,11 @@ const ProductList = () => {
               <div className="flex flex-col mt-auto left-0 right-0 relative ">
                 {authService.hasRole(["ADMIN", "MODERATOR"]) &&
                   <div className="flex flex-row items-center justify-evenly">
-                    <button className="border border-main-green-title hover:bg-red-300 text-main-green-title font-bold py-2 px-4 rounded transition duration-300" onClick={(e) => { e.stopPropagation(); handleProductDelete(Number(product.id!)) }}>Törlés</button>
-                    <button className="border border-main-green-title hover:bg-main-beige text-main-green-title font-bold py-2 px-4 rounded transition duration-300" onClick={(e) => { e.stopPropagation(); handleProductUpdate(Number(product.id)) }}>Módosítás</button>
+                    <button className="border border-main-green-title bg-white hover:bg-red-300 text-main-green-title font-bold py-2 px-4 rounded transition duration-300" onClick={(e) => { e.stopPropagation(); handleProductDelete(Number(product.id!)) }}>Törlés</button>
+                    <button className="border border-main-green-title bg-white hover:bg-main-beige text-main-green-title font-bold py-2 px-4 rounded transition duration-300" onClick={(e) => { e.stopPropagation(); handleProductUpdate(Number(product.id)) }}>Módosítás</button>
                   </div>}
                 {authService.hasRole(["USER"]) &&
-                  <div className="flex justify-center  border border-main-green-title hover:bg-main-beige text-main-green-title font-bold py-2 px-4 rounded transition duration-300 mt-5">
+                  <div className="flex justify-center  border bg-white border-main-green-title hover:bg-main-beige text-main-green-title font-bold py-2 px-4 rounded transition duration-300 mt-5">
                     <button onClick={(e) => { e.stopPropagation(); handleSaveCart(Number(product.id), 1) }}>Hozzáadás kosárhoz</button>
                   </div>
                 }

@@ -13,6 +13,7 @@
     --color-main-brown: #99755C;
     --color-main-brown-hover: #b88b6b;
     --color-main-green-title: #374735;
+    --color-product-tile:#faf5f2;
     --color-main-green: #3c5a38;
 }
 
@@ -43,7 +44,7 @@
 
 
 :root {
-    --primary-color:  #c4b3a6;
+    --primary-color:  #faf5f2;
     --primary-color-brown: #eeeeee;
     --button-red: rgb(243, 145, 145);
     --button-red-background: #ad1d00c0;
