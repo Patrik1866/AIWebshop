@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "../styles/gemini.css"
 import authService from "../util/AuthService";
 import { User } from "../entities/User";
 import { Product } from "../entities/Product";
@@ -18,9 +17,12 @@ const GeminiChatPage = () => {
         handleGetMessages();
     }, []);
     useEffect(() => {
-        const chatMessagesContainer = document.querySelector('.chat-messages');
-        chatMessagesContainer!.scrollTop = chatMessagesContainer!.scrollHeight;
-        chatMessagesContainer!.classList.add('scroll-to-bottom');
+        const chatMessagesContainer = document.querySelector('.bg-gray-50.rounded-lg.h-\\[400px\\]');
+
+        if (chatMessagesContainer) {
+            chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+            chatMessagesContainer.classList.add('scroll-to-bottom');
+        }
     }, [responses]);
 
     const handleSendMessage = async () => {
@@ -37,11 +39,25 @@ const GeminiChatPage = () => {
                 body: JSON.stringify(chatRequest)
             });
             if (response.ok) {
-                const data = await response.json();
-                setResponses(data);
-                console.log(data);
-                // Check if the last response contains product data
-                setProducts(data)
+                const responseText = await response.text();
+
+                try {
+                    const jsonData = JSON.parse(responseText);
+
+                    setProducts(jsonData);
+
+                    setResponses(prev => [...prev, {
+                        question: chatRequest.question,
+                        message: "Találtam néhány terméket, amely érdekelhet téged. Nézd meg a jobb oldali panelen!"
+                    }]);
+                } catch (e) {
+                    setProducts([]);
+
+                    setResponses(prev => [...prev, {
+                        question: chatRequest.question,
+                        message: responseText
+                    }]);
+                }
             }
         } catch (error) {
             console.error(error);
@@ -69,53 +85,87 @@ const GeminiChatPage = () => {
         setMessage(event.target.value);
     };
 
-    return (
-        <>
-            <div className="chat-page-container">
-                <header>
-                    <h2>Gemini Chat szolgáltatás</h2>
-                    <h3>Amennyiben kérdésed merülne fel, nyugodtan kérdezd a chatbotot :D</h3>
+    return (<>
+        <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-50 py-8 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden">
+
+                <header className="bg-main-brown py-6 px-6">
+                    <h2 className="text-3xl font-bold text-main-green-title">Chat szolgáltatás</h2>
+                    <h3 className="text-md mt-2 opacity-90 text-main-green">Amennyiben kérdésed merülne fel, nyugodtan kérdezd a chatbotot :D</h3>
                 </header>
 
-                <div className="chat-container">
-                    <div className="chat-messages">
-                        <p>Üzenetek megjelennek itt</p>
-                        {responses.map((response, index) => (
-                            <div key={`${index}_${response.question}_${response.message}`} className="chat-message">
-                                <div className="question">{response.question}</div><br />
-                                <div className="answer">{response.message}</div>
-                            </div>
-                        ))}
-                    </div>
-                    <div className="chat-input">
-                        <input
-                            type="text"
-                            id="chat-input"
-                            placeholder="Üzenet"
-                            value={message}
-                            onChange={handleInputChange}
-                        />
-                        <button id="chat-send" onClick={handleSendMessage}>Küldés</button>
-                    </div>
-                </div>
-                {products.length > 0 &&
-                    <div className="chat-products-container">
-                        <div className="chat-products-header">
-                            <label>A kérdésedre az alábbi termékeket találtam</label>
+                <div className="flex flex-col md:flex-row">
+                    <div className="flex-1 p-4">
+                        <div className="bg-gray-50 rounded-lg h-[400px] overflow-y-auto p-4 mb-4 shadow-inner">
+                            {responses.length === 0 ? (
+                                <p className="text-gray-400 text-center italic mt-4">Üzenetek megjelennek itt</p>
+                            ) : (
+                                responses.map((response, index) => (
+                                    <div
+                                        key={`${index}_${response.question}_${response.message}`}
+                                        className="mb-4 last:mb-0"
+                                    >
+                                        <div className="bg-main-beige text-main-green p-3 rounded-t-lg rounded-br-lg max-w-[80%] ml-auto">
+                                            {response.question}
+                                        </div>
+                                        <div className="bg-white border border-gray-200 p-3 rounded-b-lg rounded-tr-lg max-w-[80%] mt-2 shadow-sm">
+                                            {response.message}
+                                        </div>
+                                    </div>
+                                ))
+                            )}
                         </div>
-                        {products.map((product, index) => (
-                            <div key={index} className="chat-product" onClick={() => navigate(`/ViewProductPage`, { state: { product } })}>
-                                <div className="chat-product-name"><strong>Termék neve:</strong>  {product.name}</div>
-                                <div className="chat-product-price">{product.price}.- <strong>HUF</strong></div>
-                                <div className="chat-product-description"><strong>Leírás:</strong> {product.description}</div>
-                                <div className="chat-product-quantity">{product.quantity} <strong>db.</strong></div>
-                            </div>
-                        ))}
+
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="text"
+                                id="chat-input"
+                                placeholder="Üzenet"
+                                value={message}
+                                onChange={handleInputChange}
+                                className="flex-1 border border-main-green-title rounded-full px-4 py-2 focus:outline-none focus:scale-101 text-main-green transition duration-300 ease-in-out"
+                            />
+                            <button
+                                id="chat-send"
+                                onClick={handleSendMessage}
+                                className="bg-main-brown hover:bg-main-brown-hover text-main-green-title font-bold cursor-pointer px-4 py-2 rounded-full transition duration-200 flex items-center"
+                            >
+                                <span>Küldés</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                }
+
+                    {products.length > 0 && (
+                        <div className="md:w-80 border-t md:border-t-0 md:border-l border-gray-200 bg-gray-50 p-4">
+                            <div className="text-lg font-medium text-gray-700 mb-3 border-b pb-2">
+                                A kérdésedre az alábbi termékeket találtam
+                            </div>
+                            <div className="space-y-3 overflow-y-auto max-h-[400px]">
+                                {products.map((product, index) => (
+                                    <div
+                                        key={index}
+                                        className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 p-3 cursor-pointer"
+                                        onClick={() => navigate(`/ViewProductPage`, { state: { product } })}
+                                    >
+                                        <div className="text-indigo-700 font-medium mb-1">{product.name}</div>
+                                        <div className="text-lg font-bold text-gray-800 mb-1">{product.price}.- <span className="text-sm font-normal">HUF</span></div>
+                                        <div className="text-gray-600 text-sm mb-1 line-clamp-2">{product.description}</div>
+                                        <div className="text-gray-500 text-sm">
+                                            Készleten: <span className="font-medium">{product.quantity} db.</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
-        </>
-    )
+        </div>
+    </>
+    );
 }
 
 export default GeminiChatPage;

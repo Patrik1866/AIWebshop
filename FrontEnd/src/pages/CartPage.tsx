@@ -56,13 +56,13 @@ const CartPage = () => {
           <>
             <div className="space-y-4 mb-6">
               {cartContent!.map((item, index) => (
-                <div key={index} className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border-spacing-0.5 rounded-2xl shadow:md hover:shadow-lg transition duration-200 bg-main-beige">
+                <div key={index} className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-main-green-title rounded-2xl shadow:md hover:shadow-lg transition duration-200 bg-white">
                   <div className="mb-3 sm:mb-0 p-1">
                     <div className="font-bold text-main-green-title text-lg mb-1">{item.productName}</div>
                     <div className="text-main-green">{item.productPrice} HUF</div>
                   </div>
                   <button
-                    className="bg-main-brown text-main-green-title hover:bg-main-brown-hover px-4 py-2 rounded-md text-sm font-bold transition duration-300"
+                    className="bg-white text-main-green-title border border-red-400 hover:bg-main-beige shadow-lg hover:shadow-xl hover:scale-101 px-4 py-2 rounded-md text-sm font-bold transition duration-300"
                     onClick={handleCartDelete.bind(this, index)}
                   >
                     Törlés

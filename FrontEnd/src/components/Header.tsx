@@ -17,9 +17,9 @@ const Header = () => {
 
   return (
     <header className="bg-white shadow-md">
-    <nav className="container mx-auto px-4 py-3">
+    <nav className="container mx-auto px-4 py-3 items-center justify-center">
       {user ? (
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col md:flex-row md:items-center sm:items-center sm:justify-center md:justify-between">
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6">
             <div className="p-1">
               <a href="/" className="text-main-green-title hover:text-main-green font-medium">

@@ -16,6 +16,32 @@
     --color-main-green: #3c5a38;
 }
 
+@keyframes slide-in {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slide-out {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+.enter-animation {
+    animation: slide-in 0.5s ease-out forwards;
+}
+
+.leave-animation {
+    animation: slide-out 0.5s ease-in forwards;
+}
+
+
 :root {
     --primary-color:  #c4b3a6;
     --primary-color-brown: #eeeeee;
