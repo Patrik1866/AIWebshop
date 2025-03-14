@@ -8,7 +8,7 @@
     --breakpoint-lg: 1024px;
     --breakpoint-xl: 1280px;
     --breakpoint-2xl: 1536px;
-    --color-main-white: #E0E0E0;
+    --color-main-white: #eeeeee;
     --color-main-beige: #c4b3a6;
     --color-main-brown: #99755C;
     --color-main-brown-hover: #b88b6b;
@@ -18,7 +18,7 @@
 
 :root {
     --primary-color:  #c4b3a6;
-    --primary-color-brown: #a68e6c;
+    --primary-color-brown: #eeeeee;
     --button-red: rgb(243, 145, 145);
     --button-red-background: #ad1d00c0;
     --form-background:rgb(245, 229, 199);

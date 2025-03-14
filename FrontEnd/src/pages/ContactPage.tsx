@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../styles/ContactPage.css"
 import authService from "../util/AuthService";
 import Notification from "../components/Notification";
+import emailsending from "../assets/email.svg";
 
 const ContactPage = () => {
   const name = authService.getUser()?.surname + " " + authService.getUser()?.firstname;
@@ -20,12 +21,12 @@ const ContactPage = () => {
         credentials: 'include',
         body: JSON.stringify({
           from: email,
-          to: "ttesztdoga@gmail.com",  
+          to: "ttesztdoga@gmail.com",
           subject: content.subject!,
           body: content.body!
         })
       });
-      if (response.ok){
+      if (response.ok) {
         setNorification(true);
         setContent({ from: "", subject: "", body: "" });
       }
@@ -33,46 +34,94 @@ const ContactPage = () => {
       console.error(error);
     }
   };
-  
-  const handleSubjectChange = (event:any) => {
+
+  const handleSubjectChange = (event: any) => {
     setContent({ ...content, subject: event.target.value });
   };
-  
+
   const handleBodyChange = (event: any) => {
     setContent({ ...content, body: event.target.value });
   };
 
-  return (
-    <div className="contact-container">
-      <h1>Vedd fel velünk a kapcsolatot</h1>
-      <section>
-        <div className="form-group">
-          <label htmlFor="name">Név:</label>
-          <input type="text" id="name" name="name" value={name} disabled />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input type="email" id="email" name="email" value={email} disabled />
-        </div>
-        <div className="form-group">
-          <label htmlFor="subject">Tárgy:</label>
-          <input type="text" id="subject" value={content.subject} onChange={handleSubjectChange}/>
-        </div>
-        <div className="form-group">
-          <label htmlFor="body">Üzenet:</label>
-          <textarea id="body" name="body" value={content.body} onChange={handleBodyChange}/>
-        </div>
-        <button onClick={handleSendEmail}>Üzenet küldése <i className="fa fa-paper-plane"></i></button>
-      </section>
-      <div className="contact-info">
-        <h2>Információk</h2>
-        <p>Cím: 3300 Eger, Magyarország</p>
-        <p>Telefon: 555-555-5555</p>
-        <p>Email: ttesztdoga@gmail.com</p>
+  return (<>
+    <div className="max-w-5xl flex flex-row items-center justify-center  p-6 rounded-lg  mx-auto">
+      <div className="flex flex-col p-3 w-full">
+        <h1 className="text-3xl font-bold text-center mb-6 text-main-green-title">Vedd fel velünk a kapcsolatot</h1>
+
+        <section className="mb-6">
+          <div className="mb-4">
+            <label htmlFor="name" className="block text-sm font-medium text-main-green-title mb-1">Név:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={name}
+              disabled
+              className="w-full px-3 py-2 border border-main-green-title rounded-lg shadow-lg text-main-green"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-sm font-medium text-main-green-title mb-1">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              disabled
+              className="w-full px-3 py-2 border border-main-green-title rounded-lg shadow-lg text-main-green"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="subject" className="block text-sm font-medium text-main-green-title mb-1">Tárgy:</label>
+            <input
+              type="text"
+              id="subject"
+              value={content.subject}
+              onChange={handleSubjectChange}
+              className="w-full px-3 py-2 border border-main-green-title focus:outline-none focus:scale-102 transition duration-300 rounded-lg shadow-lg text-main-green"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="body" className="block text-sm font-medium text-main-green-title mb-1">Üzenet:</label>
+            <textarea
+              id="body"
+              name="body"
+              value={content.body}
+              onChange={handleBodyChange}
+              className="w-full px-3 py-2 border border-main-green-title rounded-lg h-32 resize-none focus:outline-none text-main-green focus:scale-102 transition duration-300 shadow-lg"
+            />
+          </div>
+
+          <button
+            onClick={handleSendEmail}
+            className="w-full bg-main-brown hover:bg-main-brown-hover text-main-green-title font-medium py-2 px-4 rounded-md transition duration-300 flex items-center justify-center"
+          >
+            Üzenet küldése <i className="fa fa-paper-plane ml-2"></i>
+          </button>
+        </section>
+
+
+      </div>
+      <div>
+        <img src={emailsending} className="max-w-full h-auto m-auto mt-28 fill-current text-main-green-title" />
       </div>
 
-      {notification && <Notification message="Az email sikeresen el lett kuldve"/>}
+      {notification && (
+        <div className="fixed top-4 right-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-md">
+          <Notification message="Az email sikeresen el lett kuldve" />
+        </div>
+      )}
     </div>
+    <div className="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center max-w-5xl mx-auto hover:shadow-2xl hover:scale-101 transition duration-300">
+      <h1 className="text-2xl font-bold mb-6 text-main-green-title">Információk</h1>
+      <p className="text-main-green mb-2">Cím: 3300 Eger, Magyarország</p>
+      <p className="text-main-green mb-2">Telefon: 555-555-5555</p>
+      <p className="text-main-green">Email: ttesztdoga@gmail.com</p>
+    </div>
+  </>
   )
 }
 
