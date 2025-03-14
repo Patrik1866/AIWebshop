@@ -19,20 +19,4 @@ margin: auto;
     margin-bottom: 40px;
   }
   
-  .button-container {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .button {
-    background-color: rgb(88, 88, 88);
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .button:hover {
-    background-color: grey;
-  }
+ 

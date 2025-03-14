@@ -57,14 +57,7 @@
     margin-top: 10px;
   }
   
-  button {
-    padding: 8px 12px;
-    margin-right: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
+
   .edit-button {
     background-color: #4caf50;
     color: #fff;
@@ -110,13 +103,7 @@
     animation: fadeIn 0.3s ease-out forwards;
   }
   
-  .modal-content input {
-    width: 95%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+
   
   .close-button {
     margin-top: 10px;

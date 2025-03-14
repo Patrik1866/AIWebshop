@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import '../styles/loginPage.css';
 import Notification from "../components/Notification";
 import authService from "../util/AuthService";
 import { LoginForm } from "../entities/LoginForm";
@@ -74,28 +73,37 @@ const LoginPage = () => {
   return (
     <>
 
-<div className="login-container">
-  <h2>Bejelentkezés</h2>
-  <form className="login-form" onSubmit={handleLogin}>
-    <div className="form-group">
-      <label>Felhasználónév</label>
-      <br />
-      <input placeholder="Felhasználónév" type="text" id="username" name="username" required value={loginForm.username} onChange={handleChange} />
-    </div>
-    <div className="form-group">
-      <label>Jelszó</label>
-      <br />
-      <input placeholder="Jelszó" type="password" id="password" name="password" required value={loginForm.password} onChange={handleChange} />
-    </div>
-    <button type="submit" className="login-button">
-      Bejelentkezés
-    </button>
-    <br />
-    <label>
-      Még nincs profilja?<a className="register-link" href="/RegisterPage">Regisztráció</a>
-    </label>
-  </form>
-</div>
+      <div className="max-w-md mx-auto mt-30 px-4 sm:px-6">
+        <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+          <h2 className="text-3xl font-bold text-center text-main-green-title mb-6">Bejelentkezés</h2>
+          <form className="space-y-6" onSubmit={handleLogin}>
+            <div>
+              <label className="block text-md font-medium text-main-green">Felhasználónév</label>
+              <br />
+              <input
+                className="w-full px-3 py-3 border-0  rounded-lg shadow-lg placeholder-gray-400 focus:outline-none  sm:text-sm"
+                placeholder="Felhasználónév" type="text" id="username" name="username" required value={loginForm.username} onChange={handleChange} />
+            </div>
+            <div>
+              <label className="block text-md font-medium text-main-green">Jelszó</label>
+              <br />
+              <input
+                className="w-full px-3 py-3 border-0 rounded-lg shadow-lg placeholder-gray-400 focus:outline-none  sm:text-sm"
+                placeholder="Jelszó" type="password" id="password" name="password" required value={loginForm.password} onChange={handleChange} />
+            </div>
+            <div>
+              <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-main-green-title bg-main-brown hover:bg-main-brown-hover">
+                Bejelentkezés
+              </button>
+            </div>
+            <br />
+            <div className="text-center text-md">
+                <span className="text-main-green">Még nincs profilja?</span>
+                <a className="font-medium text-main-green-title hover:text-main-green transition duration-150 ease-in-out ml-2 underline" href="/RegisterPage">Regisztráljon itt!</a>
+            </div>
+          </form>
+        </div>
+      </div>
 
       {showNotifification && <Notification message="Sikeres bejelentkezés" />}
 

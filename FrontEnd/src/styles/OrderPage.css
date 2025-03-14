@@ -22,40 +22,4 @@
     margin-bottom: 5px;
     color: #555;
   }
-  
-  input,
-  select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-  }
-  
-  input:focus,
-  select:focus {
-    outline: none;
-  }
-  
-  .order-summary {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .submit-button {
-    width: 100%;
-    padding: 10px 15px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .submit-button:hover {
-    background-color: #0056b3;
-  }
-  
+
