@@ -5,6 +5,9 @@ import com.AIWebshop.AIWebshop.req.ChatRequest;
 import com.AIWebshop.AIWebshop.service.ChatService;
 import com.AIWebshop.AIWebshop.serviceImp.GeminiService;
 import com.AIWebshop.AIWebshop.service.UserService;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,18 +39,33 @@ public class GeminiChatController {
     public ResponseEntity<String> sendMessage(@RequestBody ChatRequest chatRequest, Principal principal) {
         try {
             String username = principal.getName();
-
             int userId = userService.findByUsername(username).getId();
 
-            Chat newChat = new Chat();
-            newChat.setQuestion(chatRequest.getQuestion());
-
+            // Generate a response using the GeminiService
             String response = geminiService.generateResponse(chatRequest.getQuestion());
 
-            newChat.setMessage(response);
-            newChat.setUserId(userId);
+            // Check if the response is related to a product
+            boolean isProductResponse = false;
+            if (response != null && response.trim().startsWith("[") && response.trim().endsWith("]")) {
+                JsonParser parser = new JsonParser();
+                JsonElement jsonElement = parser.parse(response);
+                if (jsonElement.isJsonArray()) {
+                    JsonArray array = jsonElement.getAsJsonArray();
+                    if (array.size() > 0 && array.get(0).getAsJsonObject().has("name")) {
+                        isProductResponse = true;
+                    }
+                }
+            } else {
+                isProductResponse = false;
+            }
 
-            if (response != null){
+
+            // Save the chat only if it's NOT related to a product
+            if (response != null && !isProductResponse) {
+                Chat newChat = new Chat();
+                newChat.setQuestion(chatRequest.getQuestion());
+                newChat.setMessage(response);
+                newChat.setUserId(userId);
                 chatService.save(newChat);
             }
 
@@ -57,6 +75,7 @@ public class GeminiChatController {
             return ResponseEntity.status(500).body("Error communicating with Gemini API: " + e.getMessage());
         }
     }
+
 
     @GetMapping("/geminiMessage/{userId}")
 public List<Map<String, String>> findByUserId(@PathVariable int userId) {

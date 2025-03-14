@@ -1,8 +1,12 @@
 package com.AIWebshop.AIWebshop.serviceImp;
 
+import com.AIWebshop.AIWebshop.entity.Product;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import io.github.cdimascio.dotenv.Dotenv;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -14,8 +18,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -92,89 +94,77 @@ public class GeminiService {
     }
 
     private String extractProductReference(String text) {
-        String[] keywords = {"termék", "bolt","boltban", "webshop","webshopban", "webshopon","product", "store", "áru", "item"};
+        String[] triggerWords = {"nálatok", "boltban", "webshopban", "webshopon", "webshop"};
 
         String lowercaseText = text.toLowerCase();
 
-        for (String keyword : keywords) {
-            if (lowercaseText.contains(keyword)) {
+        for (String word : triggerWords) {
+            if (lowercaseText.contains(word)) {
                 return text;
             }
         }
+
         return null;
     }
 
     private String getProductInfo(String searchText) {
         try {
-            List<String> searchTerms = Arrays.stream(searchText.split("\\s+"))
+            System.out.println("Keresési szöveg: " + searchText);
+
+            String lowercaseText = searchText.trim().toLowerCase();
+            lowercaseText = lowercaseText.replaceAll("[.,!?;:()\\[\\] {}]", " ");
+            System.out.println("Előfeldolgozott szöveg: " + lowercaseText);
+
+            List<String> searchTerms = Arrays.stream(lowercaseText.split("\\s+"))
                     .filter(word -> word.length() >= 3)
-                    .filter(word -> !isCommonWord(word))
+                    .filter(word -> !isCommonWord(word)) // Feltételezve, hogy van egy ilyen metódus
+                    .distinct()
                     .collect(Collectors.toList());
+
+            System.out.println("Keresési kulcsszavak: " + String.join(", ", searchTerms));
 
             if (searchTerms.isEmpty()) {
                 return "Kérem adjon meg több információt a termékről.";
             }
 
-            StringBuilder queryBuilder = new StringBuilder();
-            queryBuilder.append("SELECT * FROM products WHERE ");
-
+            StringBuilder queryBuilder = new StringBuilder("SELECT * FROM aiwebshop.products WHERE ");
             List<String> conditions = new ArrayList<>();
             List<Object> params = new ArrayList<>();
 
             for (String term : searchTerms) {
-                conditions.add("(name LIKE ? OR description LIKE ?)");
-                params.add("%" + term + "%");
-                params.add("%" + term + "%");
+                conditions.add("(LOWER(name) LIKE ? OR LOWER(description) LIKE ?)");
+                String searchTerm = "%" + term + "%";
+                params.add(searchTerm);
+                params.add(searchTerm);
             }
 
             queryBuilder.append(String.join(" OR ", conditions));
+            String sql = queryBuilder.toString();
 
-            List<Map<String, Object>> results = jdbcTemplate.queryForList(
-                    queryBuilder.toString(),
-                    params.toArray()
-            );
+            System.out.println("Generated Query: " + sql);
+            System.out.println("Paraméterek: " + params);
+
+            List<Map<String, Object>> results = jdbcTemplate.queryForList(sql, params.toArray());
 
             if (results.isEmpty()) {
-                return "Nem találtam olyan terméket, ami megfelelne a keresési feltételeknek.";
+                return "Üres";
             }
 
-            StringBuilder response = new StringBuilder();
-            response.append("Találatok:\n\n");
-
-            for (Map<String, Object> row : results) {
-                response.append("Név: ").append(row.get("name")).append("\n");
-
-                if (row.containsKey("price")) {
-                    response.append("Ár: ").append(row.get("price")).append(" Ft\n");
-                }
-
-                if (row.containsKey("description")) {
-                    response.append("Leírás: ").append(row.get("description")).append("\n");
-                }
-
-                if (row.containsKey("quantity")) {
-                    response.append("Készlet: ").append(row.get("quantity")).append(" db\n");
-                }
-                if (row.containsKey("price")) {
-                    response.append("Ár: ").append(row.get("price")).append("\n");
-                }
-
-                response.append("\n-------------------\n\n");
-            }
-
-            return response.toString();
+            return new Gson().toJson(results);
 
         } catch (Exception e) {
+            e.printStackTrace();
             return "Hiba történt az adatbázis lekérdezése során: " + e.getMessage();
         }
     }
+
+
 
     private boolean isCommonWord(String word) {
         Set<String> commonWords = new HashSet<>(Arrays.asList(
                 "egy", "és", "vagy", "van", "nincs", "the", "and", "or", "is", "are",
                 "nem", "igen", "mit", "hogy", "ezt", "azt", "ami", "aki", "hol", "mikor",
-                "mennyi", "mennyit", "but", "what", "where", "when", "how", "which", "who",
-                "termék", "product", "bolt", "store", "kérek", "szeretnék", "want", "would"
+                "mennyi", "mennyit", "but", "what", "where", "when", "how", "which", "who"
         ));
         return commonWords.contains(word.toLowerCase());
     }
