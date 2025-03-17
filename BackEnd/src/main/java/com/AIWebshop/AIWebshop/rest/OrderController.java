@@ -43,6 +43,10 @@ public class OrderController {
     public List<Order> findAll() {
         return orderService.findAll();
     }
+    @GetMapping("/{userId}")
+    public List<Order> findByUserId(@PathVariable int userId) {
+        return orderService.findByUserId(userId);
+    }
 
     @PutMapping
     @Transactional

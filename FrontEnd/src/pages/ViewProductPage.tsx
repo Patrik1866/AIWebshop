@@ -1,5 +1,4 @@
 import { useLocation } from "react-router-dom";
-import "../styles/viewProductpage.css"
 import { useEffect, useState } from "react";
 import { Reviews } from "../entities/Reviews";
 

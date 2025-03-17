@@ -309,13 +309,13 @@ const ProductList = () => {
               <div className="flex flex-col mt-auto left-0 right-0 relative ">
                 {authService.hasRole(["ADMIN", "MODERATOR"]) &&
                   <div className="flex flex-row items-center justify-evenly">
-                    <button className="border border-main-green-title bg-white hover:bg-red-300 text-main-green-title font-bold py-2 px-4 rounded transition duration-300" onClick={(e) => { e.stopPropagation(); handleProductDelete(Number(product.id!)) }}>Törlés</button>
-                    <button className="border border-main-green-title bg-white hover:bg-main-beige text-main-green-title font-bold py-2 px-4 rounded transition duration-300" onClick={(e) => { e.stopPropagation(); handleProductUpdate(Number(product.id)) }}>Módosítás</button>
+                    <button className="border cursor-pointer border-main-green-title bg-white hover:bg-red-300 text-main-green-title font-bold py-2 px-4 rounded transition duration-300" onClick={(e) => { e.stopPropagation(); handleProductDelete(Number(product.id!)) }}>Törlés</button>
+                    <button className="border cursor-pointer border-main-green-title bg-white hover:bg-main-beige text-main-green-title font-bold py-2 px-4 rounded transition duration-300" onClick={(e) => { e.stopPropagation(); handleProductUpdate(Number(product.id)) }}>Módosítás</button>
                   </div>}
-                {authService.hasRole(["USER"]) &&
-                  <div className="flex justify-center  border bg-white border-main-green-title hover:bg-main-beige text-main-green-title font-bold py-2 px-4 rounded transition duration-300 mt-5">
-                    <button onClick={(e) => { e.stopPropagation(); handleSaveCart(Number(product.id), 1) }}>Hozzáadás kosárhoz</button>
-                  </div>
+                {authService.hasRole(["USER", "ADMIN", "MODERATOR"]) &&
+                  <button onClick={(e) => { e.stopPropagation(); handleSaveCart(Number(product.id), 1) }} className="flex justify-center cursor-pointer border bg-white border-main-green-title hover:bg-main-beige text-main-green-title font-bold py-2 px-4 rounded transition duration-300 mt-5">
+                    Hozzáadás kosárhoz
+                  </button>
                 }
               </div>
             </div>

@@ -1,5 +1,4 @@
 import React from "react";
-import "../styles/LoadingBanner.css"
 
 interface LoadingBannerProps {
     message: string;    
@@ -9,20 +8,19 @@ const LoadingBanner: React.FC<LoadingBannerProps> = ({message}) => {
 
 
     return (
-        <> 
-            <div id="loading-banner-container" className="loading-banner-container">
-                <div className="loading-banner">
-                    <div className="banner-header">
-                        <span>Kérem várjon</span>
-                    </div>
-                    <div className="banner-content">
-                        <span>{message}</span>
-                    </div>
-                </div>
+        <>
+          <div className="fixed inset-0  backdrop-blur-md flex justify-center items-center z-50 animate-fade-in">
+            <div className="bg-white rounded-lg shadow-lg p-6 text-center ">
+              <div className="text-xl font-bold mb-4">
+                <span>Kérem várjon</span>
+              </div>
+              <div className="text-lg">
+                <span>{message}</span>
+              </div>
             </div>
+          </div>
         </>
-
-    )
+      );
 }
 
 export default LoadingBanner;

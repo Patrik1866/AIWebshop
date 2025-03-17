@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "../styles/ContactPage.css"
 import authService from "../util/AuthService";
 import Notification from "../components/Notification";
 import emailsending from "../assets/email.svg";
