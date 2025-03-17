@@ -66,57 +66,58 @@ const CustomerOrderList: React.FC<OrderListProps> = ({ userId }) => {
     }
 
 
-    return (
-        <div className="view-orders-container">
-            <div className="view-orders-header">
-                <h1>Rendeléseim</h1>
-            </div>
-            <div className="view-orders-content">
-                {orders.map((order) => (
-                    <div
-                        className="view-order-tile"
-                        key={order.id}
-                        onClick={() => { handleOrderClick(order.id!), console.log(order.id) }}
-                    >
-                        <div className="view-order-tile-content">
-                            <label>Rendelés azonosítója:</label><span> {order.id}</span>
-                            <label>Rendelés ideje:</label>
-                            <span>{new Date(order.orderDate).toLocaleDateString('hu-HU', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                                hour: 'numeric',
-                                minute: 'numeric',
-                            })}</span>
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            {overlayVisible && (
-                <div className="order-items-overlay">
-                    <div className="overlay-content">
-                        <button className="items-close-button" onClick={closeOverlay}>✖</button>
-                        <h2>Rendelés tételei</h2>
-                        <div className="order-items-list">
-                            {orderItems.map((orderItem) => (
-                                <div key={orderItem.itemId}>
-                                    <div className="order-item" key={orderItem.itemId}>
-                                        <span><strong>Tétel:</strong> {orderItem.productName}</span>
-                                        <span><strong>Ár:</strong> {orderItem.price} Ft</span>
-                                        <span><strong>Mennyiség:</strong> {orderItem.quantity}</span>
-                                    </div>
-                                </div>
-                            ))}
-                            <div className="totalprice">
-                                <span><strong>Összesen:</strong> {orderItems.reduce((total, orderItem) => total + orderItem.price * orderItem.quantity, 0)} Ft</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
+   return (
+     <div className="container mx-auto p-4">
+       <div className="mb-6">
+         <h1 className="text-2xl font-bold text-center">Rendeléseim</h1>
+       </div>
+       <div className="grid gap-4">
+         {orders.map((order) => (
+           <div
+             className="bg-white shadow-md rounded-lg p-4 cursor-pointer hover:bg-gray-100"
+             key={order.id}
+             onClick={() => { handleOrderClick(order.id!), console.log(order.id) }}
+           >
+             <div>
+               <label className="block text-sm font-semibold">Rendelés azonosítója:</label>
+               <span className="block mb-2">{order.id}</span>
+               <label className="block text-sm font-semibold">Rendelés ideje:</label>
+               <span>
+                 {new Date(order.orderDate).toLocaleDateString('hu-HU', {
+                   year: 'numeric',
+                   month: 'long',
+                   day: 'numeric',
+                   hour: 'numeric',
+                   minute: 'numeric',
+                 })}
+               </span>
+             </div>
+           </div>
+         ))}
+       </div>
+   
+       {overlayVisible && (
+         <div className="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center">
+           <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
+             <button className="text-red-500 float-right" onClick={closeOverlay}>✖</button>
+             <h2 className="text-xl font-bold mb-4">Rendelés tételei</h2>
+             <div className="space-y-4">
+               {orderItems.map((orderItem) => (
+                 <div key={orderItem.itemId} className="border-b pb-2">
+                   <span className="block"><strong>Tétel:</strong> {orderItem.productName}</span>
+                   <span className="block"><strong>Ár:</strong> {orderItem.price} Ft</span>
+                   <span className="block"><strong>Mennyiség:</strong> {orderItem.quantity}</span>
+                 </div>
+               ))}
+               <div className="mt-4">
+                 <span className="text-lg font-bold">Összesen: {orderItems.reduce((total, orderItem) => total + orderItem.price * orderItem.quantity, 0)} Ft</span>
+               </div>
+             </div>
+           </div>
+         </div>
+       )}
+     </div>
+   );
 }
 
 export default CustomerOrderList;

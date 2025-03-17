@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "../styles/OrderPage.css";
 import { UserWithAddress } from "../entities/UserWithAddress";
 import cartService from "../util/CartService";
 import { Payment } from "../entities/Payment";
@@ -173,149 +172,157 @@ const OrderPage = () => {
         setSelectedState(value);
     }
 
-    return (<>
-        <div className="order-page">
-            <h1 className="order-h1">Rendelés leadása</h1>
-            <form onSubmit={handleOrderSubmit}>
-                <div className="personal-info">
-                    Személyes adatok
-                    <div className="form-group">
-                        <label>Teljes név:</label>
-                        <input
-                            type="text"
-                            name="name"
-                            value={userDetails?.suername + " " + userDetails?.firstname}
-                            onChange={handleInputChange}
-                            placeholder="Adja meg a teljes nevét"
-                            required
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Email:</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={userDetails?.email}
-                            onChange={handleInputChange}
-                            placeholder="Adja meg az email címét"
-                            required
-                        />
-                    </div>
-
-                    <div>
-                        <label>Telefonszám</label>
-                        <input
-                            type="text"
-                            name="phone"
-                            value={userDetails?.phone}
-                            onChange={handleInputChange}
-                            placeholder="Adja meg a telefonszámot"
-                            required
-                        />
-                    </div>
-                </div>
-                <div className="shippin-info">
-                    Szállítási adatok
-                    <div className="form-group">
-                        <label>Megye</label>
-                        <select name="state" onChange={(e) => handleStateChange(Number(e.target.value))}>
-                            <option value="">Válasszon megyét</option>
-                            {states?.map((state) => (
-                                <option key={state.id} value={state.id}>
-                                    {state.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label>Település</label>
-                        <input
-                            type="text"
-                            name="address"
-                            value={userDetails?.city}
-                            onChange={handleInputChange}
-                            placeholder="Adja meg a szállítási címét"
-
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Utca</label>
-                        <input
-                            type="text"
-                            name="city"
-                            value={userDetails?.city}
-                            onChange={handleInputChange}
-                            placeholder="Adja meg a városát"
-
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Házszám</label>
-                        <input
-                            type="text"
-                            name="zipCode"
-                            value={userDetails?.zipCode}
-                            onChange={handleInputChange}
-                            placeholder="Adja meg az irányítószámot"
-
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Irányítószám</label>
-                        <input
-                            type="text"
-                            name="zipCode"
-                            value={userDetails?.zipCode}
-                            onChange={handleInputChange}
-                            placeholder="Adja meg az irányítószámot"
-
-                        />
-                    </div>
-                </div>
-
-                <div className="shippin-delivery-info">
-                    <div className="form-group">
-                        <label>Fizetési mód</label>
-                        <select name="paymentMethod" onChange={(e) => handlePaymentChange(Number(e.target.value))}>
-                            <option value="">Válassz fizetési lehetőséget</option>
-                            {payment!.map((payment: any) => (
-                                <option key={payment.id} value={payment.id}>
-                                    {payment.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <label>Szállítási mód</label>
-                        <select name="shippingMethod" onChange={(e) => handleShippingChange(Number(e.target.value))}>
-                            <option value="">Válasszon szállítási módot</option>
-                            {shipping!.map((shipping: any) => (
-                                <option key={shipping.id} value={shipping.id}>
-                                    {shipping.name}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                </div>
-
-                <div className="order-summary">
-                    <h2>Rendelés összegzés</h2>
-                    <p>Végösszeg: {cartService.getCartContent()?.reduce((total, item) => total + item.productPrice, 0)} HUF</p>
-                </div>
-
-                <button type="submit" className="submit-button">
-                    Rendelés leadása
-                </button>
-
-
-            </form>
-            {loading && <LoadingBanner message="Rendelés feldolgozása..." />}
+    return (
+      <>
+        <div className="container mx-auto p-4">
+          <h1 className="text-2xl font-bold text-center mb-6">Rendelés leadása</h1>
+          <form onSubmit={handleOrderSubmit} className="bg-white shadow-md rounded-lg p-6">
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold mb-4">Személyes adatok</h2>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Teljes név:</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={userDetails?.suername + " " + userDetails?.firstname}
+                  onChange={handleInputChange}
+                  placeholder="Adja meg a teljes nevét"
+                  required
+                  className="w-full border border-gray-300 rounded-lg p-2"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Email:</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={userDetails?.email}
+                  onChange={handleInputChange}
+                  placeholder="Adja meg az email címét"
+                  required
+                  className="w-full border border-gray-300 rounded-lg p-2"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Telefonszám:</label>
+                <input
+                  type="text"
+                  name="phone"
+                  value={userDetails?.phone}
+                  onChange={handleInputChange}
+                  placeholder="Adja meg a telefonszámot"
+                  required
+                  className="w-full border border-gray-300 rounded-lg p-2"
+                />
+              </div>
+            </div>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold mb-4">Szállítási adatok</h2>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Megye:</label>
+                <select
+                  name="state"
+                  onChange={(e) => handleStateChange(Number(e.target.value))}
+                  className="w-full border border-gray-300 rounded-lg p-2"
+                >
+                  <option value="">Válasszon megyét</option>
+                  {states?.map((state) => (
+                    <option key={state.id} value={state.id}>
+                      {state.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Település:</label>
+                <input
+                  type="text"
+                  name="city"
+                  value={userDetails?.city}
+                  onChange={handleInputChange}
+                  placeholder="Adja meg a szállítási címét"
+                  className="w-full border border-gray-300 rounded-lg p-2"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Utca:</label>
+                <input
+                  type="text"
+                  name="street"
+                  value={userDetails?.street}
+                  onChange={handleInputChange}
+                  placeholder="Adja meg az utcát"
+                  className="w-full border border-gray-300 rounded-lg p-2"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Házszám:</label>
+                <input
+                  type="text"
+                  name="houseNumber"
+                  value={userDetails?.address}
+                  onChange={handleInputChange}
+                  placeholder="Adja meg a házszámot"
+                  className="w-full border border-gray-300 rounded-lg p-2"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Irányítószám:</label>
+                <input
+                  type="text"
+                  name="zipCode"
+                  value={userDetails?.zipCode}
+                  onChange={handleInputChange}
+                  placeholder="Adja meg az irányítószámot"
+                  className="w-full border border-gray-300 rounded-lg p-2"
+                />
+              </div>
+            </div>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold mb-4">Szállítási és fizetési információk</h2>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Fizetési mód:</label>
+                <select
+                  name="paymentMethod"
+                  onChange={(e) => handlePaymentChange(Number(e.target.value))}
+                  className="w-full border border-gray-300 rounded-lg p-2"
+                >
+                  <option value="">Válassz fizetési lehetőséget</option>
+                  {payment!.map((payment: any) => (
+                    <option key={payment.id} value={payment.id}>
+                      {payment.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2">Szállítási mód:</label>
+                <select
+                  name="shippingMethod"
+                  onChange={(e) => handleShippingChange(Number(e.target.value))}
+                  className="w-full border border-gray-300 rounded-lg p-2"
+                >
+                  <option value="">Válasszon szállítási módot</option>
+                  {shipping!.map((shipping: any) => (
+                    <option key={shipping.id} value={shipping.id}>
+                      {shipping.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="mb-6">
+              <h2 className="text-xl font-semibold mb-4">Rendelés összegzés</h2>
+              <p className="text-lg">Végösszeg: {cartService.getCartContent()?.reduce((total, item) => total + item.productPrice, 0)} HUF</p>
+            </div>
+            <button type="submit" className="w-full bg-main-green-title hover:bg-main-green  text-white font-bold py-2 rounded-lg transition duration-300 cursor-pointer">
+              Rendelés leadása
+            </button>
+          </form>
+          {loading && <LoadingBanner message="Rendelés feldolgozása..." />}
         </div>
-    </>);
+      </>
+    );
 };
 
 export default OrderPage;

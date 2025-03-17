@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { User } from "../entities/User";
-import register from "../assets/register.svg";
 
 export function RegisterPage() {
   const [registerFormData, setRegisterFormData] = useState<Omit<User, 'id'>>({
