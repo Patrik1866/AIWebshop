@@ -113,7 +113,7 @@ export function ProfilePage(this: any) {
         <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
           {/* Header */}
           <header className="bg-main-brown text-main-green-title py-5 px-6">
-            <h2 className="text-2xl font-bold text-center">Saját profil oldal</h2>
+            <h2 className="text-2xl font-bold text-center">Saját adatok</h2>
           </header>
           
           <div className="p-6">

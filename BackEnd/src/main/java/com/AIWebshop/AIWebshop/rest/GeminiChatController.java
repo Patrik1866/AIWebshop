@@ -41,10 +41,8 @@ public class GeminiChatController {
             String username = principal.getName();
             int userId = userService.findByUsername(username).getId();
 
-            // Generate a response using the GeminiService
             String response = geminiService.generateResponse(chatRequest.getQuestion());
 
-            // Check if the response is related to a product
             boolean isProductResponse = false;
             if (response != null && response.trim().startsWith("[") && response.trim().endsWith("]")) {
                 JsonParser parser = new JsonParser();
@@ -60,7 +58,6 @@ public class GeminiChatController {
             }
 
 
-            // Save the chat only if it's NOT related to a product
             if (response != null && !isProductResponse) {
                 Chat newChat = new Chat();
                 newChat.setQuestion(chatRequest.getQuestion());
@@ -78,10 +75,10 @@ public class GeminiChatController {
 
 
     @GetMapping("/geminiMessage/{userId}")
-public List<Map<String, String>> findByUserId(@PathVariable int userId) {
-    List<Chat> theList = chatService.findByUserId(userId);
+    public List<Map<String, String>> findByUserId(@PathVariable int userId) {
+        List<Chat> theList = chatService.findByUserId(userId);
 
-    List<Map<String, String>> messages = theList.stream()
+        List<Map<String, String>> messages = theList.stream()
             .map(chat -> {
                 Map<String, String> map = new HashMap<>();
                 map.put("message", chat.getMessage());
@@ -89,8 +86,8 @@ public List<Map<String, String>> findByUserId(@PathVariable int userId) {
                 return map;
             })
             .toList();
-    return messages;
-}
+        return messages;
+    }
 
     @GetMapping("/geminiQuestion/{userId}")
     public List<String> findQuestionByUserId(@PathVariable int userId) {

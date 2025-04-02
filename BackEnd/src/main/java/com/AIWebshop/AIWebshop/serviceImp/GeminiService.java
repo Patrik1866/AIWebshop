@@ -117,7 +117,7 @@ public class GeminiService {
 
             List<String> searchTerms = Arrays.stream(lowercaseText.split("\\s+"))
                     .filter(word -> word.length() >= 3)
-                    .filter(word -> !isCommonWord(word)) // Feltételezve, hogy van egy ilyen metódus
+                    .filter(word -> !isCommonWord(word))
                     .distinct()
                     .collect(Collectors.toList());
 

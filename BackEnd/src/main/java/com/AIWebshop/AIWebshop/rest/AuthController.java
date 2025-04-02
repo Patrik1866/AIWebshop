@@ -38,7 +38,7 @@ public class AuthController {
     private CustomUserDetailsService customUserDetailsService;
 
     @PostMapping("/login")
-public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(authRequest.getUsername());
         if (passwordEncoder.matches(authRequest.getPassword(), userDetails.getPassword())) {
             

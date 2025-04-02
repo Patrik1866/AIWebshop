@@ -38,25 +38,6 @@ const HomePage = () => {
          Vásárlás
        </button>
      </header>
-     
-     <section className="my-12 px-4 md:px-12 lg:px-20">
-       <h2 className="text-2xl md:text-3xl font-semibold mb-8 text-center text-main-green-title">Felkapott termékek</h2>
-       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-         {[1, 2, 3].map((_, index) => (
-           <div key={index} className="border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-lg hover:scale-105 transition duration-300 bg-main-beige">
-             <h3 className="text-xl font-bold mb-2 text-main-green-title">Termék {index + 1}</h3>
-             <p className="text-main-green mb-4">Dummy text for product {index + 1}</p>
-             <button 
-               onClick={() => window.location.href = "/products"}
-               className="bg-main-brown hover:bg-main-brown-hover text-white font-bold py-2 px-6 rounded-lg transition duration-300"
-             >
-               Vásárlás
-             </button>
-           </div>
-         ))}
-       </div>
-     </section>
-     
      <section className="my-12 px-4 md:px-12 lg:px-20">
        <h2 className="text-2xl md:text-3xl font-semibold mb-8 text-center text-main-green-title">Mit mondanak a vásárlóink</h2>
        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -171,10 +171,15 @@ const UsersPage = ({ }) => {
                     <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
                         <header className="text-xl font-bold mb-4">Adatok szerkesztése</header>
                         <div className="space-y-4 mb-4">
+                            <label htmlFor="surname">Vezetéknév</label>
                             <input name="surname" type="text" placeholder="Vezetéknév" value={editingUser?.surname} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-2" />
+                            <label htmlFor="firstname">Keresztnév</label>
                             <input name="firstname" type="text" placeholder="Keresztnév" value={editingUser?.firstname} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-2" />
+                            <label htmlFor="email">E-mail</label>
                             <input name="email" type="text" placeholder="E-mail" value={editingUser?.email} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-2" />
+                            <label htmlFor="phone">Telefonszám</label>
                             <input name="phone" type="text" placeholder="Telefonszám" value={editingUser?.phone} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-2" />
+                            <label htmlFor="username">Felhasználónév</label>
                             <input name="username" type="text" placeholder="Felhasználónév" value={editingUser?.username} onChange={handleChange} className="w-full border border-gray-300 rounded-lg p-2" />
                         </div>
                         <div className="flex justify-end space-x-2">
