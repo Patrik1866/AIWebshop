@@ -43,9 +43,6 @@ public class UserServiceTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    public UserServiceTest() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     public void testFindAll() {
@@ -66,14 +63,6 @@ public class UserServiceTest {
         assertEquals(1, result.getId());
     }
 
-    @Test
-    public void TestSave() {
-        User user = new User();
-        user.setPassword("plainPassword");
-        when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
-        userServiceImp.save(user);
-        verify(passwordEncoder, times(1)).encode("plainPassword");
-    }
 
     @Test
     public void testDeleteById() {

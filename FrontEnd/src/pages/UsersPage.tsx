@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { User } from "../entities/User";
-import '../styles/usersPage.css'
 
 const UsersPage = ({ }) => {
     const [users, setUsers] = useState<User[]>([]);

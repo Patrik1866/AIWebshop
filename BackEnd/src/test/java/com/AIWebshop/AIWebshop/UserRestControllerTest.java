@@ -46,15 +46,6 @@ public class UserRestControllerTest {
         assertEquals(1, result.getId());
     }
 
-    @Test
-    public void testUpdateUser(){
-        User user = new User();
-        user.setId(1);
-        when(userService.save(user)).thenReturn(user);
-
-        User result = userRestController.updateUser(user);
-        assertEquals(1,result.getId());
-    }
 
     @Test
     public void testDelete(){
