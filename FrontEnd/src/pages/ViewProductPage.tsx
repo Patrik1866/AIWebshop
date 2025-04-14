@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Reviews } from "../entities/Reviews";
+import tablet from "../assets/tablet.svg";
 
 export function ViewProductPage() {
     const [isComment, setIsComment] = useState(false);
@@ -70,21 +71,25 @@ export function ViewProductPage() {
 
                 <div className="max-w-4xl mx-auto px-4 py-6">
                     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                        {/* Product Header */}
-                        <div className="border-b border-gray-200 p-6">
-                            <h1 className="text-2xl font-bold text-main-green-title">{product.name}</h1>
-                        </div>
-
-                        {/* Product Information */}
-                        <div className="p-6 space-y-4">
-                            <div>
-                                <h2 className="text-lg font-semibold text-main-green-title mb-2">Termékleírás:</h2>
-                                <p className="text-main-green font-md ml-2">{product.description}</p>
+                            {/* Product Header */}
+                            <div className="border-b border-gray-200 p-6">
+                                <h1 className="text-2xl font-bold text-main-green-title">{product.name}</h1>
                             </div>
-                            <div className="mt-4">
-                                <h2 className="text-lg font-semibold text-gray-700 flex flex-row">
-                                    <span className="font-bold text-main-green-title">Ár:</span> <p className="font-medium text-main-green ml-2">{product.price}</p>
-                                </h2>
+                            <div className="flex flex-row ml-3">
+                            {/* Product Information */}
+                            <div>
+                                <img className="w-20 flex justify-center items-center mt-9" src={tablet}/>
+                            </div>
+                            <div className="p-6 space-y-4">
+                                <div>
+                                    <h2 className="text-lg font-semibold text-main-green-title mb-2">Termékleírás:</h2>
+                                    <p className="text-main-green font-md ml-2">{product.description}</p>
+                                </div>
+                                <div className="mt-4">
+                                    <h2 className="text-lg font-semibold text-gray-700 flex flex-row">
+                                        <span className="font-bold text-main-green-title">Ár:</span> <p className="font-medium text-main-green ml-2">{product.price}</p>
+                                    </h2>
+                                </div>
                             </div>
                         </div>
 
